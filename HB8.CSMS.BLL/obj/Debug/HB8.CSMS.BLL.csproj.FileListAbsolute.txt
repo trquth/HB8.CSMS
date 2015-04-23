@@ -1,0 +1,7 @@
+D:\GitHub\HB8.CSMS\HB8.CSMS.BLL\bin\Debug\HB8.CSMS.BLL.dll
+D:\GitHub\HB8.CSMS\HB8.CSMS.BLL\bin\Debug\HB8.CSMS.BLL.pdb
+D:\GitHub\HB8.CSMS\HB8.CSMS.BLL\bin\Debug\HB8.CSMS.DAL.dll
+D:\GitHub\HB8.CSMS\HB8.CSMS.BLL\bin\Debug\HB8.CSMS.DAL.pdb
+D:\GitHub\HB8.CSMS\HB8.CSMS.BLL\obj\Debug\HB8.CSMS.BLL.csprojResolveAssemblyReference.cache
+D:\GitHub\HB8.CSMS\HB8.CSMS.BLL\obj\Debug\HB8.CSMS.BLL.dll
+D:\GitHub\HB8.CSMS\HB8.CSMS.BLL\obj\Debug\HB8.CSMS.BLL.pdb
