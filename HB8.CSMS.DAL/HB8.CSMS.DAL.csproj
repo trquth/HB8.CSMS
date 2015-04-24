@@ -30,7 +30,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -39,8 +48,55 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IDataRepository.cs" />
+    <Compile Include="ConcreteFunctions\DataContext.cs" />
+    <Compile Include="ConcreteFunctions\DataRepository.cs" />
+    <Compile Include="Models\BillPurchaseOrdDetail.cs" />
+    <Compile Include="Models\BillPurchaseOrder.cs" />
+    <Compile Include="Models\BillSaleOrder.cs" />
+    <Compile Include="Models\BillSlsOrderDetail.cs" />
+    <Compile Include="Models\CSMSContext.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Inventory.cs" />
+    <Compile Include="Models\InvoiceType.cs" />
+    <Compile Include="Models\Mapping\BillPurchaseOrdDetailMap.cs" />
+    <Compile Include="Models\Mapping\BillPurchaseOrderMap.cs" />
+    <Compile Include="Models\Mapping\BillSaleOrderMap.cs" />
+    <Compile Include="Models\Mapping\BillSlsOrderDetailMap.cs" />
+    <Compile Include="Models\Mapping\CustomerMap.cs" />
+    <Compile Include="Models\Mapping\InventoryMap.cs" />
+    <Compile Include="Models\Mapping\InvoiceTypeMap.cs" />
+    <Compile Include="Models\Mapping\PaymentMap.cs" />
+    <Compile Include="Models\Mapping\StaffMap.cs" />
+    <Compile Include="Models\Mapping\StkTransDetailMap.cs" />
+    <Compile Include="Models\Mapping\StockMap.cs" />
+    <Compile Include="Models\Mapping\StockRequisitionDetailMap.cs" />
+    <Compile Include="Models\Mapping\StockRequisitionMap.cs" />
+    <Compile Include="Models\Mapping\StockTransferMap.cs" />
+    <Compile Include="Models\Mapping\sysdiagramMap.cs" />
+    <Compile Include="Models\Mapping\UnitMap.cs" />
+    <Compile Include="Models\Mapping\UserMap.cs" />
+    <Compile Include="Models\Mapping\VendorMap.cs" />
+    <Compile Include="Models\Payment.cs" />
+    <Compile Include="Models\Staff.cs" />
+    <Compile Include="Models\StkTransDetail.cs" />
+    <Compile Include="Models\Stock.cs" />
+    <Compile Include="Models\StockRequisition.cs" />
+    <Compile Include="Models\StockRequisitionDetail.cs" />
+    <Compile Include="Models\StockTransfer.cs" />
+    <Compile Include="Models\sysdiagram.cs" />
+    <Compile Include="Models\Unit.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Vendor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
