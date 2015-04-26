@@ -2,43 +2,60 @@
 using HB8.CSMS.DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace HB8.CSMS.DAL.ConcreteFunctions
 {
-    public class DataRepository<T> :DataContext,IDataRepository<T>
+    public class DataRepository<T> : IDataRepository<T> where T : class
     {
-        public DataRepository(CSMSContext context):base(context){}
-        public void Insert(T item)
+        protected CSMSContext context;
+        public DataRepository()
         {
-           
+            context = new CSMSContext();
+        }
+        public DataRepository(CSMSContext context)
+        {
+            this.context = context;
+        }
+        protected DbSet<T> GetDbSet
+        {
+            get
+            {
+                return context.Set<T>();
+            }
+        }
+        public T Create(T t)
+        {
+            var newEntry = GetDbSet.Add(t);
+            return newEntry;
+
         }
 
-        public void Update(T item)
+        public int Update(T t)
         {
-            throw new NotImplementedException();
+            var entry = context.Entry(t);
+            GetDbSet.Attach(t);
+            entry.State = EntityState.Modified;
+            return 0;
         }
 
-        public void Delete(T item)
+        public int Delete(T t)
         {
-            throw new NotImplementedException();
-        }
+            GetDbSet.Remove(t);
+            return 0;
 
-        public void Save()
-        {
-            throw new NotImplementedException();
         }
-
         public T GetItemById(string id)
         {
-            throw new NotImplementedException();
+            return GetDbSet.Find(id);
         }
 
-        public IQueryable<T> GetAllItem
+        public IQueryable<T> GetAllItem()
         {
-            get { throw new NotImplementedException(); }
+            return GetDbSet.AsQueryable();
         }
     }
 }

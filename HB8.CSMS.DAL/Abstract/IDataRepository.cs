@@ -1,18 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace HB8.CSMS.DAL.Abstract
 {
-    public interface IDataRepository<T>
+    public interface IDataRepository<T> where T : class
     {
-        void Insert(T item);
-        void Update(T item);
-        void Delete(T item);
-        void Save();
+        /// <summary>
+        /// Insert mot doi tuong vao database
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        T Create(T t);
+        /// <summary>
+        /// Update mot doi tuong vao database
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        int Update(T t);
+        /// <summary>
+        /// Detele mot doi tuong khoi database
+        /// </summary>
+        /// <param name="item"></param>
+        int Delete(T t);
+        /// <summary>
+        /// Tim mot doi tuong dua vao ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         T GetItemById(string id);
-        IQueryable<T> GetAllItem { get; }
+        /// <summary>
+        /// Lay ra danh sach tu database
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<T> GetAllItem();
     }
 }
