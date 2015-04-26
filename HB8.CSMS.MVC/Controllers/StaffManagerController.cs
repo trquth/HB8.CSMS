@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HB8.CSMS.BLL.Abstract;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,8 +11,12 @@ namespace HB8.CSMS.MVC.Controllers
     {
         //
         // GET: /StaffManager/
-
-        public ActionResult Index()
+        private readonly IStaffManagerService staffManager;
+        public StaffManagerController(IStaffManagerService staffManager)
+        {
+            this.staffManager = staffManager;
+        }
+        public ActionResult CreateNewStaff()
         {
             return View();
         }

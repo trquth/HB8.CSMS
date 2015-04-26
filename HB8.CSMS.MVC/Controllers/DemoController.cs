@@ -15,6 +15,10 @@ namespace HB8.CSMS.MVC.Controllers
         {
             return View();
         }
+        public ActionResult Index2()
+        {
+            return View();
+        }
 
     }
 }

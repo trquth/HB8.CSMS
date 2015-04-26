@@ -31,7 +31,7 @@ namespace HB8.CSMS.MVC.DependencyResolution {
                                         scan.WithDefaultConventions();
                                     });
             //                x.For<IExample>().Use<Example>();
-                            x.For<IStaffManagerService>().Use<StaffManagerService>();
+                            x.For<IStaffManagerService>().Use<StaffManagerService>();                           
                         });
             return ObjectFactory.Container;
         }
