@@ -48,8 +48,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\IDataRepository.cs" />
+    <Compile Include="AbstractRepositories\IDataRepository.cs" />
+    <Compile Include="AbstractRepositories\IStaffRepository.cs" />
     <Compile Include="ConcreteFunctions\DataRepository.cs" />
+    <Compile Include="ConcreteFunctions\StaffRepository.cs" />
     <Compile Include="Models\BillPurchaseOrdDetail.cs" />
     <Compile Include="Models\BillPurchaseOrder.cs" />
     <Compile Include="Models\BillSaleOrder.cs" />

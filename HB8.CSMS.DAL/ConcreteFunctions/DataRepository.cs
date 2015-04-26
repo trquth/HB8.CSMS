@@ -1,4 +1,4 @@
-﻿using HB8.CSMS.DAL.Abstract;
+﻿using HB8.CSMS.DAL.AbstractRepositories;
 using HB8.CSMS.DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HB8.CSMS.DAL.ConcreteFunctions
 {
-    public class DataRepository<T> : IDataRepository<T> where T : class
+    public class DataRepository<T> : IDataRepository<T> where T :class
     {
         protected CSMSContext context;
         public DataRepository()
