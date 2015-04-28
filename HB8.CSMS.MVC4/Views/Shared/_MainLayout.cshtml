@@ -4,13 +4,54 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    @Scripts.Render("~/bundles/jquery")
+    <link href="~/css/bootstrap-theme.css" rel="stylesheet" />
+    @*@Scripts.Render("~/bundles/jquery")*@
     @*@Scripts.Render("~/bundles/morris")*@
     @Styles.Render("~/bundles/css")
     @Styles.Render("~/font-awesome/css")
-    <script src="~/js/plugins/morris/morris-data.js"></script>
+    <script src="~/js/bootstrap.js"></script>
+    <script src="~/Scripts/jquery-1.9.1.js"></script>
+    <link href="~/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    @*<script src="~/js/plugins/morris/morris-data.js"></script>
     <script src="~/js/plugins/morris/morris.js"></script>
-    <script src="~/js/plugins/morris/raphael.min.js"></script>
+    <script src="~/js/plugins/morris/raphael.min.js"></script>*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+
+                type: "POST",
+                url: "/StaffManager/ListPosition",
+                data: "{}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    $.each(data, function (key, value) {
+                        $("#ddlPosition").append($("<option></option>").val(value.UserId).html(value.UserName));
+                    });
+                },
+
+                error: function (result) {
+                    alert("Error")
+                }
+            });
+        });
+    </script>
+ 
+    <link href="~/css/jquery.fileupload.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.ui.widget.js"></script>
+    <script src="~/Scripts/jquery.fileupload.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#fileupload').fileupload({
+                dataType: 'json',
+                url: "/StaffManager/UploadImage",
+                autoUpload: true,
+                done: function (e, data) {
+                    $('.file_name').html(data.result.name);
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <div>
@@ -191,5 +232,3 @@
     </div>
 </body>
 </html>
-
-

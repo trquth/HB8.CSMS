@@ -33,3 +33,7 @@ D:\GitHub\HB8.CSMS\HB8.CSMS.MVC4.Tests\obj\Debug\HB8.CSMS.MVC4.Tests.dll
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC4.Tests\obj\Debug\HB8.CSMS.MVC4.Tests.pdb
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC4.Tests\bin\Debug\HB8.CSMS.BLL.dll
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC4.Tests\bin\Debug\HB8.CSMS.BLL.pdb
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC4.Tests\bin\Debug\HB8.CSMS.DAL.dll
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC4.Tests\bin\Debug\EntityFramework.dll
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC4.Tests\bin\Debug\HB8.CSMS.DAL.pdb
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC4.Tests\bin\Debug\EntityFramework.xml

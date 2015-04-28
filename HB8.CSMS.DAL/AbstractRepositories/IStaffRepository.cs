@@ -9,5 +9,6 @@ namespace HB8.CSMS.DAL.AbstractRepositories
 {
     public interface IStaffRepository:IDataRepository<Staff>
     {
+ 
     }
 }

@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "CreateNewStaff";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-heading"><h5>Thêm mới nhân viên</h5></div>
+    <div class="panel-body">
+        <form class="form-horizontal">
+            <div class="col-lg-2">
+                <img src="..." alt="" class="img-rounded fa fa-file-image-o"><i class="fa fa-file-image-o fa-5x"></i>   
+                <br />
+                    <span class="btn btn-success fileinput-button">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>Thêm hình</span>
+                        <input id="fileupload" type="file" name="files[]" multiple>
+                    </span>   
+                <br/>
+                <div id="file_name"></div>          
+            </div>
+            <div class="col-lg-10">
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Mã Nhân viên:</label>
+                    <div class="col-lg-2">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Tên Nhân Viên:</label>
+                    <div class="col-lg-4">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            <input type="text" class="form-control" placeholder="Username">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Chức vụ:</label>
+                    <div class="col-lg-4">
+                        <div class="input-group">
+                            <select class="form-control" id="ddlPosition">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Địa chỉ:</label>
+                    <div class="col-lg-2">                      
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>
+                            <input type="text" class="form-control" placeholder="Username">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Số điện thoại:</label>
+                    <div class="col-lg-4">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
+                            <input type="text" class="form-control" placeholder="Username">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Email:</label>
+                    <div class="col-lg-4">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+                            <input type="text" class="form-control" placeholder="Username">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-10">
+                        <button type="button" class="btn btn-primary">Lưu</button>
+                        <a href="#" class="btn btn-primary">Thoát</a>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <hr>
+    </div>
+</div>

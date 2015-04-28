@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace HB8.CSMS.DAL.ConcreteFunctions
 {
-    public class StaffRepository : DataRepository<Staff>, IStaffRepository
+    public class StaffRepository :DataRepository<Staff>,IStaffRepository
     {
+
     }
 }

@@ -18,6 +18,8 @@
 
 using HB8.CSMS.BLL.Abstract;
 using HB8.CSMS.BLL.ConcreteFunctionsServer;
+using HB8.CSMS.DAL.AbstractRepositories;
+using HB8.CSMS.DAL.ConcreteFunctions;
 using StructureMap;
 using StructureMap.Graph;
 namespace HB8.CSMS.MVC4.DependencyResolution {
@@ -31,7 +33,9 @@ namespace HB8.CSMS.MVC4.DependencyResolution {
                                         scan.WithDefaultConventions();
                                     });
             //                x.For<IExample>().Use<Example>();
-                            x.For<IStaffManagerService>().Add<StaffManagerService>();
+                            x.For(typeof( IStaffManagerService<>)).Add(typeof(StaffManagerService<>));
+                            x.For<IUserRepository>().Add<UserRepository>();
+                            x.For<IStaffRepository>().Add<StaffRepository>();
                            
                         });
             return ObjectFactory.Container;
