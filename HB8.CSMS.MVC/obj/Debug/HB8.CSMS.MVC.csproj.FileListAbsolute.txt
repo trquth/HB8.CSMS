@@ -33,3 +33,5 @@ D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\System.Web.WebPages.Deployment.xml
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\System.Web.WebPages.Razor.xml
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\obj\Debug\HB8.CSMS.MVC.dll
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\obj\Debug\HB8.CSMS.MVC.pdb
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\EntityFramework.SqlServer.dll
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\EntityFramework.SqlServer.xml

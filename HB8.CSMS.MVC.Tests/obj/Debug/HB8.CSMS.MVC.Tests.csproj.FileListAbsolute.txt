@@ -29,3 +29,5 @@ D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\HB8.CSMS.BLL.pdb
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\HB8.CSMS.DAL.pdb
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\obj\Debug\HB8.CSMS.MVC.Tests.dll
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\obj\Debug\HB8.CSMS.MVC.Tests.pdb
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\EntityFramework.dll
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\EntityFramework.xml

@@ -1,10 +1,10 @@
 ﻿using HB8.CSMS.BLL.Abstract;
 using HB8.CSMS.BLL.ConcreteFunctionsServer;
+using HB8.CSMS.DAL.AbstractRepositories;
+using HB8.CSMS.DAL.ConcreteFunctions;
+using HB8.CSMS.DAL.Models;
+using StructureMap;
 using StructureMap.Configuration.DSL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace HB8.CSMS.MVC.StructureMap
 {
@@ -12,12 +12,12 @@ namespace HB8.CSMS.MVC.StructureMap
     {
         public ApplicationRegistry()
         {
-            Scan(scanner =>
-                {
-                    scanner.TheCallingAssembly();
-                    scanner.AddAllTypesOf(typeof(IStaffManagerService<>));
-                    scanner.WithDefaultConventions();
-                });
+            For(typeof(IStaffManagerService<>)).Use(typeof(StaffManagerService<>));
+            For(typeof(IDataRepository<>)).Use(typeof(DataRepository<>));
+            Scan(x =>
+            {
+                
+            });
         }
     }
 }

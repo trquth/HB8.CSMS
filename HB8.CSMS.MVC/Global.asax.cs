@@ -17,14 +17,16 @@ namespace HB8.CSMS.MVC
     {
         protected void Application_Start()
         {
+            Bootstrapper.ConfigureStructureMap();
+
+            ControllerBuilder.Current.SetControllerFactory(new StructureMapControllerFactory());
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            Bootstrapper.ConfigureStructureMap();
-            ControllerBuilder.Current.SetControllerFactory(new StructureMapControllerFactory());
+        
         }
     }
 }

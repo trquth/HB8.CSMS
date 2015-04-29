@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace HB8.CSMS.BLL.ConcreteFunctionsServer
 {
-    public class StaffManagerService<T> : IStaffManagerService<User>,IStaffManagerService<Staff>
+    public class StaffManagerService<T>: IStaffManagerService<T> where T:class 
     {
-        private IUserRepository userRepo;
-        public StaffManagerService(IUserRepository userRepo)
+        private IDataRepository<T> userRepo;
+        public StaffManagerService(IDataRepository<T> userRepo)
         {
             this.userRepo = userRepo;
         }
@@ -20,14 +20,9 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
         /// Lấy về danh sách các chức vụ 
         /// </summary>
         /// <returns></returns>
-        public IQueryable<User> GetListPosition()
+        IQueryable<T> IStaffManagerService<T>.GetListPosition()
         {
             return userRepo.GetAllItem();
-        }
-
-        IQueryable<Staff> IStaffManagerService<Staff>.GetListPosition()
-        {
-            throw new NotImplementedException();
         }
     }
 }
