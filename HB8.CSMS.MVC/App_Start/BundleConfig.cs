@@ -9,8 +9,7 @@ namespace HB8.CSMS.MVC
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/js/jquery.js", "~/js/bootstrap.js"));
-
+                          "~/Scripts/jquery-1.8.2.js", "~/js/bootstrap.js"));
             bundles.Add(new ScriptBundle("~/bundles/morris").Include(
                         "~/js/plugins/morris/morris-data.js", "~/js/plugins/morris/morris.js", "~/js/plugins/morris/raphael.min.js"));
 
@@ -25,11 +24,11 @@ namespace HB8.CSMS.MVC
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
-
             bundles.Add(new StyleBundle("~/bundles/css").Include("~/css/bootstrap.css", "~/css/sb-admin.css", "~/css/plugins/morris.css"));
 
 
             bundles.Add(new StyleBundle("~/font-awesome/css").Include("~/font-awesome/css/font-awesome.css"));
+            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",

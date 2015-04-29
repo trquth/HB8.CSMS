@@ -22,6 +22,10 @@ namespace HB8.CSMS.MVC4.Controllers
             var model = staffMana.GetListPosition().First();
             return View(model);
         }
+        public ActionResult Index2()
+        {
+            return View();
+        }
 
     }
 }

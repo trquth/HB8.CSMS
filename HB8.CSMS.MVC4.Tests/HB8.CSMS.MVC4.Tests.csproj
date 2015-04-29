@@ -105,12 +105,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\HB8.CSMS.MVC4\HB8.CSMS.MVC4.csproj">
-      <Project>{5EBB07B8-867E-45A7-8D2E-EDE006205132}</Project>
-      <Name>HB8.CSMS.MVC4</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
