@@ -1,82 +1,94 @@
-﻿@{
+﻿@model HB8.CSMS.MVC.Models.Staff.StaffModel
+@{
     ViewBag.Title = "CreateNewStaff";
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
 <div class="panel panel-primary">
     <div class="panel-heading"><h5>Thêm mới nhân viên</h5></div>
     <div class="panel-body">
-        <form class="form-horizontal">
-            <div class="col-lg-2">
-                <img src="..." alt="" class="img-rounded fa fa-file-image-o"><i class="fa fa-file-image-o fa-5x"></i>
-                <br />
-                <span class="btn btn-success fileinput-button">
-                    <i class="glyphicon glyphicon-plus"></i>
-                    <span>Thêm hình</span>
-                    <input id="fileupload" type="file" name="files[]" multiple>
-                </span>
-                <br />
-                <div id="file_name"></div>
-            </div>
-            <div class="col-lg-10">
-                <div class="form-group">
-                    <label class="control-label col-lg-2">Mã Nhân viên:</label>
-                    <div class="col-lg-2">
-                        <input type="text" class="form-control">
+        @using (Html.BeginForm("CreateNewStaff", "StaffManager", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+        {
+            <fieldset>
+                @*@Html.ValidationSummary(false, "", new { @class = "alert alert-danger" })*@
+                <div class="col-lg-2">
+                    @*<div class="col-lg-12">
+                        <img src="~/ImagesTemp/10807202_1543289049266977_185376300_o.jpg" class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" />
                     </div>
+                    <div class="file_name">
+                    </div>
+                    <div class="col-lg-12">
+                        <span class="btn btn-success fileinput-button center-block">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span >Thêm hình</span>
+                            <input type="file" name="fileupload" id="fileupload">
+                        </span>
+                    </div>*@
+                    <div id="imagePreview">
+                        <img src="~/ImagesTemp/10807202_1543289049266977_185376300_o.jpg" class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" />
+                    </div>
+                    <input id="uploadFile" type="file" name="fileupload" class="img" />
                 </div>
-                <div class="form-group">
-                    <label class="control-label col-lg-2">Tên Nhân Viên:</label>
-                    <div class="col-lg-4">
-                        <div class="input-group">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                            <input type="text" class="form-control" placeholder="Username">
+                <div class="col-lg-10">
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">Mã Nhân viên:</label>
+                        <div class="col-lg-2">
+                            @Html.TextBoxFor(x => x.ID, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">Tên Nhân Viên:</label>
+                        <div class="col-lg-4">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                                @Html.TextBoxFor(x => x.StaffName, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">Chức vụ:</label>
+                        <div class="col-lg-4">
+                            @*<div class="input-group">*@
+                            @*<select class="form-control" id="ddlPosition"></select>*@
+                            @Html.DropDownListFor(x => x.UserId, new SelectList(ViewBag.Position, "UserId", "UserName"), new { @class = "form-control " })
+                            @*</div>*@
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">Địa chỉ:</label>
+                        <div class="col-lg-2">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>
+                                @Html.TextBoxFor(x => x.Address, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">Số điện thoại:</label>
+                        <div class="col-lg-4">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
+                                @Html.TextBoxFor(x => x.NumberPhone, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">Email:</label>
+                        <div class="col-lg-4">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+                                @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <input type="submit" class="btn btn-primary" value="Lưu">
+                            <a href="#" class="btn btn-primary">Thoát</a>
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label col-lg-2">Chức vụ:</label>
-                    <div class="col-lg-4">
-                        <div class="input-group">
-                            <select class="form-control" id="ddlPosition"></select>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-lg-2">Địa chỉ:</label>
-                    <div class="col-lg-2">
-                        <div class="input-group">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>
-                            <input type="text" class="form-control" placeholder="Username">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-lg-2">Số điện thoại:</label>
-                    <div class="col-lg-4">
-                        <div class="input-group">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
-                            <input type="text" class="form-control" placeholder="Username">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-lg-2">Email:</label>
-                    <div class="col-lg-4">
-                        <div class="input-group">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
-                            <input type="text" class="form-control" placeholder="Username">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-lg-offset-2 col-lg-10">
-                        <button type="button" class="btn btn-primary">Lưu</button>
-                        <a href="#" class="btn btn-primary">Thoát</a>
-                    </div>
-                </div>
-            </div>
+            </fieldset>
 
-        </form>
-        <hr>
+        }
     </div>
 </div>
