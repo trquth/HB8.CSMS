@@ -6,11 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HB8.CSMS.BLL.Abstract
+namespace HB8.CSMS.DAL.ConcreteFunctions
 {
-    public interface IStaffManagerService
+    public class UserRepository :DataRepository<User>, IUserRepository
     {
-        List<User> GetListPosition();
-        Staff CreateStaff(Staff staff);
+        public UserRepository(CSMSContext context) : base(context) { }
     }
 }

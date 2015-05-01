@@ -1,5 +1,6 @@
 ﻿using HB8.CSMS.BLL.Abstract;
 using HB8.CSMS.DAL.AbstractRepositories;
+using HB8.CSMS.DAL.DBContext;
 using HB8.CSMS.DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -9,20 +10,23 @@ using System.Threading.Tasks;
 
 namespace HB8.CSMS.BLL.ConcreteFunctionsServer
 {
-    public class StaffManagerService<T>: IStaffManagerService<T> where T:class 
+    public class StaffManagerService: IStaffManagerService
     {
-        private IDataRepository<T> userRepo;
-        public StaffManagerService(IDataRepository<T> userRepo)
+        private IDALContext context;
+        public StaffManagerService(IDALContext context)
         {
-            this.userRepo = userRepo;
+            this.context = context;
         }
-        /// <summary>
-        /// Lấy về danh sách các chức vụ 
-        /// </summary>
-        /// <returns></returns>
-        IQueryable<T> IStaffManagerService<T>.GetListPosition()
+        public List<User> GetListPosition()
         {
-            return userRepo.GetAllItem();
+            return context.Users.GetAllItem().ToList();
+        }
+
+        public Staff CreateStaff(Staff staff)
+        {
+            context.Staffs.Create(staff);
+            context.SaveChange();
+            return staff;
         }
     }
 }

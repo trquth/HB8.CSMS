@@ -48,8 +48,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConcreteFunctions\UserRepository.cs" />
+    <Compile Include="DBContext\IDALContext.cs" />
     <Compile Include="AbstractRepositories\IDataRepository.cs" />
+    <Compile Include="AbstractRepositories\IStaffRepository.cs" />
+    <Compile Include="UoW\IUnitOfWork.cs" />
+    <Compile Include="AbstractRepositories\IUserRepository.cs" />
+    <Compile Include="DBContext\DALContext.cs" />
     <Compile Include="ConcreteFunctions\DataRepository.cs" />
+    <Compile Include="ConcreteFunctions\StaffRepository.cs" />
     <Compile Include="Models\BillPurchaseOrdDetail.cs" />
     <Compile Include="Models\BillPurchaseOrder.cs" />
     <Compile Include="Models\BillSaleOrder.cs" />

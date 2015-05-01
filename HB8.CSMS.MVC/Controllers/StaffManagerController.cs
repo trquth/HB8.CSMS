@@ -12,10 +12,10 @@ using System.Web.Mvc;
 
 namespace HB8.CSMS.MVC.Controllers
 {
-    public class StaffManagerController : UploadController
+    public class StaffManagerController : Controller
     {
-        private IStaffManagerService<User> staffService;
-        public StaffManagerController(IStaffManagerService<User> staffService)
+        private IStaffManagerService staffService;
+        public StaffManagerController(IStaffManagerService staffService)
         {
             this.staffService = staffService;
         }
@@ -64,8 +64,7 @@ namespace HB8.CSMS.MVC.Controllers
             newStaff.Email = staff.Email;
             newStaff.Address = staff.Address;
             newStaff.NumberPhone = staff.NumberPhone;
-            newStaff.UserId = staff.UserId;
-            //newStaff.Image = SaveImage();
+            newStaff.UserId = staff.UserId;           
             HttpPostedFileBase photo = Request.Files["fileupload"];
             if (photo != null && photo.ContentLength > 0)
             {
@@ -73,8 +72,9 @@ namespace HB8.CSMS.MVC.Controllers
                 var fileName = System.Guid.NewGuid().ToString("N") + extension;
                 var path = HostingEnvironment.MapPath("~/Images/");
                 photo.SaveAs(Path.Combine(path, fileName));
-                //return fileName;
+                newStaff.Image = fileName;
             }
+            staffService.CreateStaff(newStaff);
             return View();
         }
 
