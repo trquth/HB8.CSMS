@@ -58,6 +58,10 @@ namespace HB8.CSMS.MVC.Controllers
         [HttpPost]
         public ViewResult CreateNewStaff(StaffModel staff)
         {
+            if (ModelState.IsValid)
+            {
+                
+            }
             var newStaff = new Staff();
             newStaff.StaffID = staff.ID;
             newStaff.StaffName = staff.StaffName;
@@ -75,6 +79,7 @@ namespace HB8.CSMS.MVC.Controllers
                 newStaff.Image = fileName;
             }
             staffService.CreateStaff(newStaff);
+            ViewBag.Position = GetListPosition();
             return View();
         }
 
