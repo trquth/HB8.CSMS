@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace HB8.CSMS.BLL.ConcreteFunctionsServer
 {
-    public class StaffManagerService: IStaffManagerService
+    public class StaffManagerService : IStaffManagerService
     {
         private IDALContext context;
         public StaffManagerService(IDALContext context)
@@ -27,6 +27,19 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             context.Staffs.Create(staff);
             context.SaveChange();
             return staff;
+        }
+
+
+        public IEnumerable<Staff> GetListStaff()
+        {
+            return context.Staffs.GetAllItem();
+
+        }
+
+
+        public Staff GetStaffById(string id)
+        {
+            return context.Staffs.GetItemById(id);
         }
     }
 }

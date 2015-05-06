@@ -37,5 +37,11 @@ namespace HB8.CSMS.DAL.AbstractRepositories
         /// </summary>
         /// <returns></returns>
         IQueryable<T> GetAllItem();
+        /// <summary>
+        /// Tim mot doi tuong bang khóa
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <returns></returns>
+        T Find(params object[] keys);
     }
 }

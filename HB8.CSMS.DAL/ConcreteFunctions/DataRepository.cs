@@ -57,5 +57,11 @@ namespace HB8.CSMS.DAL.ConcreteFunctions
         {
             return GetDbSet.AsQueryable();
         }
+
+
+        public T Find(params object[] keys)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

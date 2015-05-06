@@ -1,0 +1,150 @@
+﻿@model HB8.CSMS.MVC.Models.Staff.StaffModel
+@*@{
+    ViewBag.Title = "CreateNewStaff";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}*@
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            url: "/StaffManager/ListPosition",
+            type: 'Get',
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                $.each(data, function (key, value) {
+                    $("#ddlPosition").append($("<option></option>").val(value.UserId).html(value.UserName));
+                });
+            },
+            error: function (result) {
+                alert("Error")
+            }
+        });
+    })
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#staffform').validate({
+        });
+    });
+
+</script>
+<script type="text/javascript">
+    $(function () {
+        $("#uploadFile").on("change", function () {
+            var files = !!this.files ? this.files : [];
+            if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+
+            if (/^image/.test(files[0].type)) { // only image file
+                var reader = new FileReader(); // instance of the FileReader
+                reader.readAsDataURL(files[0]); // read the local file
+
+                reader.onloadend = function () { // set image data as background of div
+                    $('#changeimage').attr('src', this.result);
+
+                }
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#update-button").click(function () {
+         
+            var id = $("#staffId").val();
+            var name = $("#staffName").val();
+            var position = $("#ddlPosition").val();
+            var address = $("#address").val();
+            var phone = $("#numberphone").val();
+            var mail = $("#email").val();
+            //Goi toi action EditStaff
+            if (name.length == 0) {
+                $(this).attr('type', 'submit');
+                $("#staffform").submit();
+            } else {
+                $("#editForm").dialog("close");
+                $.post('/StaffManager/EditStaff', { "staffId": id, "staffName": name, "position": position, "address": address, "phone": phone, "mail": mail }, function () {
+                    alert("Dữ liệu lưu thành công");
+                    window.location.reload(true);
+                })
+            }
+           
+        });
+    });
+   
+
+</script>
+<div class="panel panel-warning">
+    <div class="panel-heading"><h5>Sửa thông tin nhân viên</h5></div>
+    <div class="panel-body">
+        @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", @id = "staffform" }))
+        {
+            @Html.ValidationSummary(true);
+            <fieldset>
+                <div class="col-lg-2">
+                    <div id="imagePreview">
+                        <img src="~/ImagesTemp/10807202_1543289049266977_185376300_o.jpg" class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" />
+                    </div>
+                    <br />
+                    <br />
+                    <div class="col-lg-12">
+                        <span class="btn btn-success fileinput-button center-block">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>Thêm hình</span>
+                            <input id="uploadFile" type="file" name="fileupload" class="img" />
+                        </span>
+                    </div>
+
+                </div>
+                <div class="col-lg-10">
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">Tên Nhân Viên:</label>
+                        <div class="col-lg-10">
+                            @Html.HiddenFor(x => x.ID, new { @id = "staffId" })
+                            @Html.TextBoxFor(x => x.StaffName, new { @class = "form-control", @data_rule_required = "true", @data_msg_required = "Tên nhân viên không được rỗng", @data_rule_maxlength = "50", @data_msg_maxlength = "Tên nhân viên tối đa 50 kí tự", @data_rule_minlength = "10", @data_msg_minlength = "Tên nhân viên tối thiểu 10 kí tự", @id = "staffName" })
+                            @Html.ValidationMessageFor(x => x.StaffName, String.Empty, new { @class = "error" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">Chức vụ:</label>
+                        <div class="col-lg-2">
+                            <select id="ddlPosition" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">Địa chỉ:</label>
+                        <div class="col-lg-10">
+                            @Html.TextBoxFor(x => x.Address, new { @class = "form-control", @data_rule_maxlength = "100", @data_msg_maxlength = "Địa chỉ quá dài", @data_rule_required = "true", @data_msg_required = "Địa chỉ không được rỗng", @data_rule_minlength = "2", @data_msg_minlength = "Địa chỉ quá ngắn", @id = "address" ,})
+                            @Html.ValidationMessageFor(x => x.Address, String.Empty, new { @class = "error" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">Số điện thoại:</label>
+                        <div class="col-lg-3">
+                            @Html.TextBoxFor(x => x.NumberPhone, new { @class = "form-control", @data_rule_pattern = "[0][1-9]{1}[0-9]{8,9}", @data_msg_pattern = "Đinh dạng số điện thoại sai", @data_rule_required = "true", @data_msg_required = "Số điện thoại không được rỗng", @id = "numberphone" })
+                            @Html.ValidationMessageFor(x => x.NumberPhone, String.Empty, new { @class = "error" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">Email:</label>
+                        <div class="col-lg-10">
+                            @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @data_rule_email = "true", @type = "email", @data_msg_email = "Đinh dạng mail sai", @data_rule_pattern = @"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$", @data_msg_pattern = "Đinh dạng mail sai", @id = "email" })
+                            @Html.ValidationMessageFor(x => x.Email, String.Empty, new { @class = "error" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <input type="submit" class="btn btn-primary submit" value="Cập nhật" id="update-button">
+                            <a href="" class="btn btn-primary">Thoát</a>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        }
+    </div>
+</div>
+@*<script type="text/javascript" src="~/MyjQ/edit.partialview.js" ></script>*@
+<script src="~/Scripts/jquery-ui-1.11.4.js" type="text/javascript"></script>

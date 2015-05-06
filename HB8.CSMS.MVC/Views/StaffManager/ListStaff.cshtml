@@ -1,0 +1,121 @@
+﻿@model IEnumerable<HB8.CSMS.MVC.Models.Staff.StaffModel>
+@using PagedList
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "ListStaff";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-heading">
+
+            <div class="panel panel-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="text-center">
+
+                                <h5>Hình ảnh</h5>
+
+                            </th>
+                            <th class="text-center">
+
+                                <h5>Tên nhân viên</h5>
+
+                            </th>
+                            <th class="text-center">
+
+                                <h5>Chức vụ</h5>
+
+                            </th>
+                            <th class="text-center">
+
+                                <h5>Số điện thoại</h5>
+
+                            </th>
+                            <th class="text-center">
+
+                                <h5>Email</h5>
+
+                            </th>
+                            <th>
+
+                                <h5></h5>
+
+                            </th>
+                            <th>
+
+                                <h5></h5>
+
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+
+                        @{
+                            var items = ViewBag.OnePageOfStaffs;
+                            foreach (var item in items)
+                            {
+                                <tr>
+                                    <td class="text-center itemIdClass">
+                                        <input id="ID" type="text" value="@item.ID" name="item.ID">
+                                    </td>
+                                    <td class="text-center">
+
+                                        <h5><img src="" alt="" class="img-rounded" width="50px"></h5>
+
+                                    </td>
+                                    <td class="text-center">
+
+                                        <h5>@item.StaffName</h5>
+
+                                    </td>
+                                    <td class="text-center">
+
+                                        <small>@item.UserName</small>
+
+                                    </td>
+                                    <td class="text-center">
+
+                                        <h5>@item.NumberPhone</h5>
+
+                                    </td>
+                                    <td class="text-center">
+
+                                        <h5>@item.Email</h5>
+
+                                    </td>
+                                    <td class="text-center"></td>
+                                    <td class="text-center">
+
+                                        <input type="button" value="Edit" class="buttonEdit btn btn-default" />
+
+                                    </td>
+                                    <td class="text-center">
+
+                                        <h5><a href="#">Delete</a></h5>
+
+                                    </td>
+                                </tr>
+                            }
+                        }
+                     
+                    </tbody>
+                </table>
+            </div>
+            <div id="createForm"></div>
+            <div id="editForm"></div>
+            <div id="deleteForm">
+                <p>Please provide the confirmation to delete this training.</p>
+                <input type="button" value="Yes" class="okDelete btnStyleOne" />
+            </div>
+            <div class="panel panel-footer">
+                @Html.PagedListPager((IPagedList)ViewBag.OnePageOfStaffs, page => Url.Action("Index", new { page = page }))
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="~/MyjQ/Index.js"></script>
+<script src="~/Scripts/jquery-ui-1.11.4.js"></script>

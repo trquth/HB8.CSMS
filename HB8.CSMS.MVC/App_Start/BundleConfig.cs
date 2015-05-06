@@ -9,7 +9,7 @@ namespace HB8.CSMS.MVC
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                          "~/Scripts/jquery-1.8.2.js", "~/js/bootstrap.js", "~/Scripts/jquery.validate.js", "~/Scripts/jquery.validate.unobtrusive.js", "~/Scripts/jquery.fileupload.js", "~/Scripts/additional-methods.js"));
+                          "~/js/bootstrap.js", "~/Scripts/jquery.validate.js", "~/Scripts/jquery.validate.unobtrusive.js", "~/Scripts/jquery-ui-1.11.4.js", "~/Scripts/jquery-1.9.1.js"));
             bundles.Add(new ScriptBundle("~/bundles/morris").Include(
                         "~/js/plugins/morris/morris-data.js", "~/js/plugins/morris/morris.js", "~/js/plugins/morris/raphael.min.js"));
 
