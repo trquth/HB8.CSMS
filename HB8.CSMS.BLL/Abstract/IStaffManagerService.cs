@@ -1,4 +1,5 @@
-﻿using HB8.CSMS.DAL.AbstractRepositories;
+﻿using HB8.CSMS.BLL.DomainModels;
+using HB8.CSMS.DAL.AbstractRepositories;
 using HB8.CSMS.DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace HB8.CSMS.BLL.Abstract
         /// </summary>
         /// <param name="staff"></param>
         /// <returns></returns>
-        Staff CreateStaff(Staff staff);
+        int CreateStaff(StaffDomain staff);
         /// <summary>
         /// Tra ve danh sach nhan vien duoc sap xep
         /// </summary>
@@ -32,5 +33,18 @@ namespace HB8.CSMS.BLL.Abstract
         /// <param name="id"></param>
         /// <returns></returns>
         Staff GetStaffById(string id);
+        /// <summary>
+        /// Ham update thong tin nhan vien vao DATABASE
+        /// </summary>
+        /// <param name="staff"></param>
+        /// <returns></returns>
+        int UpdateStaff(StaffDomain staff);
+        /// <summary>
+        /// Ham xoa thong tin nhan vien
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        int DeleteStaff(string id);
+
     }
 }

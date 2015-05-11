@@ -19,67 +19,23 @@
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/additional-methods.js"></script>
     <script src="~/Scripts/jquery-ui-1.11.4.js"></script>
-    <script type="text/javascript">
-    //$('#staffform').validate({
-    //    rules: {
-    //        txtmanv: {
-    //            required: true,
-    //            minlength: 5
-    //        }
-    //    },
-    //    messages: {
-    //        txtmanv: "Please enter your firstname",
+    <script src="~/Scripts/sweetalert.min.js"></script>
+    <link href="~/css/sweetalert.css" rel="stylesheet" />
+    @*<script type="text/javascript">
+        $(document).ready(function () {
+            $('#fileupload').fileupload({
+                dataType: 'json',
+                url: "/Upload/UploadImage",
+                autoUpload: true,
+                done: function (e, data) {
+                    alert("abc")                 
+                }
 
-    //    },
-    //    highlight: function (element) {
-    //        $(element).closest('.form-control').addClass('has-error')
-    //    },
-    //    unhighlight: function (element) {
-    //        $(element).closest('.form-group').removeClass('has-error')
-    //    },
-    //    submitHandler: function (form) { // for demo
-    //        alert('valid form submitted'); // for demo
-    //        return false; // for demo
-    //    }
-        //});
-    </script>
+            });
 
-    <script type="text/javascript">
+        });
+    </script>*@
 
-        //$(document).ready(function () {
-        //    $.ajax({
-
-        //        type: "POST",
-        //        url: "/StaffManager/ListPosition",
-        //        data: "{}",
-        //        contentType: "application/json; charset=utf-8",
-        //        dataType: "json",
-        //        success: function (data) {
-        //            $.each(data, function (key, value) {
-        //                $("#ddlPosition").append($("<option></option>").val(value.UserId).html(value.UserName));
-        //            });
-        //        },
-
-        //        error: function (result) {
-        //            alert("Error")
-        //        }
-        //    });
-        //});
-        //$(document).ready(function () {
-        //    $('#fileupload').fileupload({
-        //        dataType: 'json',
-        //        url: "/Upload/UploadImage",
-        //        autoUpload: true,
-        //        done: function (e, data) {
-        //            alert("abc")
-        //            var newSrc = '/ImagesTemp/' + data.result.name;
-        //            $('#changeimage').attr('src', newSrc);
-        //        }
-
-        //    });
-
-        //});
-    </script>
     <script src="~/js/bootstrap.js"></script>
     @*<script type="text/javascript">
             $(function () {

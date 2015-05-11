@@ -8,6 +8,6 @@ namespace HB8.CSMS.DAL.UoW
 {
     public interface IUnitOfWork
     {
-        int SaveChange();
+        int Save();
     }
 }

@@ -9,28 +9,36 @@ using System.Web.Mvc;
 
 namespace HB8.CSMS.MVC.Controllers
 {
-    public class UploadController : Controller
+    public class UploadController : Controller, IDisposable
     {
-        public ContentResult UploadImage()
-        {
 
+        [HttpPost]
+        public ContentResult UploadImage(string path)
+        {
+            string pathImage = path;
             var imageName = new List<UploadImageModel>();
             foreach (string file in Request.Files)
             {
-                HttpPostedFileBase hpf = Request.Files[file] as HttpPostedFileBase;
-                string savedFileName = Path.Combine(Server.MapPath("~/ImagesTemp"), Path.GetFileName(hpf.FileName));
-                hpf.SaveAs(savedFileName);
-
-                if (hpf.ContentLength == 0)
+                if (Request.Files[file].ContentLength > 0)
                 {
-                    continue;
+                    HttpPostedFileBase hpf = Request.Files[file] as HttpPostedFileBase;
+                    string savedFileName = Path.Combine(Server.MapPath(pathImage), Path.GetFileName(hpf.FileName));
+                    if (System.IO.File.Exists(savedFileName))
+                    {
+                        System.IO.File.Delete(savedFileName);
+                    }
+                    hpf.SaveAs(savedFileName);                
+                    if (hpf.ContentLength == 0)
+                    {
+                        continue;
+                    }
+                    imageName.Add(new UploadImageModel()
+                    {
+                        ImageName = hpf.FileName
+                    });
                 }
-                imageName.Add(new UploadImageModel()
-                {
-                    ImageName = hpf.FileName
-                });
-            }
 
+            }
             return Content("{\"name\":\"" + imageName[0].ImageName + "\"}", "application/json");
         }
         public string SaveImage()
@@ -46,6 +54,7 @@ namespace HB8.CSMS.MVC.Controllers
             }
             return null;
         }
+
 
 
     }

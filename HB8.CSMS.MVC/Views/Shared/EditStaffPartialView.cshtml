@@ -1,10 +1,6 @@
 ﻿@model HB8.CSMS.MVC.Models.Staff.StaffModel
-@*@{
-    ViewBag.Title = "CreateNewStaff";
-    Layout = "~/Views/Shared/_MainLayout.cshtml";
-}*@
-
 <script type="text/javascript">
+    //Do du lieu vao dropdowlist
     $(document).ready(function () {
         $.ajax({
             url: "/StaffManager/ListPosition",
@@ -18,64 +14,116 @@
                 });
             },
             error: function (result) {
-                alert("Error")
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
             }
         });
     })
 </script>
 <script type="text/javascript">
-
+    //Kiem tra thong tin nhap vao dung hay sai
     $(document).ready(function () {
         $('#staffform').validate({
         });
     });
 
 </script>
-<script type="text/javascript">
-    $(function () {
-        $("#uploadFile").on("change", function () {
-            var files = !!this.files ? this.files : [];
-            if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+@*<script type="text/javascript">
+        //Up tam hinh len va show cho nguoi dung thay
+        $(function () {
+            $("#uploadFile").on("change", function () {
+                var files = !!this.files ? this.files : [];
+                if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
 
-            if (/^image/.test(files[0].type)) { // only image file
-                var reader = new FileReader(); // instance of the FileReader
-                reader.readAsDataURL(files[0]); // read the local file
+                if (/^image/.test(files[0].type)) { // only image file
+                    var reader = new FileReader(); // instance of the FileReader
+                    reader.readAsDataURL(files[0]); // read the local file
 
-                reader.onloadend = function () { // set image data as background of div
-                    $('#changeimage').attr('src', this.result);
+                    reader.onloadend = function () { // set image data as background of div
+                        alert(this.result);
+                        $('#changeimage').attr('src', this.result);
 
+                    }
                 }
-            }
+            });
         });
-    });
-</script>
+    </script>*@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#update-button").click(function () {
-         
-            var id = $("#staffId").val();
+            $(this).attr('type', 'button');
+            var id = $("#Id").val();
             var name = $("#staffName").val();
             var position = $("#ddlPosition").val();
             var address = $("#address").val();
             var phone = $("#numberphone").val();
             var mail = $("#email").val();
-            //Goi toi action EditStaff
-            if (name.length == 0) {
+            var image = $("#uploadFile").val();
+            //Dung kiem tra xem cac thong tin nhap vao dung hay sai
+            if (name.length <= 10 || name.length >= 50 || address.length < 2 || phone.length < 1 || position.length < 2) {
                 $(this).attr('type', 'submit');
                 $("#staffform").submit();
             } else {
                 $("#editForm").dialog("close");
-                $.post('/StaffManager/EditStaff', { "staffId": id, "staffName": name, "position": position, "address": address, "phone": phone, "mail": mail }, function () {
-                    alert("Dữ liệu lưu thành công");
+                $.post('/StaffManager/EditStaff', { "Id": id, "staffName": name, "userId": position, "address": address, "numberphone": phone, "email": mail, "Image": image }, function () {
+                    swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
                     window.location.reload(true);
                 })
             }
-           
         });
     });
-   
+</script>
+<script type="text/javascript">
+    //Dung de dong diaglog chua form
+    $("#buttonExitEdit").button().click(function () {
+        $('.buttonEdit').prop("disabled", false);
+        $('.buttonDelete').prop("disabled", false);
+        $("#editForm").dialog("close");
+    })
+</script>
+<script type="text/javascript">
+    //Save hinh vao thu muc
+    $(document).ready(function () {
+        $("#uploadFile").change(function () {          
+            var myfile = $("#uploadFile").val();
+            var extensionfile = myfile.split('.').pop().toString();
+            if (extensionfile == "jpg" || extensionfile == "png" || extensionfile == "gif") {
+                var data = new FormData();
+                var files = $("#uploadFile").get(0).files;
+                if (files.length > 0) {
+                    data.append("SectionImages", files[0]);
+                }
+                $.ajax({
+                    url: 'Upload/UploadImage',
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    data: data,
+                    dataType: 'json',
+                    success: function (response) {
+                        $("#spinner").delay(1000).fadeOut();
+                        var imagename = response["name"];
+                        var srcname = '/Images/' + imagename;
+                        setTimeout(function () {
+                            $("#imagePreview").append('<img class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" id="changeimage"  />');
+                            $("#changeimage").attr('src', srcname);
+                        }, 1500);
+                    },
+                    beforeSend: function () {
+                        $("#changeimage").hide();
+                        $("#imagePreview").html("<center><i class='fa fa-spinner fa-spin fa-5x ' id='spinner'></i></center>");
+                    },
+                    error: function (er) {
+                        swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+                    }
+                });
+            } else {
+                sweetAlert("Cảnh báo", "Chỉ hỗ trợ file ảnh jpg, png, gif. Vui lòng chọn lại", "error");
+            }
+        });
+    });
 
 </script>
+
 <div class="panel panel-warning">
     <div class="panel-heading"><h5>Sửa thông tin nhân viên</h5></div>
     <div class="panel-body">
@@ -83,40 +131,52 @@
         {
             @Html.ValidationSummary(true);
             <fieldset>
-                <div class="col-lg-2">
+                <div class="col-lg-2 ">
                     <div id="imagePreview">
-                        <img src="~/ImagesTemp/10807202_1543289049266977_185376300_o.jpg" class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" />
+                        @{
+            if (Model.Image == null)
+            {
+                <img src="~/Images/no_image.jpg" class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" />
+            }
+            else
+            {
+                <img src="~/Images/@Model.Image" class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" />
+            }
+                        }
+
                     </div>
                     <br />
                     <br />
                     <div class="col-lg-12">
-                        <span class="btn btn-success fileinput-button center-block">
+                        <span class="btn btn-success fileinput-button center-block" id="fix">
                             <i class="glyphicon glyphicon-plus"></i>
                             <span>Thêm hình</span>
-                            <input id="uploadFile" type="file" name="fileupload" class="img" />
+                            <input id="uploadFile" type="file" name="fileupload" />
                         </span>
-                    </div>
 
+                    </div>
                 </div>
                 <div class="col-lg-10">
                     <div class="form-group">
                         <label class="control-label col-lg-2">Tên Nhân Viên:</label>
                         <div class="col-lg-10">
-                            @Html.HiddenFor(x => x.ID, new { @id = "staffId" })
+                            @Html.HiddenFor(x => x.ID, new { @id = "Id" })
                             @Html.TextBoxFor(x => x.StaffName, new { @class = "form-control", @data_rule_required = "true", @data_msg_required = "Tên nhân viên không được rỗng", @data_rule_maxlength = "50", @data_msg_maxlength = "Tên nhân viên tối đa 50 kí tự", @data_rule_minlength = "10", @data_msg_minlength = "Tên nhân viên tối thiểu 10 kí tự", @id = "staffName" })
                             @Html.ValidationMessageFor(x => x.StaffName, String.Empty, new { @class = "error" })
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-lg-2">Chức vụ:</label>
-                        <div class="col-lg-2">
-                            <select id="ddlPosition" class="form-control"></select>
+                        <div class="col-lg-3">
+                            <select id="ddlPosition" class="form-control" data-rule-required="true" data-msg-required="Chức vụ không được rỗng">
+                                <option selected="selected" value="">--Chọn chức vụ--</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-lg-2">Địa chỉ:</label>
                         <div class="col-lg-10">
-                            @Html.TextBoxFor(x => x.Address, new { @class = "form-control", @data_rule_maxlength = "100", @data_msg_maxlength = "Địa chỉ quá dài", @data_rule_required = "true", @data_msg_required = "Địa chỉ không được rỗng", @data_rule_minlength = "2", @data_msg_minlength = "Địa chỉ quá ngắn", @id = "address" ,})
+                            @Html.TextBoxFor(x => x.Address, new { @class = "form-control", @data_rule_maxlength = "100", @data_msg_maxlength = "Địa chỉ quá dài", @data_rule_required = "true", @data_msg_required = "Địa chỉ không được rỗng", @data_rule_minlength = "2", @data_msg_minlength = "Địa chỉ quá ngắn", @id = "address", })
                             @Html.ValidationMessageFor(x => x.Address, String.Empty, new { @class = "error" })
 
                         </div>
@@ -137,8 +197,8 @@
                     </div>
                     <div class="form-group">
                         <div class="col-lg-offset-2 col-lg-10">
-                            <input type="submit" class="btn btn-primary submit" value="Cập nhật" id="update-button">
-                            <a href="" class="btn btn-primary">Thoát</a>
+                            <input type="button" class="btn btn-primary submit" value="Cập nhật" id="update-button">
+                            <input type="button" class="btn btn-primary " id="buttonExitEdit" value="Thoát">
                         </div>
                     </div>
                 </div>

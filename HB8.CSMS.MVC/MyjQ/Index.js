@@ -1,21 +1,30 @@
 ﻿
 var selectedId = 0;
 $(document).ready(function () {
+    $('.buttonEdit').prop("disabled", false);
+    $('.buttonCreate').prop("disabled", false);
+    $('.buttonDelete').prop("disabled", false);
+
+})
+$(document).ready(function () {
     $(".itemIdClass").hide();
     $("#deleteForm").hide();
+
 });
 //jQueryUI method to create dialog box
 $("#createForm").dialog({
     autoOpen: false,
+    height: 400,
+    width: 1200,
+    resizable: false,
     modal: true,
-    width: 450,
-    title: "Create Training"
+    open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
 });
 //jQueryUI hien FORM EDIT
 $("#editForm").dialog({
     autoOpen: false,
     height: 400,
-    width: 1100,
+    width: 1200,
     resizable: false,
     modal: true,
     open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
@@ -27,33 +36,48 @@ $(window).resize(function () {
 $("#deleteForm").dialog({
     autoOpen: false,
     modal: true,
-    title: "Delete Selected Training"
+    height: 200,
+    width: 600,
+    resizable: false,
+    modal: true,
+    open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
+});
+$("#showspinnerForm").dialog({
+    autoOpen: false,
+    modal: true,
+    height: 200,
+    width: 600,
+    resizable: false,
+    modal: true,
+    open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
 });
 $(".buttonCreate").button().click(function () {
     $.ajax({
-        // Call CreatePartialView action method
-        url: "/Home/CreatePartialView",
+        // Goi CreateStaffPV action
+        url: "/StaffManager/CreateStaffPV",
         type: 'Get',
         success: function (data) {
             $("#createForm").dialog("open");
             $("#createForm").empty().append(data);
             $("#editForm").hide();
+            $(".buttonEdit").attr('disabled', 'disabled');
+            $(".buttonDelete").attr('disabled', 'disabled');
         },
         error: function () {
-            alert("something seems wrong");
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
         }
     });
 });
 
 var selectedTrainer;
 
-$(".buttonEdit").button().click(function () { 
+$(".buttonEdit").button().click(function () {
     // Lấy về Id và gán cho biến selectedId 
     var selectedId = $(this).parents('tr:first').children('td:first').children('input:first').attr('value');
     selectedStaffName = $(this).parents('tr:first').children('td:nth-child(3)').text().trim();
 
     $.ajax({
-        // Gọi cái 
+        // Gọi 
         url: "/StaffManager/EditStaffPV",
         data: { id: selectedId },
         type: 'Get',
@@ -61,9 +85,11 @@ $(".buttonEdit").button().click(function () {
             $("#editForm").dialog("open");
             $("#editForm").empty().append(msg);
             $("#createForm").hide();
+            $(".buttonEdit").attr('disabled', 'disabled');
+            $(".buttonDelete").attr('disabled', 'disabled');
         },
         error: function () {
-            alert("something seems wrong");
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
         }
     });
 });
@@ -71,25 +97,44 @@ $(".buttonEdit").button().click(function () {
 
 
 $(".buttonDelete").button().click(function () {
+    $(".buttonEdit").attr('disabled', 'disabled');
+    $(".buttonCreate").attr('disabled', 'disabled');
+    $(".buttonDelete").attr('disabled', 'disabled');
     //Open the dialog box
-    $("#deleteForm").dialog("resize","auto","open");
+    $("#deleteForm").dialog("open");
     //Get the TrainingId
     selectedId = $(this).parents('tr:first').children('td:first').children('input:first').attr('value');
 });
+$(".buttonCloseDelete").button().click(function () {
+    $('.buttonEdit').prop("disabled", false);
+    $('.buttonCreate').prop("disabled", false);
+    $('.buttonDelete').prop("disabled", false);
+    //Open the dialog box
+    $("#deleteForm").dialog("close");
 
+
+});
 $(".okDelete").button().click(function () {
+    $('.buttonEdit').prop("disabled", false);
+    $('.buttonCreate').prop("disabled", false);
+    $('.buttonDelete').prop("disabled", false);
     // Close the dialog box on Yes button is clicked
     $("#deleteForm").dialog("close");
     $.ajax({
         // Call Delete action method
-        url: "/Home/Delete",
+        url: "/StaffManager/DeleteStaff",
         data: { id: selectedId },
         type: 'Get',
         success: function (msg) {
+
             window.location.reload(true);
         },
+        beforeSend: function () {
+            //$("#showspinner").html("<center><i class='fa fa-spinner fa-spin fa-5x ' id='spinner'></i></center>").delay(10000000).fadeOut();
+            $("#showspinnerForm").dialog("open");
+        },
         error: function (xhr) {
-            alert("something seems wrong");
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
         }
     });
 });

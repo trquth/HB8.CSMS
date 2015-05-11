@@ -30,7 +30,7 @@ namespace HB8.CSMS.DAL.DBContext
             }
         }
 
-        public int SaveChange()
+        public int Save()
         {
             dbContext.SaveChanges();
             return 1;

@@ -1,4 +1,5 @@
 ﻿using HB8.CSMS.BLL.Abstract;
+using HB8.CSMS.BLL.DomainModels;
 using HB8.CSMS.DAL.AbstractRepositories;
 using HB8.CSMS.DAL.DBContext;
 using HB8.CSMS.DAL.Models;
@@ -22,11 +23,19 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             return context.Users.GetAllItem().ToList();
         }
 
-        public Staff CreateStaff(Staff staff)
+        public int CreateStaff(StaffDomain staff)
         {
-            context.Staffs.Create(staff);
-            context.SaveChange();
-            return staff;
+            var model = new Staff();
+            model.StaffID = staff.ID;
+            model.UserId = staff.UserId;
+            model.StaffName = staff.StaffName;
+            model.NumberPhone = staff.NumberPhone;
+            model.Image = staff.Image;
+            model.Address = staff.Address;
+            model.Email = staff.Email;
+            context.Staffs.Create(model);
+            context.Save();
+            return 0;
         }
 
 
@@ -40,6 +49,30 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
         public Staff GetStaffById(string id)
         {
             return context.Staffs.GetItemById(id);
+        }
+
+
+        public int UpdateStaff(StaffDomain staff)
+        {
+            var model = context.Staffs.GetItemById(staff.ID);
+            model.UserId = staff.UserId;
+            model.StaffName = staff.StaffName;
+            model.NumberPhone = staff.NumberPhone;
+            model.Image = staff.Image;
+            model.Address = staff.Address;
+            model.Email = staff.Email;
+            context.Staffs.Update(model);
+            context.Save();
+            return 0;
+        }
+
+
+        public int DeleteStaff(string id)
+        {
+            var model = context.Staffs.GetItemById(id);
+            context.Staffs.Delete(model);
+            context.Save();
+            return 0;
         }
     }
 }

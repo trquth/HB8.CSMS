@@ -9,7 +9,7 @@ namespace HB8.CSMS.MVC
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                          "~/js/bootstrap.js", "~/Scripts/jquery.validate.js", "~/Scripts/jquery.validate.unobtrusive.js", "~/Scripts/jquery-ui-1.11.4.js", "~/Scripts/jquery-1.9.1.js"));
+                          "~/js/bootstrap.js", "~/Scripts/jquery.validate.js", "~/Scripts/jquery.validate.unobtrusive.js", "~/Scripts/jquery-ui-1.11.4.js", "~/Scripts/jquery-1.9.1.js", "~/Scripts/sweetalert-{version}.js"));
             bundles.Add(new ScriptBundle("~/bundles/morris").Include(
                         "~/js/plugins/morris/morris-data.js", "~/js/plugins/morris/morris.js", "~/js/plugins/morris/raphael.min.js"));
 
@@ -24,7 +24,7 @@ namespace HB8.CSMS.MVC
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
-            bundles.Add(new StyleBundle("~/bundles/css").Include("~/css/bootstrap.css", "~/css/sb-admin.css", "~/css/plugins/morris.css"));
+            bundles.Add(new StyleBundle("~/bundles/css").Include("~/css/bootstrap.css", "~/css/sb-admin.css", "~/css/plugins/morris.css", "~/css/sweetalert.css"));
 
 
             bundles.Add(new StyleBundle("~/font-awesome/css").Include("~/font-awesome/css/font-awesome.css"));
