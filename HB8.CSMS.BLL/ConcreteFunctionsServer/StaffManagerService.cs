@@ -55,10 +55,13 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
         public int UpdateStaff(StaffDomain staff)
         {
             var model = context.Staffs.GetItemById(staff.ID);
+            if (staff.Image != null)//kiem tra mot tam hinh neu ma khong co thay doi
+            {
+                model.Image = staff.Image;
+            }        
             model.UserId = staff.UserId;
             model.StaffName = staff.StaffName;
             model.NumberPhone = staff.NumberPhone;
-            model.Image = staff.Image;
             model.Address = staff.Address;
             model.Email = staff.Email;
             context.Staffs.Update(model);

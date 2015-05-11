@@ -7,7 +7,7 @@
 }
 <div class="row">
     <div class="col-md-12"><input type="button" value="Thêm nhân viên mới" class="buttonCreate btn btn-default" /></div>
-    <div class="col-md-12">      
+    <div class="col-md-12">
         <div class="panel panel-heading">
             <div class="panel panel-body">
                 <table class="table table-striped">
@@ -66,8 +66,14 @@
                                         <input id="ID" type="hidden" value="@item.ID" name="item.ID">
                                     </td>
                                     <td class="text-center">
-
-                                        <h5><img src="~/Images/@item.Image" alt="" class="img-rounded" width="80px"></h5>
+                                        @if (item.Image == null)
+                                        {
+                                            <img src="~/Images/no_image.jpg" class="img-rounded"  width="80" />
+                                        }
+                                        else
+                                        {
+                                            <h5><img src="~/Images/StaffImages/@item.Image" alt="" class="img-rounded" width="80"></h5>
+                                        }
 
                                     </td>
                                     <td class="text-center">
@@ -117,7 +123,7 @@
             <div id="deleteForm">
                 <div class="panel panel-warning">
                     <div class="panel-heading"> <span><i class="fa fa-exclamation-triangle fa-2x"></i>  <b>Xóa thông tin nhân viên</b> </span> </div>
-                    <div class="alert alert-error " style="text-align: center" >
+                    <div class="alert alert-error " style="text-align: center">
                         <strong>Cảnh báo!</strong> <p>Bạn có chắc là sẽ xóa thông tin nhân viên này</p>
                         <br />
                         <input type="button" value="Đồng ý" class="okDelete btn btn-danger right" />

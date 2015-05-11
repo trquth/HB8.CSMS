@@ -23,6 +23,8 @@ namespace HB8.CSMS.DAL.Models
         public decimal DueAmt { get; set; }
         public string Status { get; set; }
         public string Description { get; set; }
+        public Nullable<System.DateTime> BirthDate { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
         public virtual ICollection<BillSaleOrder> BillSaleOrders { get; set; }
         public virtual ICollection<Payment> Payments { get; set; }
     }

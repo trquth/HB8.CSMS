@@ -77,25 +77,7 @@ namespace HB8.CSMS.MVC.Controllers
         }
         [HttpPost]
         public ViewResult CreateNewStaff(StaffModel staff)
-        {
-            //var newStaff = new Staff();
-            //newStaff.StaffID = staff.ID;
-            //newStaff.StaffName = staff.StaffName;
-            //newStaff.Email = staff.Email;
-            //newStaff.Address = staff.Address;
-            //newStaff.NumberPhone = staff.NumberPhone;
-            //newStaff.UserId = staff.UserId;
-            //HttpPostedFileBase photo = Request.Files["fileupload"];
-            //if (photo != null && photo.ContentLength > 0)
-            //{
-            //    string extension = Path.GetExtension(photo.FileName);
-            //    var fileName = System.Guid.NewGuid().ToString("N") + extension;
-            //    var path = HostingEnvironment.MapPath("~/Images/");
-            //    photo.SaveAs(Path.Combine(path, fileName));
-            //    newStaff.Image = fileName;
-            //}
-            //staffService.CreateStaff(newStaff);
-            //ViewBag.Position = GetListPosition();
+        {           
             return View();
         }
         public ViewResult ListStaff(int? page)

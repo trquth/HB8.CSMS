@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
 namespace HB8.CSMS.DAL.Models.Mapping
@@ -55,6 +55,8 @@ namespace HB8.CSMS.DAL.Models.Mapping
             this.Property(t => t.DueAmt).HasColumnName("DueAmt");
             this.Property(t => t.Status).HasColumnName("Status");
             this.Property(t => t.Description).HasColumnName("Description");
+            this.Property(t => t.BirthDate).HasColumnName("BirthDate");
+            this.Property(t => t.CreateDate).HasColumnName("CreateDate");
         }
     }
 }

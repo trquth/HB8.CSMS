@@ -20,6 +20,75 @@
     })
 </script>
 <script type="text/javascript">
+    //Do du lieu vao dropdowlist
+    $(document).ready(function () {
+        $("#manv").keyup(function () {
+            var checkId = $(this).val();
+            if (checkId != '') {
+                $.ajax({
+                    url: "/StaffManager/HaveStaffId",
+                    type: 'Get',
+                    data: { staffId: checkId },
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data) {
+                            sweetAlert("Cảnh báo", "Mã nhân viên đã tồn tại!", "error");
+                        }
+                    },
+                    error: function (result) {
+                        swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+                    }
+                });
+            }
+        });
+    })
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#create-button").click(function () {
+            $(this).attr('type', 'button');
+            var id = $("#manv").val();
+            var name = $("#staffName").val();
+            var position = $("#ddlPosition").val();
+            var address = $("#address").val();
+            var phone = $("#numberphone").val();
+            var mail = $("#email").val();
+            var image = $("#uploadFile").val();
+            if (id != '') {
+                //Kiem tra 1 lan nua xem ma nv co ton tai hay khong
+                $.ajax({
+                    url: "/StaffManager/HaveStaffId",
+                    type: 'Get',
+                    data: { staffId: id },
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data) {
+                            sweetAlert("Cảnh báo", "Mã nhân viên đã tồn tại!", "error");
+                        }
+                    },
+                    error: function (result) {
+                        swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+                    }
+                });
+            } else {
+                //Dung kiem tra xem cac thong tin nhap vao dung hay sai
+                if (name.length <= 10 || name.length >= 50 || address.length < 2 || phone.length < 1 || position.length < 2) {
+                    $(this).attr('type', 'submit');
+                    $("#staffform").submit();
+                } else {
+                    $("#editForm").dialog("close");
+                    $.post('/StaffManager/CreateStaff', { "Id": id, "staffName": name, "userId": position, "address": address, "numberphone": phone, "email": mail, "Image": image }, function () {
+                        swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
+                        window.location.reload(true);
+                    })
+                }
+            }         
+        });
+    });
+</script>
+<script type="text/javascript">
     //Kiem tra thong tin nhap vao dung hay sai
     $(document).ready(function () {
         $('#staffform').validate({
@@ -28,42 +97,9 @@
 
 </script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $("#update-button").click(function () {
-            $(this).attr('type', 'button');
-            var id = $("#Id").val();
-            var name = $("#staffName").val();
-            var position = $("#ddlPosition").val();
-            var address = $("#address").val();
-            var phone = $("#numberphone").val();
-            var mail = $("#email").val();
-            var image = $("#uploadFile").val();
-            //Dung kiem tra xem cac thong tin nhap vao dung hay sai
-            if (name.length <= 10 || name.length >= 50 || address.length < 2 || phone.length < 1 || position.length < 2) {
-                $(this).attr('type', 'submit');
-                $("#staffform").submit();
-            } else {
-                $("#editForm").dialog("close");
-                $.post('/StaffManager/EditStaff', { "Id": id, "staffName": name, "userId": position, "address": address, "numberphone": phone, "email": mail, "Image": image }, function () {
-                    swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
-                    window.location.reload(true);
-                })
-            }
-        });
-    });
-</script>
-<script type="text/javascript">
-    //Dung de dong diaglog chua form
-    $("#buttonExitEdit").button().click(function () {
-        $('.buttonEdit').prop("disabled", false);
-        $('.buttonDelete').prop("disabled", false);
-        $("#editForm").dialog("close");
-    })
-</script>
-<script type="text/javascript">
     //Save hinh vao thu muc
     $(document).ready(function () {
-        $("#uploadFile").change(function () {          
+        $("#uploadFile").change(function () {         
             var myfile = $("#uploadFile").val();
             var extensionfile = myfile.split('.').pop().toString();
             if (extensionfile == "jpg" || extensionfile == "png" || extensionfile == "gif") {
@@ -83,7 +119,7 @@
                     success: function (response) {
                         $("#spinner").delay(1000).fadeOut();
                         var imagename = response["name"];
-                        var srcname = '/Images/StaffImages' + imagename;
+                        var srcname = '/Images/StaffImages/' + imagename;
                         setTimeout(function () {
                             $("#imagePreview").append('<img class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" id="changeimage"  />');
                             $("#changeimage").attr('src', srcname);
@@ -99,32 +135,34 @@
                 });
             } else {
                 sweetAlert("Cảnh báo", "Chỉ hỗ trợ file ảnh jpg, png, gif. Vui lòng chọn lại", "error");
+                $("#changeimage").show();
             }
         });
     });
 
 </script>
 
-<div class="panel panel-warning">
-    <div class="panel-heading"><h5>Sửa thông tin nhân viên</h5></div>
+<script type="text/javascript">
+    //Dung de dong diaglog chua form
+    $("#buttonExitCreate").button().click(function () {
+        $('.buttonEdit').prop("disabled", false);
+        $('.buttonDelete').prop("disabled", false);
+        $("#createForm").dialog("close");
+        window.location.reload(true);
+
+    })
+</script>
+
+<div class="panel panel-primary">
+    <div class="panel-heading"><h5>Thêm thông tin nhân viên</h5></div>
     <div class="panel-body">
         @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", @id = "staffform" }))
         {
             @Html.ValidationSummary(true);
             <fieldset>
-                <div class="col-lg-2 ">
+                <div class="col-lg-2  ">
                     <div id="imagePreview">
-                        @{
-            if (Model.Image == null)
-            {
-                <img src="~/Images/no_image.jpg" class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" />
-            }
-            else
-            {
-                <img src="~/Images/StaffImages/@Model.Image" class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" />
-            }
-                        }
-
+                        <img class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" src="~/Images/no_image.jpg" />
                     </div>
                     <br />
                     <br />
@@ -134,16 +172,22 @@
                             <span>Thêm hình</span>
                             <input id="uploadFile" type="file" name="fileupload" />
                         </span>
-
                     </div>
                 </div>
                 <div class="col-lg-10">
+                    <div class="form-group ">
+                        <label class="control-label col-lg-2">Mã Nhân viên:</label>
+                        <div class="col-lg-2">
+                            @Html.TextBoxFor(x => x.ID, new { @class = "form-control", @data_rule_maxlength = "5", @data_msg_maxlength = "Mã nhân viên tối đa 5 kí tự", @data_rule_minlength = "5", @data_msg_minlength = "Mã nhân viên it nhất 5 kí tự", @data_rule_required = "true", @data_msg_required = "Mã nhân viên không được rỗng", @data_rule_pattern = "[a-zA-z0-9]{5}", @data_msg_pattern = "Mã nhân viên không chứa kí tự đặc biệt", @id = "manv" })
+                            @Html.ValidationMessageFor(x => x.ID, String.Empty, new { @class = "error" })
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="control-label col-lg-2">Tên Nhân Viên:</label>
                         <div class="col-lg-10">
-                            @Html.HiddenFor(x => x.ID, new { @id = "Id" })
                             @Html.TextBoxFor(x => x.StaffName, new { @class = "form-control", @data_rule_required = "true", @data_msg_required = "Tên nhân viên không được rỗng", @data_rule_maxlength = "50", @data_msg_maxlength = "Tên nhân viên tối đa 50 kí tự", @data_rule_minlength = "10", @data_msg_minlength = "Tên nhân viên tối thiểu 10 kí tự", @id = "staffName" })
                             @Html.ValidationMessageFor(x => x.StaffName, String.Empty, new { @class = "error" })
+
                         </div>
                     </div>
                     <div class="form-group">
@@ -178,8 +222,8 @@
                     </div>
                     <div class="form-group">
                         <div class="col-lg-offset-2 col-lg-10">
-                            <input type="button" class="btn btn-primary submit" value="Cập nhật" id="update-button">
-                            <input type="button" class="btn btn-primary " id="buttonExitEdit" value="Thoát">
+                            <input type="button" class="btn btn-primary submit" value="Cập nhật" id="create-button">
+                            <input type="button" class="btn btn-primary " id="buttonExitCreate" value="Thoát">
                         </div>
                     </div>
                 </div>

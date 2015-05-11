@@ -300,9 +300,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_MainLayout.cshtml" />
-    <Content Include="Views\StaffManager\CreateNewStaff.cshtml" />
     <Content Include="Views\StaffManager\ListStaff.cshtml" />
-    <Content Include="Views\StaffManager\EditStaff.cshtml" />
     <Content Include="Views\Shared\EditStaffPartialView.cshtml" />
     <Content Include="Views\Shared\CreateStaffPartialView.cshtml" />
   </ItemGroup>

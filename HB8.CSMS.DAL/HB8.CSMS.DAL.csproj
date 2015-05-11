@@ -52,11 +52,6 @@
     <Compile Include="DBContext\IDALContext.cs" />
     <Compile Include="AbstractRepositories\IDataRepository.cs" />
     <Compile Include="AbstractRepositories\IStaffRepository.cs" />
-    <Compile Include="UoW\IUnitOfWork.cs" />
-    <Compile Include="AbstractRepositories\IUserRepository.cs" />
-    <Compile Include="DBContext\DALContext.cs" />
-    <Compile Include="ConcreteFunctions\DataRepository.cs" />
-    <Compile Include="ConcreteFunctions\StaffRepository.cs" />
     <Compile Include="Models\BillPurchaseOrdDetail.cs" />
     <Compile Include="Models\BillPurchaseOrder.cs" />
     <Compile Include="Models\BillSaleOrder.cs" />
@@ -94,6 +89,11 @@
     <Compile Include="Models\Unit.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Vendor.cs" />
+    <Compile Include="UoW\IUnitOfWork.cs" />
+    <Compile Include="AbstractRepositories\IUserRepository.cs" />
+    <Compile Include="DBContext\DALContext.cs" />
+    <Compile Include="ConcreteFunctions\DataRepository.cs" />
+    <Compile Include="ConcreteFunctions\StaffRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
