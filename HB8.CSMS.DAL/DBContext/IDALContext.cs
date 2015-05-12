@@ -12,5 +12,7 @@ namespace HB8.CSMS.DAL.DBContext
     {
         IStaffRepository Staffs { get; }
         IUserRepository Users { get; }
+        ICustomerRepository Customers { get; }
+        IStatusRepository Status { get; }
     }
 }

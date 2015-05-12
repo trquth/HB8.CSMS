@@ -48,6 +48,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractRepositories\ICustomerRepository.cs" />
+    <Compile Include="AbstractRepositories\IStatusRepository.cs" />
+    <Compile Include="ConcreteFunctions\CustomerRepository.cs" />
+    <Compile Include="ConcreteFunctions\StatusRepository.cs" />
     <Compile Include="ConcreteFunctions\UserRepository.cs" />
     <Compile Include="DBContext\IDALContext.cs" />
     <Compile Include="AbstractRepositories\IDataRepository.cs" />
@@ -69,6 +73,7 @@
     <Compile Include="Models\Mapping\InvoiceTypeMap.cs" />
     <Compile Include="Models\Mapping\PaymentMap.cs" />
     <Compile Include="Models\Mapping\StaffMap.cs" />
+    <Compile Include="Models\Mapping\StatusMap.cs" />
     <Compile Include="Models\Mapping\StkTransDetailMap.cs" />
     <Compile Include="Models\Mapping\StockMap.cs" />
     <Compile Include="Models\Mapping\StockRequisitionDetailMap.cs" />
@@ -80,6 +85,7 @@
     <Compile Include="Models\Mapping\VendorMap.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\Staff.cs" />
+    <Compile Include="Models\Status.cs" />
     <Compile Include="Models\StkTransDetail.cs" />
     <Compile Include="Models\Stock.cs" />
     <Compile Include="Models\StockRequisition.cs" />

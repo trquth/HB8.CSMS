@@ -1,5 +1,5 @@
 ﻿@model HB8.CSMS.MVC.Models.Staff.StaffModel
-<script type="text/javascript">
+@*<script type="text/javascript">
     //Do du lieu vao dropdowlist
     $(document).ready(function () {
         $.ajax({
@@ -55,7 +55,7 @@
             var phone = $("#numberphone").val();
             var mail = $("#email").val();
             var image = $("#uploadFile").val();
-            if (id != '') {
+            if (id != '') {             
                 //Kiem tra 1 lan nua xem ma nv co ton tai hay khong
                 $.ajax({
                     url: "/StaffManager/HaveStaffId",
@@ -64,6 +64,7 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (data) {
+                       
                         if (data) {
                             sweetAlert("Cảnh báo", "Mã nhân viên đã tồn tại!", "error");
                         }
@@ -72,7 +73,6 @@
                         swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
                     }
                 });
-            } else {
                 //Dung kiem tra xem cac thong tin nhap vao dung hay sai
                 if (name.length <= 10 || name.length >= 50 || address.length < 2 || phone.length < 1 || position.length < 2) {
                     $(this).attr('type', 'submit');
@@ -84,7 +84,7 @@
                         window.location.reload(true);
                     })
                 }
-            }         
+            }  
         });
     });
 </script>
@@ -151,8 +151,8 @@
         window.location.reload(true);
 
     })
-</script>
-
+</script>*@
+<script src="~/MyjQ/create.partialview.js" type="text/javascript"></script>
 <div class="panel panel-primary">
     <div class="panel-heading"><h5>Thêm thông tin nhân viên</h5></div>
     <div class="panel-body">
@@ -231,5 +231,4 @@
         }
     </div>
 </div>
-@*<script type="text/javascript" src="~/MyjQ/edit.partialview.js" ></script>*@
 <script src="~/Scripts/jquery-ui-1.11.4.js" type="text/javascript"></script>

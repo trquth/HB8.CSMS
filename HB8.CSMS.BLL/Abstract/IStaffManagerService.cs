@@ -17,7 +17,7 @@ namespace HB8.CSMS.BLL.Abstract
         /// <returns></returns>
         List<User> GetListPosition();
         /// <summary>
-        /// Ham tao va luu nhan vien moi vao DATABASE
+        /// Ham luu thong tin nhan vien
         /// </summary>
         /// <param name="staff"></param>
         /// <returns></returns>
@@ -34,7 +34,7 @@ namespace HB8.CSMS.BLL.Abstract
         /// <returns></returns>
         Staff GetStaffById(string id);
         /// <summary>
-        /// Ham update thong tin nhan vien vao DATABASE
+        /// Sua thong tin nhan vien
         /// </summary>
         /// <param name="staff"></param>
         /// <returns></returns>

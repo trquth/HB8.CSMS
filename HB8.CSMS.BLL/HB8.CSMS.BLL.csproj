@@ -39,8 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\ICustomerManagerService.cs" />
     <Compile Include="Abstract\IStaffManagerService.cs" />
+    <Compile Include="ConcreteFunctionsServer\CustomerManagerService.cs" />
     <Compile Include="ConcreteFunctionsServer\StaffManagerService.cs" />
+    <Compile Include="DomainModels\CustomerDomain.cs" />
     <Compile Include="DomainModels\StaffDomain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

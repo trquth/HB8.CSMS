@@ -14,6 +14,8 @@ namespace HB8.CSMS.DAL.DBContext
         private CSMSContext dbContext;
         private IStaffRepository staffs;
         private IUserRepository users;
+        private ICustomerRepository customers;
+        private IStatusRepository status;
         public DALContext()
         {
             dbContext = new CSMSContext();
@@ -46,6 +48,32 @@ namespace HB8.CSMS.DAL.DBContext
                     users = new UserRepository(dbContext);
                 }
                 return users;
+            }
+        }
+
+
+        public ICustomerRepository Customers
+        {
+            get 
+            {
+                if (customers ==null)
+                {
+                    customers = new CustomerRepository(dbContext);
+                }
+                return customers;
+            }
+        }
+
+
+        public IStatusRepository Status
+        {
+            get
+            {
+                if (status == null)
+                {
+                    status = new StatusRepository(dbContext);
+                }
+                return status;
             }
         }
     }

@@ -25,6 +25,7 @@ namespace HB8.CSMS.DAL.Models
         public DbSet<InvoiceType> InvoiceTypes { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Staff> Staffs { get; set; }
+        public DbSet<Status> Status { get; set; }
         public DbSet<StkTransDetail> StkTransDetails { get; set; }
         public DbSet<Stock> Stocks { get; set; }
         public DbSet<StockRequisition> StockRequisitions { get; set; }
@@ -46,6 +47,7 @@ namespace HB8.CSMS.DAL.Models
             modelBuilder.Configurations.Add(new InvoiceTypeMap());
             modelBuilder.Configurations.Add(new PaymentMap());
             modelBuilder.Configurations.Add(new StaffMap());
+            modelBuilder.Configurations.Add(new StatusMap());
             modelBuilder.Configurations.Add(new StkTransDetailMap());
             modelBuilder.Configurations.Add(new StockMap());
             modelBuilder.Configurations.Add(new StockRequisitionMap());

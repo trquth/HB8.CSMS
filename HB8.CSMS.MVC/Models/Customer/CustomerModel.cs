@@ -1,33 +1,29 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
 
-namespace HB8.CSMS.DAL.Models
+namespace HB8.CSMS.MVC.Models.Customer
 {
-    public partial class Customer
+    public class CustomerModel
     {
-        public Customer()
-        {
-            this.BillSaleOrders = new List<BillSaleOrder>();
-            this.Payments = new List<Payment>();
-        }
-
         public string CustID { get; set; }
         public string CustName { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
         public string Fax { get; set; }
         public string Email { get; set; }
+        [Required(ErrorMessage = "Số ngày quá hạn thanh toán không được rỗng")]
         public int Overdue { get; set; }
         public Nullable<decimal> Amount { get; set; }
         public Nullable<decimal> OverdueAmt { get; set; }
         public Nullable<decimal> DueAmt { get; set; }
-        public string StatusId { get; set; }
+        public string StatusID { get; set; }
+        public string StatusName { get; set; }
         public string Description { get; set; }
-        public Nullable<System.DateTime> BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string Image { get; set; }
-        public virtual ICollection<BillSaleOrder> BillSaleOrders { get; set; }
-        public virtual Status Status { get; set; }
-        public virtual ICollection<Payment> Payments { get; set; }
     }
 }

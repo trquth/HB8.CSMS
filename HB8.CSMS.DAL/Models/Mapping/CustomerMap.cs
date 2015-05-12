@@ -16,30 +16,31 @@ namespace HB8.CSMS.DAL.Models.Mapping
                 .HasMaxLength(20);
 
             this.Property(t => t.CustName)
+                .IsRequired()
                 .HasMaxLength(50);
 
             this.Property(t => t.Address)
-                .IsRequired()
                 .HasMaxLength(50);
 
             this.Property(t => t.Phone)
-                .IsRequired()
                 .HasMaxLength(20);
 
             this.Property(t => t.Fax)
-                .IsRequired()
                 .HasMaxLength(20);
 
             this.Property(t => t.Email)
-                .IsRequired()
                 .HasMaxLength(50);
 
-            this.Property(t => t.Status)
+            this.Property(t => t.StatusId)
+                .IsRequired()
+                .IsFixedLength()
                 .HasMaxLength(2);
 
             this.Property(t => t.Description)
-                .IsRequired()
                 .HasMaxLength(200);
+
+            this.Property(t => t.Image)
+                .HasMaxLength(100);
 
             // Table & Column Mappings
             this.ToTable("Customer");
@@ -53,10 +54,17 @@ namespace HB8.CSMS.DAL.Models.Mapping
             this.Property(t => t.Amount).HasColumnName("Amount");
             this.Property(t => t.OverdueAmt).HasColumnName("OverdueAmt");
             this.Property(t => t.DueAmt).HasColumnName("DueAmt");
-            this.Property(t => t.Status).HasColumnName("Status");
+            this.Property(t => t.StatusId).HasColumnName("StatusId");
             this.Property(t => t.Description).HasColumnName("Description");
             this.Property(t => t.BirthDate).HasColumnName("BirthDate");
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
+            this.Property(t => t.Image).HasColumnName("Image");
+
+            // Relationships
+            this.HasRequired(t => t.Status)
+                .WithMany(t => t.Customers)
+                .HasForeignKey(d => d.StatusId);
+
         }
     }
 }

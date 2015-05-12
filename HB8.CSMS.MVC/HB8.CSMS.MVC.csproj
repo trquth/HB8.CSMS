@@ -150,11 +150,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CustomerManagerController.cs" />
     <Compile Include="Controllers\StaffManagerController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Customer\CustomerModel.cs" />
     <Compile Include="Models\Staff\StaffModel.cs" />
     <Compile Include="Models\UploadImage\UploadImageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -197,6 +199,7 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="css\bootstrap-datepicker.css" />
     <Content Include="css\bootstrap-rtl.css" />
     <Content Include="css\bootstrap-rtl.min.css" />
     <Content Include="css\bootstrap-theme.css" />
@@ -262,8 +265,10 @@
     <Content Include="js\plugins\morris\morris.js" />
     <Content Include="js\plugins\morris\morris.min.js" />
     <Content Include="js\plugins\morris\raphael.min.js" />
+    <Content Include="MyjQ\create.partialview.js" />
     <Content Include="MyjQ\Index.js" />
     <Content Include="Scripts\additional-methods.js" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
@@ -274,6 +279,8 @@
     <Content Include="Scripts\jquery-ui-1.11.4.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
     <Content Include="Scripts\jquery.fileupload.js" />
+    <Content Include="Scripts\jquery.timepicker.js" />
+    <Content Include="Scripts\jquery.timepicker.min.js" />
     <Content Include="Scripts\jquery.ui.widget.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
@@ -303,6 +310,8 @@
     <Content Include="Views\StaffManager\ListStaff.cshtml" />
     <Content Include="Views\Shared\EditStaffPartialView.cshtml" />
     <Content Include="Views\Shared\CreateStaffPartialView.cshtml" />
+    <Content Include="Views\Shared\CreateCustomerPartialView.cshtml" />
+    <Content Include="Views\Shared\EditCustomerPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

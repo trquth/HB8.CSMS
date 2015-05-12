@@ -13,6 +13,7 @@ namespace HB8.CSMS.MVC.StructureMap
     {
         public ApplicationRegistry()
         {
+            For<ICustomerManagerService>().Use<CustomerManagerService>();
             For<IStaffManagerService>().Use<StaffManagerService>();
             For<IDALContext>().Use<DALContext>();
             For(typeof(IDataRepository<>)).Use(typeof(DataRepository<>));

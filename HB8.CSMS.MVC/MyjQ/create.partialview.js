@@ -18,43 +18,79 @@ $(document).ready(function () {
     });
 })
 
-//Kiem tra thong tin nhap vao dung hay sai
+//Do du lieu vao dropdowlist
 $(document).ready(function () {
-    $('#staffform').validate({
+    $("#manv").keyup(function () {
+        var checkId = $(this).val();
+        if (checkId != '') {
+            $.ajax({
+                url: "/StaffManager/HaveStaffId",
+                type: 'Get',
+                data: { staffId: checkId },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data) {
+                        sweetAlert("Cảnh báo", "Mã nhân viên đã tồn tại!", "error");
+                    }
+                },
+                error: function (result) {
+                    swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+                }
+            });
+        }
     });
-});
-
+})
 
 $(document).ready(function () {
-    $("#update-button").click(function () {
+    $("#create-button").click(function () {
         $(this).attr('type', 'button');
-        var id = $("#Id").val();
+        var id = $("#manv").val();
         var name = $("#staffName").val();
         var position = $("#ddlPosition").val();
         var address = $("#address").val();
         var phone = $("#numberphone").val();
         var mail = $("#email").val();
         var image = $("#uploadFile").val();
-        //Dung kiem tra xem cac thong tin nhap vao dung hay sai
-        if (name.length <= 10 || name.length >= 50 || address.length < 2 || phone.length < 1 || position.length < 2) {
-            $(this).attr('type', 'submit');
-            $("#staffform").submit();
-        } else {
-            $("#editForm").dialog("close");
-            $.post('/StaffManager/EditStaff', { "Id": id, "staffName": name, "userId": position, "address": address, "numberphone": phone, "email": mail, "Image": image }, function () {
-                swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
-                window.location.reload(true);
-            })
+        if (id != '') {
+            //Kiem tra 1 lan nua xem ma nv co ton tai hay khong
+            $.ajax({
+                url: "/StaffManager/HaveStaffId",
+                type: 'Get',
+                data: { staffId: id },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data) {
+                        sweetAlert("Cảnh báo", "Mã nhân viên đã tồn tại!", "error");
+                    } else {
+                        //Dung kiem tra xem cac thong tin nhap vao dung hay sai
+                        if (name.length <= 10 || name.length >= 50 || address.length < 2 || phone.length < 1 || position.length < 2) {
+                            $(this).attr('type', 'submit');
+                            $("#staffform").submit();
+                        } else {
+                            $("#editForm").dialog("close");
+                            $.post('/StaffManager/CreateStaff', { "Id": id, "staffName": name, "userId": position, "address": address, "numberphone": phone, "email": mail, "Image": image }, function () {
+                                swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
+                                window.location.reload(true);
+                            })
+                        }
+                    }
+                },
+                error: function (result) {
+                    swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+                }
+            });
+
         }
     });
 });
 
-//Dung de dong diaglog chua form
-$("#buttonExitEdit").button().click(function () {
-    $('.buttonEdit').prop("disabled", false);
-    $('.buttonDelete').prop("disabled", false);
-    $("#editForm").dialog("close");
-})
+//Kiem tra thong tin nhap vao dung hay sai
+$(document).ready(function () {
+    $('#staffform').validate({
+    });
+});
 
 //Save hinh vao thu muc
 $(document).ready(function () {
@@ -94,7 +130,17 @@ $(document).ready(function () {
             });
         } else {
             sweetAlert("Cảnh báo", "Chỉ hỗ trợ file ảnh jpg, png, gif. Vui lòng chọn lại", "error");
+            $("#changeimage").show();
         }
     });
 });
+
+//Dung de dong diaglog chua form
+$("#buttonExitCreate").button().click(function () {
+    $('.buttonEdit').prop("disabled", false);
+    $('.buttonDelete').prop("disabled", false);
+    $("#createForm").dialog("close");
+    window.location.reload(true);
+
+})
 
