@@ -312,6 +312,7 @@
     <Content Include="Views\Shared\CreateStaffPartialView.cshtml" />
     <Content Include="Views\Shared\CreateCustomerPartialView.cshtml" />
     <Content Include="Views\Shared\EditCustomerPartialView.cshtml" />
+    <Content Include="Views\CustomerManager\ListCustomer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

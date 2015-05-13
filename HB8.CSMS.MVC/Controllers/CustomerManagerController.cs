@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace HB8.CSMS.MVC.Controllers
 {
@@ -75,34 +76,41 @@ namespace HB8.CSMS.MVC.Controllers
         //{           
         //    return View();
         //}
-        //public ViewResult ListStaff(int? page)
-        //{
-        //    var model = ListAllStaff();
-        //    int numberPage = page ?? 1;
-        //    var onePageOfStaffs = model.ToPagedList(numberPage, 8);
-        //    ViewBag.OnePageOfStaffs = onePageOfStaffs;
-        //    return View();
-        //}
-        ///// <summary>
-        ///// Lay ve danh sach nhan vien
-        ///// </summary>
-        ///// <returns></returns>
-        //public IEnumerable<StaffModel> ListAllStaff()
-        //{
-        //    var list = staffService.GetListStaff();
-        //    var model = (from item in list
-        //                 select new StaffModel
-        //                 {
-        //                     ID = item.StaffID,
-        //                     StaffName = item.StaffName,
-        //                     Image = item.Image,
-        //                     Address = item.Address,
-        //                     NumberPhone = item.NumberPhone,
-        //                     Email = item.Email,
-        //                     UserName = item.User.UserName,
-        //                 });
-        //    return model;
-        //}
+        /// <summary>
+        /// Danh sach khach hang
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        public ViewResult ListCustomer(int? page)
+        {
+            var model = ListAllCustomer();
+            int numberPage = page ?? 1;
+            var onePageOfCustomers = model.ToPagedList(numberPage, 8);
+            ViewBag.OnePageOfCustomers = onePageOfCustomers;
+            return View();
+        }
+        /// <summary>
+        /// Lay ve danh sach khach hang
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<CustomerModel> ListAllCustomer()
+        {
+            var list = customerService.GetListCustomers();
+            var model = (from item in list
+                         select new CustomerModel
+                         {
+                             CustID = item.CustID,
+                             CustName = item.CustName,
+                             Image = item.Image,
+                             Address = item.Address,
+                             Phone = item.Phone,
+                             Email = item.Email,
+                             Fax = item.Fax,
+                             StatusName = item.Status.StatusName,
+                             BirthDate =(DateTime)item.BirthDate,
+                         });
+            return model;
+        }
         //public ViewResult EditStaff(string staffId)
         //{
         //    var model = GetStaffByStaffId(staffId);

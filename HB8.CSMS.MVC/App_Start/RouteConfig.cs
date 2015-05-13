@@ -16,7 +16,7 @@ namespace HB8.CSMS.MVC
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "CustomerManager", action = "CreateCustomerPV", id = UrlParameter.Optional }
+                defaults: new { controller = "CustomerManager", action = "ListCustomer", id = UrlParameter.Optional }
             );
         }
     }

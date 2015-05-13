@@ -51,6 +51,20 @@ $("#showspinnerForm").dialog({
     modal: true,
     open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
 });
+//Show bieu tuong loading
+$("#showLoading").dialog({
+    autoOpen: false,
+    modal: true,
+    height: 200,
+    width: 600,
+    resizable: false,
+    modal: true,
+    open: function (event, ui) {
+        $(".ui-dialog-titlebar-close").hide();
+        setTimeout("$('#showLoading').dialog('close')", 150);
+    },
+});
+
 $(".buttonCreate").button().click(function () {
     $.ajax({
         // Goi CreateStaffPV action
@@ -140,3 +154,18 @@ $(".okDelete").button().click(function () {
 });
 
 
+
+
+$("#btnListView").button().click(function () {
+    $("#showLoading").dialog("open");
+    $("#listView").show();
+    $(".gridView").hide();
+    $(".pagination").show();
+});
+
+$("#btnGirdView").button().click(function () {
+    $("#showLoading").dialog("open");
+    $("#listView").hide();
+    $(".gridView").show();
+    $(".pagination").hide();
+});
