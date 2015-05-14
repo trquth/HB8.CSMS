@@ -1,4 +1,5 @@
 ﻿using HB8.CSMS.BLL.Abstract;
+using HB8.CSMS.BLL.DomainModels;
 using HB8.CSMS.DAL.DBContext;
 using HB8.CSMS.DAL.Models;
 using System;
@@ -83,6 +84,30 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
         public List<Status> GetListStatus()
         {
             return context.Status.GetAllItem().ToList();
+        }
+
+        /// <summary>
+        /// Lay ra nguoi khach hang tiep theo de show
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="isHistoryBack"></param>
+        /// <returns></returns>
+        public DomainModels.CustomerDomain GetNextCustomerTopList(string id, bool isHistoryBack)
+        {
+            var model = new CustomerDomain();
+            if (isHistoryBack)
+            {
+                var customer = context.Customers.GetItemById(id);
+                model.Image = customer.Image;
+                model.CustName = customer.CustName;
+                model.Address = customer.Address;
+                model.Phone = customer.Phone;
+                return model;
+            }
+            else
+            {
+                return model;
+            }
         }
     }
 }

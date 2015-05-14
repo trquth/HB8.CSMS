@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Index2";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<h2>Index2</h2>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var page = 0;
+        var _inCallback = false;
+        $(".demo").click(function () {
+            alert('vao day');
+            if (page > -1 && !_inCallback) {
+                _inCallback = true;
+                page++;
+                $('div#loading').html('<p><img src="/Content/Images/loading.gif"></p>');
+                $.get("/CustomerManager/Index2/" + page, function (data) {
+                    if (data != '') {
+                        $("#productList").append(data);
+                    }
+                    else {
+                        page = -1;
+                    }
+
+                    _inCallback = false;
+                    $('div#loading').empty();
+                });
+            }
+        });
+    });
+   
+</script>
+<div id="productList">
+    @Html.Partial("CustomerPartialView")
+</div>
+@*<button id="demo">Click</button>*@
+<input  type="button" class="demo" value="Click"/>
+<div id="loading"></div> 

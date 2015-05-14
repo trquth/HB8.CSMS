@@ -44,5 +44,7 @@ namespace HB8.CSMS.BLL.Abstract
         /// </summary>
         /// <returns></returns>
         List<Status> GetListStatus();
+        //CustomerDomain GetNextCustomerTopList(string id, bool isHistoryBack);
+
     }
 }

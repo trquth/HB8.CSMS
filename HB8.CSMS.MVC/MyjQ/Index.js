@@ -169,3 +169,25 @@ $("#btnGirdView").button().click(function () {
     $(".gridView").show();
     $(".pagination").hide();
 });
+
+
+var page = 0;
+var _inCallback = false;
+$("#demo").click(function () {
+    if (page > -1 && !_inCallback) {
+        _inCallback = true;
+        page++;
+        $('div#loading').html('<p><img src="/Content/Images/loading.gif"></p>');
+        $.get("/CustomerManager/Index2/" + page, function (data) {
+            if (data != '') {
+                $("#productList").append(data);
+            }
+            else {
+                page = -1;
+            }
+
+            _inCallback = false;
+            $('div#loading').empty();
+        });
+    }
+});

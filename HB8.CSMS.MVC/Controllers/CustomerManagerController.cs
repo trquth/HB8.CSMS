@@ -12,6 +12,7 @@ namespace HB8.CSMS.MVC.Controllers
     public class CustomerManagerController : Controller
     {
         private ICustomerManagerService customerService;
+        const int recordsPerPage = 1;
         public CustomerManagerController(ICustomerManagerService customerService)
         {
             this.customerService = customerService;
@@ -107,7 +108,7 @@ namespace HB8.CSMS.MVC.Controllers
                              Email = item.Email,
                              Fax = item.Fax,
                              StatusName = item.Status.StatusName,
-                             BirthDate =(DateTime)item.BirthDate,
+                             BirthDate = (DateTime)item.BirthDate,
                          });
             return model;
         }
@@ -175,6 +176,67 @@ namespace HB8.CSMS.MVC.Controllers
         //{
         //    staffService.DeleteStaff(id);
         //}
+        //public ActionResult GetTopCustomersFormNextSection(string lastRowId, bool isHistoryBack)
+        //{
+        //    var sectionCustomer = customerService.GetNextCustomerTopList(lastRowId, isHistoryBack);
+        //    return Json(sectionCustomer, JsonRequestBehavior.AllowGet);
+        //}
+        public ActionResult Index2(int? id)
+        {
+            var page = id ?? 0;
 
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("CustomerPartialView", GetPaginatedProducts(page));
+            }
+            var model = customerService.GetListCustomers();
+            var listOfCustomer = (from a in model
+                                  select new CustomerModel
+                                  {
+                                      CustID = a.CustID,
+                                      CustName = a.CustName,
+                                      Address = a.Address,
+                                      Phone = a.Phone
+                                  }).ToList();
+            return View("Index2", listOfCustomer.Take(recordsPerPage));
+        }
+
+        public ActionResult Product(int? id)
+        {
+            var page = id ?? 0;
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("CustomerPartialView", GetPaginatedProducts(page));
+            }
+            var model = customerService.GetListCustomers();
+            var listOfCustomer = (from a in model
+                                  select new CustomerModel
+                                  {
+                                      CustID = a.CustID,
+                                      CustName = a.CustName,
+                                      Address = a.Address,
+                                      Phone = a.Phone
+                                  }).ToList();
+            return View("Index2", listOfCustomer.Take(recordsPerPage));
+        }
+
+        private List<CustomerModel> GetPaginatedProducts(int page = 1)
+        {
+            var skipRecords = page * recordsPerPage;         
+            var model =  customerService.GetListCustomers();
+            var listOfCustomer = (from a in model
+                                  select new CustomerModel
+                                  {
+                                      CustID = a.CustID,
+                                      CustName = a.CustName,
+                                      Address = a.Address,
+                                      Phone = a.Phone
+                                  }).ToList();
+            return listOfCustomer.
+                OrderBy(x => x.CustName).
+                Skip(skipRecords).
+                Take(recordsPerPage).ToList();
+        }
     }
 }

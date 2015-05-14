@@ -1,0 +1,17 @@
+﻿@model IEnumerable<HB8.CSMS.MVC.Models.Customer.CustomerModel>
+
+@{
+    foreach (var item in Model)
+    {
+        <div class="col-md-4 gridView">
+            <div class=" col-md-4 thumbnail">
+                <img src="~/Images/no_image.jpg" class="img-rounded" width="110" alt="" />
+            </div>
+            <div class="caption col-md-8">
+                <h3>@item.CustName</h3>
+                <p>@item.Address</p>
+                <p>@item.Phone</p>
+            </div>
+        </div>
+    }
+}

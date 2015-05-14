@@ -8,6 +8,7 @@ namespace HB8.CSMS.BLL.DomainModels
 {
     public class CustomerDomain
     {
+        public CustomerDomain() { }
         public CustomerDomain(string id, string name, string address, string phone, string fax, string email, int overDue, decimal? amount, decimal? overDueAmt, decimal? dueAmt, string statusID, string description, DateTime? birthDate, DateTime? createDate, string image)
         {
             CustID = id;
@@ -28,6 +29,7 @@ namespace HB8.CSMS.BLL.DomainModels
             CreateDate = createDate;
             Image = image;
         }
+        
         public string CustID { get; set; }
         public string CustName { get; set; }
         public string Address { get; set; }

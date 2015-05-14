@@ -157,6 +157,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Customer\CustomerModel.cs" />
+    <Compile Include="Models\Paging\PageData.cs" />
     <Compile Include="Models\Staff\StaffModel.cs" />
     <Compile Include="Models\UploadImage\UploadImageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="StructureMap\StructureMapControllerFactory.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\loading.gif" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -313,6 +315,8 @@
     <Content Include="Views\Shared\CreateCustomerPartialView.cshtml" />
     <Content Include="Views\Shared\EditCustomerPartialView.cshtml" />
     <Content Include="Views\CustomerManager\ListCustomer.cshtml" />
+    <Content Include="Views\Shared\CustomerPartialView.cshtml" />
+    <Content Include="Views\CustomerManager\Index2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
