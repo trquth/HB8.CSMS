@@ -5,7 +5,7 @@ using System.Web;
 
 namespace HB8.CSMS.MVC.Models.Paging
 {
-    public class PageData<T> where T : class
+    public class PagedData<T> where T : class
     {
         public IEnumerable<T> Data { get; set; }
         public int NumberOfPages { get; set; }

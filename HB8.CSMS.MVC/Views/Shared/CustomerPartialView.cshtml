@@ -1,7 +1,7 @@
-﻿@model IEnumerable<HB8.CSMS.MVC.Models.Customer.CustomerModel>
+﻿@model  HB8.CSMS.MVC.Models.Paging.PagedData<HB8.CSMS.MVC.Models.Customer.CustomerModel>
 
 @{
-    foreach (var item in Model)
+    foreach (var item in Model.Data)
     {
         <div class="col-md-4 gridView">
             <div class=" col-md-4 thumbnail">
@@ -15,3 +15,138 @@
         </div>
     }
 }
+<table class="table table-striped" id="listView" style="display:none">
+    <thead>
+        <tr>
+            <th class="text-center">
+
+                <h5>Hình ảnh</h5>
+
+            </th>
+            <th class="text-center">
+
+                <h5>Tên Khách hàng</h5>
+
+            </th>
+            <th class="text-center">
+
+                <h5>Ngày sinh</h5>
+
+            </th>
+            <th class="text-center">
+
+                <h5>Địa chỉ</h5>
+
+            </th>
+            <th class="text-center">
+
+                <h5>Số điện thoại</h5>
+
+            </th>
+            <th class="text-center">
+
+                <h5>Fax</h5>
+
+            </th>
+            <th class="text-center">
+
+                <h5>Email</h5>
+
+            </th>
+            <th>
+
+                <h5></h5>
+
+            </th>
+            <th>
+
+                <h5></h5>
+
+            </th>
+
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @{
+
+            foreach (var item in Model.Data)
+            {
+                <tr>
+                    <td class="text-center itemIdClass">
+                        <input id="ID" type="hidden" value="@item.CustID" name="item.ID">
+                    </td>
+                    <td class="text-center">
+                        @if (item.Image == null)
+                        {
+                            <img src="~/Images/no_image.jpg" class="img-rounded" width="80" />
+                        }
+                        else
+                        {
+                            <h5><img src="~/Images/StaffImages/@item.Image" alt="" class="img-rounded" width="80"></h5>
+                        }
+
+                    </td>
+                    <td class="text-center">
+
+                        <h5>@item.CustName</h5>
+
+                    </td>
+                    <td class="text-center">
+
+                        <small>@item.BirthDate</small>
+
+                    </td>
+                    <td class="text-center">
+
+                        <h5>@item.Address</h5>
+
+                    </td>
+                    <td class="text-center">
+
+                        <h5>@item.Phone</h5>
+
+                    </td>
+                    <td class="text-center">
+
+                        <h5>@item.Fax</h5>
+
+                    </td>
+                    <td class="text-center">
+
+                        <h5>@item.Email</h5>
+
+                    </td>
+                    <td class="text-center"></td>
+                    <td class="text-center">
+
+                        <input type="button" value="Sửa" class="buttonEdit btn btn-default" />
+
+                    </td>
+                    <td class="text-center">
+                        <input type="button" value="Xóa" class="buttonDelete btn btn-default" />
+                    </td>
+                </tr>
+                <tr></tr>
+
+            }
+        }
+
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">
+                @for (int i = 1; i <= Model.NumberOfPages; i++)
+                {
+                    if (i == Model.CurrentPage)
+                    {
+                        @i
+                    }
+                    else
+                    {
+                        <a class="page-number" href="javascript:void();">@i</a>
+                    }
+                }
+            </td>
+        </tr>
+    </tfoot>
+</table>

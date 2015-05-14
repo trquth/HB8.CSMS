@@ -4,7 +4,7 @@
 }
 
 <h2>Index2</h2>
-<script type="text/javascript">
+@*<script type="text/javascript">
     $(document).ready(function () {
         var page = 0;
         var _inCallback = false;
@@ -29,9 +29,25 @@
         });
     });
    
+</script>*@
+<script type="text/javascript">
+    $().ready(function () {
+        $(".page-number").live("click", function () {
+
+            var page = parseInt($(this).html());
+
+            $.ajax({
+                url: '/CustomerManager/CustomerList',
+                data: { "page": page },
+                success: function (data) {
+                    $("#person-list").html(data);
+                }
+            });
+        });
+    });
 </script>
-<div id="productList">
-    @Html.Partial("CustomerPartialView")
+<div id="person-list">
+    @Html.Partial("CustomerListPartialView")
 </div>
 @*<button id="demo">Click</button>*@
 <input  type="button" class="demo" value="Click"/>
