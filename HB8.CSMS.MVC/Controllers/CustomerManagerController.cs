@@ -14,7 +14,7 @@ namespace HB8.CSMS.MVC.Controllers
     {
         private ICustomerManagerService customerService;
         //const int recordsPerPage = 1;
-        public const int pageSize = 2;
+        public const int pageSize = 1;
         public CustomerManagerController(ICustomerManagerService customerService)
         {
             this.customerService = customerService;
@@ -108,33 +108,9 @@ namespace HB8.CSMS.MVC.Controllers
             customer.Data = listOfCustomer.Take(pageSize);
             customer.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
             customer.CurrentPage = 1;
+            customer.Count = count;
+            customer.PageSize = pageSize;
             return View("ListCustomer", customer);
-
-            //else
-            //{
-
-
-            //    var model = customerService.GetListCustomers();
-            //    int count = model.Count();
-            //    var listOfCustomer = (from a in model
-            //                          select new CustomerModel
-            //                          {
-            //                              CustID = a.CustID,
-            //                              CustName = a.CustName,
-            //                              Address = a.Address,
-            //                              Phone = a.Phone
-            //                          }).ToList();
-            //    customer.Data = listOfCustomer;
-            //    customer.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / PageSize));
-            //    customer.CurrentPage = 1;
-            //    return View(customer);
-            //}
-
-            //var model = ListAllCustomer();
-            //int numberPage = page ?? 1;
-            //var onePageOfCustomers = model.ToPagedList(numberPage, 8);
-            //ViewBag.OnePageOfCustomers = onePageOfCustomers;
-            //return View();
         }
         /// <summary>
         /// Lay ve danh sach khach hang
@@ -261,11 +237,12 @@ namespace HB8.CSMS.MVC.Controllers
                                       CustName = a.CustName,
                                       Address = a.Address,
                                       Phone = a.Phone
-                                  }).ToList();
+                                  }).OrderBy(x => x.CustName).Skip(pageSize * (page - 1)).Take(pageSize).ToList();
             customer.Data = listOfCustomer;
             customer.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
             customer.CurrentPage = page;
-            return PartialView(customer);
+            //return Json(customer, JsonRequestBehavior.AllowGet);
+            return PartialView("CustomerPartialView", customer);
         }
         public ActionResult Product(int? id)
         {
@@ -292,6 +269,7 @@ namespace HB8.CSMS.MVC.Controllers
             var customer = new PagedData<CustomerModel>();
             var skipRecords = page * pageSize;
             var model = customerService.GetListCustomers();
+            int count = model.Count();
             var listOfCustomer = (from a in model
                                   select new CustomerModel
                                   {
@@ -299,9 +277,11 @@ namespace HB8.CSMS.MVC.Controllers
                                       CustName = a.CustName,
                                       Address = a.Address,
                                       Phone = a.Phone
-                                  }).ToList();
-            customer.Data = listOfCustomer.OrderBy(x=>x.CustName).Skip(skipRecords).Take(pageSize).ToList();
-
+                                  }).OrderBy(x => x.CustName).Skip(skipRecords).Take(pageSize).ToList();
+            customer.Data = listOfCustomer;
+            customer.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
+            customer.Count = count;
+            customer.PageSize = pageSize;
             return customer;
         }
     }

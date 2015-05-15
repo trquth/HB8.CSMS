@@ -1,19 +1,43 @@
 ﻿@model  HB8.CSMS.MVC.Models.Paging.PagedData<HB8.CSMS.MVC.Models.Customer.CustomerModel>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".page-number").on('click', function () {
+            var page = parseInt($(this).html());
+            $.ajax({
+                url: '/CustomerManager/CustomerList',
+                data: { "page": page },
+                success: function (data) {
+                    $("#person-list").html(data);
+                    $(".gridView").hide();
+                    $("#listView").show();
+                },
+                beforeSend: function () {
+                    $("#showLoading").dialog("open");
+                },
+            });
+            return false;
+        });
+    });
+</script>
 
 @{
-    foreach (var item in Model.Data)
-    {
-        <div class="col-md-4 gridView">
-            <div class=" col-md-4 thumbnail">
-                <img src="~/Images/no_image.jpg" class="img-rounded" width="110" alt="" />
+
+        foreach (var item in Model.Data)
+        {
+            <div class="col-md-4 gridView">
+                <div class=" col-md-4 thumbnail">
+                    <img src="~/Images/no_image.jpg" class="img-rounded" width="110" alt="" />
+                </div>
+                <div class="caption col-md-8">
+                    <h3 id="getname">@item.CustName</h3>
+                    <p id="getaddress">@item.Address</p>
+                    <p id="getphone">@item.Phone</p>
+                    <input  type="hidden" id="getnumberpages" value="@Model.NumberOfPages"/>
+                    <input type="hidden" id="count" value="@Model.Count" />
+                    <input type="hidden" id="pagesize" value="@Model.PageSize" />
+                </div>
             </div>
-            <div class="caption col-md-8">
-                <h3>@item.CustName</h3>
-                <p>@item.Address</p>
-                <p>@item.Phone</p>
-            </div>
-        </div>
-    }
+        }
 }
 <table class="table table-striped" id="listView" style="display:none">
     <thead>
@@ -68,7 +92,6 @@
     </thead>
     <tbody class="text-center">
         @{
-
             foreach (var item in Model.Data)
             {
                 <tr>
@@ -135,17 +158,24 @@
     <tfoot>
         <tr>
             <td colspan="3">
-                @for (int i = 1; i <= Model.NumberOfPages; i++)
-                {
-                    if (i == Model.CurrentPage)
+
+                <ul class="pagination">
+                    @for (int i = 1; i <= Model.NumberOfPages; i++)
                     {
-                        @i
+                        if (i == Model.CurrentPage)
+                        {
+                            <li class="active"><a class="" href="#" onclick="return false;">@i<span class="sr-only"></span></a></li>
+
+                        }
+                        else
+                        {
+                            @*<li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>*@
+                            <li class=""><a class="page-number" href="javascript:;">@i<span class="sr-only"></span></a></li>
+
+                            // <a class="page-number" href="javascript:;">@i</a>
+                        }
                     }
-                    else
-                    {
-                        <a class="page-number" href="javascript:void();">@i</a>
-                    }
-                }
+                </ul>
             </td>
         </tr>
     </tfoot>

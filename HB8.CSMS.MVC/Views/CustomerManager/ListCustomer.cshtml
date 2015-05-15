@@ -1,6 +1,6 @@
 ﻿@*@model IEnumerable<HB8.CSMS.MVC.Models.Customer.CustomerModel>*@
 @*@model  HB8.CSMS.MVC.Models.Paging.PagedData<HB8.CSMS.MVC.Models.Customer.CustomerModel>*@
-          
+
 @using PagedList
 @using PagedList.Mvc
 @{
@@ -41,21 +41,40 @@
     $(document).ready(function () {
         var page = 0;
         var _inCallback = false;
-        $(".demo").click(function () {
-            alert('vao day')
+        var count = parseInt($('#count').val());
+        var pagesize = parseInt($('#pagesize').val());
+        $("#btnload").click(function () {
             if (page > -1 && !_inCallback) {
                 _inCallback = true;
+                if (page==0) {
+                    var result = count - pagesize;
+                    $("#btnload").text("Còn lại" + result + "kết quả")
+                } else {
+                    var result = count - (pagesize * page);
+                    $("#btnload").text("Còn lại " + result + " kết quả")
+                }
                 page++;
-                $('div#loading').html('<p><img src="/Content/Images/loading.gif"></p>');
+                
+              
+                //$('div#loading').html('<p><img src="/Content/Images/loading.gif"></p>');
                 $.get("/CustomerManager/ListCustomer/" + page, function (data) {
-                    if (data != '') {
-                        $("#productList").append(data);
+                    var number = parseInt($(data).find('#getnumberpages').val()) - 1;
+                    if (number == page) {
+                        $("#btnload").hide();
+                    }
+                    var name = $(data).find('#getname').text();
+                    var address = $(data).find('#getaddress').text();
+                    var phone = $(data).find('#getphone').text();
+                    if (name != "" && address != "" && phone != "") {
+                        $("#person-list").append(data);
                     }
                     else {
+
                         page = -1;
                     }
                     _inCallback = false;
-                    $('div#loading').empty();
+                    //$('div#loading').empty();
+                    $("#showLoading").dialog("open");
                 });
             }
         });
@@ -63,17 +82,19 @@
 
 </script>
 <script type="text/javascript">
-    $().ready(function () {
-        $(".page-number").live("click", function () {
-
+    $(document).ready(function () {
+        $(".page-number").on('click', function () {
             var page = parseInt($(this).html());
             $.ajax({
                 url: '/CustomerManager/CustomerList',
                 data: { "page": page },
                 success: function (data) {
                     $("#person-list").html(data);
+                    $(".gridView").hide();
+                    $("#listView").show();
                 }
             });
+            return false;
         });
     });
 </script>
@@ -134,148 +155,12 @@
     <div class="col-md-12">
         <div class="panel panel-heading">
             <div class="panel panel-body">
-                <div id="productList">
+                <div id="person-list">
                     @Html.Partial("CustomerPartialView")
                 </div>
-                <div id="loading"></div>
-                @*@{
-                        var listCustomers = ViewBag.OnePageOfCustomers;
-                        foreach (var item in listCustomers)
-                        {
-
-                            <div class="col-md-4 gridView">
-                                <div class=" col-md-4 thumbnail">
-                                    <img src="~/Images/no_image.jpg" class="img-rounded" width="110" alt="" />
-                                </div>
-                                <div class="caption col-md-8">
-                                    <h3>@item.CustName</h3>
-                                    <p>@item.Address</p>
-                                    <p>@item.Phone</p>
-                                </div>
-                            </div>
-                        }
-                    }*@
-                @*<table class="table table-striped" id="listView" style="display:none">
-                    <thead>
-                        <tr>
-                            <th class="text-center">
-
-                                <h5>Hình ảnh</h5>
-
-                            </th>
-                            <th class="text-center">
-
-                                <h5>Tên Khách hàng</h5>
-
-                            </th>
-                            <th class="text-center">
-
-                                <h5>Ngày sinh</h5>
-
-                            </th>
-                            <th class="text-center">
-
-                                <h5>Địa chỉ</h5>
-
-                            </th>
-                            <th class="text-center">
-
-                                <h5>Số điện thoại</h5>
-
-                            </th>
-                            <th class="text-center">
-
-                                <h5>Fax</h5>
-
-                            </th>
-                            <th class="text-center">
-
-                                <h5>Email</h5>
-
-                            </th>
-                            <th>
-
-                                <h5></h5>
-
-                            </th>
-                            <th>
-
-                                <h5></h5>
-
-                            </th>
-
-                        </tr>
-                    </thead>
-                    <tbody class="text-center">
-                        @{
-                            var items = ViewBag.OnePageOfCustomers;
-                            foreach (var item in items)
-                            {
-                        <tr>
-                            <td class="text-center itemIdClass">
-                                <input id="ID" type="hidden" value="@item.CustID" name="item.ID">
-                            </td>
-                            <td class="text-center">
-                                @if (item.Image == null)
-                                        {
-                                <img src="~/Images/no_image.jpg" class="img-rounded" width="80" />
-                                        }
-                                        else
-                                        {
-                                <h5><img src="~/Images/StaffImages/@item.Image" alt="" class="img-rounded" width="80"></h5>
-                                        }
-
-                            </td>
-                            <td class="text-center">
-
-                                <h5>@item.CustName</h5>
-
-                            </td>
-                            <td class="text-center">
-
-                                <small>@item.BirthDate</small>
-
-                            </td>
-                            <td class="text-center">
-
-                                <h5>@item.Address</h5>
-
-                            </td>
-                            <td class="text-center">
-
-                                <h5>@item.Phone</h5>
-
-                            </td>
-                            <td class="text-center">
-
-                                <h5>@item.Fax</h5>
-
-                            </td>
-                            <td class="text-center">
-
-                                <h5>@item.Email</h5>
-
-                            </td>
-                            <td class="text-center"></td>
-                            <td class="text-center">
-
-                                <input type="button" value="Sửa" class="buttonEdit btn btn-default" />
-
-                            </td>
-                            <td class="text-center">
-                                <input type="button" value="Xóa" class="buttonDelete btn btn-default" />
-                            </td>
-                        </tr>
-                        <tr></tr>
-
-                            }
-                        }
-
-                    </tbody>
-                </table>*@
             </div>
             <div class="text-center">
-                <button class="btn btn-default demo">Hiện thêm</button>
+                <button class="btn btn-default " id="btnload">Hiện thêm</button>
             </div>
             <div id="showspinner"></div>
             <div id="createForm"></div>
