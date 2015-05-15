@@ -44,40 +44,40 @@
         var count = parseInt($('#count').val());
         var pagesize = parseInt($('#pagesize').val());
         $("#btnload").click(function () {
-            if (page > -1 && !_inCallback) {
-                _inCallback = true;
-                if (page==0) {
-                    var result = count - pagesize;
-                    $("#btnload").text("Còn lại" + result + "kết quả")
-                } else {
-                    var result = count - (pagesize * page);
+            var flag =$("#btnGirdView").attr("value");
+            if (flag == 1) {
+                $("#btnGirdView").val("");
+                page = 0;             
+            } else {
+                if (page > -1 && !_inCallback) {
+                    _inCallback = true;
+                    page++;
+                    var result = count - (pagesize * page) - pagesize;
                     $("#btnload").text("Còn lại " + result + " kết quả")
-                }
-                page++;
-                
-              
-                //$('div#loading').html('<p><img src="/Content/Images/loading.gif"></p>');
-                $.get("/CustomerManager/ListCustomer/" + page, function (data) {
-                    var number = parseInt($(data).find('#getnumberpages').val()) - 1;
-                    if (number == page) {
-                        $("#btnload").hide();
-                    }
-                    var name = $(data).find('#getname').text();
-                    var address = $(data).find('#getaddress').text();
-                    var phone = $(data).find('#getphone').text();
-                    if (name != "" && address != "" && phone != "") {
-                        $("#person-list").append(data);
-                    }
-                    else {
+                    $.get("/CustomerManager/ListCustomer/" + page, function (data) {
+                        var number = parseInt($(data).find('#getnumberpages').val()) - 1;
+                        if (number == page) {
+                            $("#btnload").hide();
+                            $("#btnload").val(0);
+                        }
+                        var name = $(data).find('#getname').text();
+                        var address = $(data).find('#getaddress').text();
+                        var phone = $(data).find('#getphone').text();
+                        if (name != "" && address != "" && phone != "") {
+                            $("#person-list").append(data);
+                        }
+                        else {
 
-                        page = -1;
-                    }
-                    _inCallback = false;
-                    //$('div#loading').empty();
-                    $("#showLoading").dialog("open");
-                });
+                            page = -1;
+                        }
+                        _inCallback = false;
+                        $("#showLoading").dialog("open");
+                    });
+                }
             }
+
         });
+
     });
 
 </script>
@@ -139,7 +139,7 @@
                         <button type="button" class="btn btn-default  right" aria-label="Left Align" id="btnListView">
                             <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                         </button>
-                        <button type="button" class="btn btn-default right" aria-label="Left Align" id="btnGirdView">
+                        <button type="button" class="btn btn-default right" aria-label="Left Align" id="btnGirdView" value="">
                             <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
                         </button>
                         <br />
@@ -160,7 +160,7 @@
                 </div>
             </div>
             <div class="text-center">
-                <button class="btn btn-default " id="btnload">Hiện thêm</button>
+                <button class="btn btn-default " id="btnload" value="">Hiện thêm</button>
             </div>
             <div id="showspinner"></div>
             <div id="createForm"></div>

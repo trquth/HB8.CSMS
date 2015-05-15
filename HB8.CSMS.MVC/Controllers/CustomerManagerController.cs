@@ -244,26 +244,6 @@ namespace HB8.CSMS.MVC.Controllers
             //return Json(customer, JsonRequestBehavior.AllowGet);
             return PartialView("CustomerPartialView", customer);
         }
-        public ActionResult Product(int? id)
-        {
-            var page = id ?? 0;
-
-            if (Request.IsAjaxRequest())
-            {
-                return PartialView("CustomerPartialView", GetPaginatedProducts(page));
-            }
-            var model = customerService.GetListCustomers();
-            var listOfCustomer = (from a in model
-                                  select new CustomerModel
-                                  {
-                                      CustID = a.CustID,
-                                      CustName = a.CustName,
-                                      Address = a.Address,
-                                      Phone = a.Phone
-                                  }).ToList();
-            return View("ListCustomer", listOfCustomer.Take(pageSize));
-        }
-
         private PagedData<CustomerModel> GetPaginatedProducts(int page)
         {
             var customer = new PagedData<CustomerModel>();

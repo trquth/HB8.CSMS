@@ -161,6 +161,7 @@ $("#btnListView").button().click(function () {
     $("#listView").show();
     $(".gridView").hide();
     $(".pagination").show();
+    $("#btnload").hide();
 });
 
 $("#btnGirdView").button().click(function () {
@@ -168,6 +169,27 @@ $("#btnGirdView").button().click(function () {
     $("#listView").hide();
     $(".gridView").show();
     $(".pagination").hide();
+    //var flag = $("#btnload").attr('value');
+    //if (flag != "") {
+    //    $("#btnload").hide();
+    //} else {
+    //    $("#btnload").show();
+    //}
+    $.ajax({
+        url: "/CustomerManager/ListCustomer/",
+        type: 'Get',
+        success: function (data) {
+            $("#person-list").empty();
+            var flag = $("#btnload").add('value');
+            if (flag !="") {
+                $("#btnload").val("");
+            }
+            $("#btnGirdView").val("1");//danh dau xem biet la co click nut gridview lan nao chua
+            $("#btnload").show();
+            $("#btnload").text("Hiển thị thêm")
+            $("#person-list").append(data);
+        },
+    });  
 });
 
 
