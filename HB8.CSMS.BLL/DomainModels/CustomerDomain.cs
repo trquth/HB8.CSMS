@@ -9,7 +9,7 @@ namespace HB8.CSMS.BLL.DomainModels
     public class CustomerDomain
     {
         public CustomerDomain() { }
-        public CustomerDomain(string id, string name, string address, string phone, string fax, string email, int overDue, decimal? amount, decimal? overDueAmt, decimal? dueAmt, string statusID, string description, DateTime? birthDate, DateTime? createDate, string image)
+        public CustomerDomain(string id, string name, string address, string phone, string fax, string email, int overDue, decimal amount, decimal overDueAmt, decimal dueAmt, string statusID, string description, DateTime birthDate, DateTime createDate, string image)
         {
             CustID = id;
             CustName = name;
@@ -17,8 +17,6 @@ namespace HB8.CSMS.BLL.DomainModels
             Phone = phone;
             Fax = fax;
             Email = email;
-            Overdue = overDue;
-            Amount = amount;
             Overdue = overDue;
             Amount = amount;
             OverdueAmt = overDueAmt;

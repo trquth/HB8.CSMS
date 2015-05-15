@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using HB8.CSMS.MVC.Models.Paging;
+using HB8.CSMS.BLL.DomainModels;
 
 namespace HB8.CSMS.MVC.Controllers
 {
@@ -134,48 +135,61 @@ namespace HB8.CSMS.MVC.Controllers
                          });
             return model;
         }
-        //public ViewResult EditStaff(string staffId)
-        //{
-        //    var model = GetStaffByStaffId(staffId);
-        //    ViewBag.Position = GetListPosition();
-        //    return View(model);
-        //}
-        //[HttpPost]
-        //public void EditStaff(StaffModel staff)
-        //{
-        //    var model = new StaffDomain(staff.ID, staff.UserId, staff.StaffName, staff.Image, staff.Address, staff.NumberPhone, staff.Email);
-        //    staffService.UpdateStaff(model);
-        //}
-        ///// <summary>
-        ///// Gan nhan vien co manv duoc chon tu DATABASE vao MODEL
-        ///// </summary>
-        ///// <param name="id"></param>
-        ///// <returns></returns>
-        //public StaffModel GetStaffByStaffId(string id)
-        //{
-        //    var item = staffService.GetStaffById(id);
-        //    var model = new StaffModel();
-        //    model.ID = item.StaffID;
-        //    model.Image = item.Image;
-        //    model.ID = item.StaffID;
-        //    model.StaffName = item.StaffName;
-        //    model.UserName = item.User.UserName;
-        //    model.Address = item.Address;
-        //    model.Email = item.Email;
-        //    model.NumberPhone = item.NumberPhone;
-        //    return model;
-        //}
-        ///// <summary>
-        ///// Goi form sua thong tin nhan vien
-        ///// </summary>
-        ///// <param name="id"></param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public ActionResult EditStaffPV(string id)
-        //{
-        //    var model = GetStaffByStaffId(id);
-        //    return PartialView("EditStaffPartialView", model);
-        //}
+        #region Ghi chu
+
+
+        public ViewResult EditCustomer(string custId)
+        {
+            var model = GetStaffByStaffId(custId);
+            //ViewBag.Position = GetListPosition();
+            return View(model);
+        }
+        [HttpPost]
+        public void EditCustomer(CustomerModel customer)
+        {
+            var model = new CustomerDomain(customer.CustID, customer.CustName, customer.Address,
+                customer.Phone, customer.Fax, customer.Email, customer.Overdue, (decimal)customer.Amount, (decimal)customer.OverdueAmt,
+                (decimal)customer.DueAmt, customer.StatusID, customer.Description, customer.BirthDate, (DateTime)customer.CreateDate, customer.Image);
+            customerService.UpdateCustomer(model);
+        }
+        /// <summary>
+        /// Gan nhan vien co manv duoc chon tu DATABASE vao MODEL
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public CustomerModel GetStaffByStaffId(string id)
+        {
+            var item = customerService.GetCustomerById(id);
+            var model = new CustomerModel();
+            model.CustID = item.CustID;
+            model.CustName = item.CustName;
+            model.Address = item.Address;
+            model.Phone = item.Phone;
+            model.Fax = item.Fax;
+            model.Email = item.Email;
+            model.Overdue = item.Overdue;
+            model.Amount = item.Amount;
+            model.OverdueAmt = item.OverdueAmt;
+            model.DueAmt = item.DueAmt;
+            model.StatusID = item.StatusID;
+            model.Description = item.Description;
+            model.BirthDate = (DateTime)item.BirthDate;
+            model.CreateDate = item.CreateDate;
+            model.Image = item.Image;
+            return model;
+        }
+        /// <summary>
+        /// Goi form sua thong tin nhan vien
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult EditStaffPV(string id)
+        {
+            var model = GetStaffByStaffId(id);
+            return PartialView("EditStaffPartialView", model);
+        }
+        #endregion
         /// <summary>
         /// Goi form  them khach hang
         /// </summary>
@@ -185,6 +199,9 @@ namespace HB8.CSMS.MVC.Controllers
         {
             return PartialView("CreateCustomerPartialView");
         }
+        #region  Ghi chu
+
+
         ///// <summary>
         ///// Luu thong tin nhan vien
         ///// </summary>
@@ -224,6 +241,7 @@ namespace HB8.CSMS.MVC.Controllers
         //    customer.CurrentPage = 1;
         //    return View(customer);
         //}
+        #endregion
         public ActionResult CustomerList(int page)
         {
             var customer = new PagedData<CustomerModel>();
@@ -262,6 +280,31 @@ namespace HB8.CSMS.MVC.Controllers
             customer.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
             customer.Count = count;
             customer.PageSize = pageSize;
+            return customer;
+        }
+        public ActionResult DetailCustomer(string custId)
+        {
+            var model = GetCustomerDetail(custId);
+            return PartialView("DetailCustomerParitalView", model);
+        }
+        private CustomerModel GetCustomerDetail(string custId)
+        {
+            var customer = new CustomerModel();
+            var model = customerService.GetCustomerById(custId);
+            customer.Image = model.Image;
+            customer.CustName = model.CustName;
+            customer.Address = model.Address;
+            customer.Phone = model.Phone;
+            customer.Fax = model.Fax;
+            customer.Email = model.Email;
+            customer.Overdue = model.Overdue;
+            customer.Amount = model.Amount;
+            customer.OverdueAmt = model.OverdueAmt;
+            customer.DueAmt = model.DueAmt;
+            customer.StatusID = model.StatusID;
+            customer.Description = model.Description;
+            customer.BirthDate = (DateTime)model.BirthDate;
+            customer.CreateDate = model.CreateDate;
             return customer;
         }
     }

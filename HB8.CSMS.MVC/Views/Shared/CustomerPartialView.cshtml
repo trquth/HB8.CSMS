@@ -19,9 +19,25 @@
         });
     });
 </script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".detailcustomer").on("click", function () {
+            var id = $(this).attr('value');
+            $.ajax({
+                url: '/CustomerManager/DetailCustomer',
+                data: { "custId": id },
+                success: function (data) {
+                    $("#btnload").hide();
+                    $("#addbutton").append("<input type='button' value='Sửa' class='buttonEdit btn btn-default' />");
+                    $("#person-list").empty();  
+                    $("#person-list").append(data);
+                },
+            });
 
+        });
+    });
+</script>
 @{
-
         foreach (var item in Model.Data)
         {
             <div class="col-md-4 gridView">
@@ -29,7 +45,7 @@
                     <img src="~/Images/no_image.jpg" class="img-rounded" width="110" alt="" />
                 </div>
                 <div class="caption col-md-8">
-                    <h3 id="getname">@item.CustName</h3>
+                    <a class="detailcustomer" href="javascript:;" value="@item.CustID"><h3 id="getname">@item.CustName</h3></a>                  
                     <p id="getaddress">@item.Address</p>
                     <p id="getphone">@item.Phone</p>
                     <input  type="hidden" id="getnumberpages" value="@Model.NumberOfPages"/>

@@ -1,0 +1,39 @@
+﻿@model HB8.CSMS.MVC.Models.Customer.CustomerModel
+<div class="row">
+    <div class="col-md-3">
+        <a href="#">
+            <img class="img-responsive" src="http://placehold.it/700x300" alt="">
+        </a>
+    </div>
+    <div class="col-md-3">
+        <h3> <b>Tên khách hàng: </b></h3>
+        <h3><b> Ngày sinh:</b> </h3>
+    </div>
+    <div class="col-md-6">
+        <h3>@Model.CustName</h3>
+        <h3>@Model.BirthDate </h3>
+    </div>
+</div>
+<div class="row">
+    <br />
+    <div class="col-md-6">
+        <div class="col-md-3">
+            <h4><b>Địa chỉ:</b></h4>
+        </div>
+        <div class="col-md-9">
+            <h4>@Model.Address</h4>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="col-md-4">
+            <h4><b>Số điện thoại: </b></h4>
+            <h4><b>Email:</b></h4>
+            <h4><b>Fax:</b></h4>
+        </div>
+        <div class="col-md-8">
+            <h4>@Model.Phone</h4>
+            <h4>@Model.Email</h4>
+            <h4>@Model.Fax</h4>
+        </div>
+    </div>
+</div>

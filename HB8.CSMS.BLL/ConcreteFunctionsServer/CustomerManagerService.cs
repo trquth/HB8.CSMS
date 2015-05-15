@@ -43,12 +43,6 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
         {
             return context.Customers.GetAllItem();
         }
-
-        public DAL.Models.Staff GetCustomerById(string id)
-        {
-            return context.Staffs.GetItemById(id);
-        }
-
         public int UpdateCustomer(DomainModels.CustomerDomain customer)
         {
             var model = context.Customers.GetItemById(customer.CustID);
@@ -108,6 +102,28 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             {
                 return model;
             }
+        }
+
+
+        CustomerDomain ICustomerManagerService.GetCustomerById(string id)
+        {
+            var model = context.Customers.GetItemById(id);
+            var customer = new CustomerDomain();
+            customer.Image = model.Image;
+            customer.CustName = model.CustName;
+            customer.Address = model.Address;
+            customer.Phone = model.Phone;
+            customer.Fax = model.Fax;
+            customer.Email = model.Email;
+            customer.Overdue = model.Overdue;
+            customer.Amount = model.Amount;
+            customer.OverdueAmt = model.OverdueAmt;
+            customer.DueAmt = model.DueAmt;
+            customer.StatusID = model.StatusId;
+            customer.Description = model.Description;
+            customer.BirthDate = model.BirthDate;
+            customer.CreateDate = model.CreateDate;
+            return customer;
         }
     }
 }

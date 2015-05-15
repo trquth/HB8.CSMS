@@ -26,7 +26,7 @@ namespace HB8.CSMS.BLL.Abstract
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Staff GetCustomerById(string id);
+        CustomerDomain GetCustomerById(string id);
         /// <summary>
         /// Sua thong tin khach hang
         /// </summary>
