@@ -1,8 +1,6 @@
 ﻿@model HB8.CSMS.MVC.Models.Customer.CustomerModel
-@{
-    ViewBag.Title = "ListStaff";
-    Layout = "~/Views/Shared/_MainLayout.cshtml";
-}
+
+<script src="~/MyjQ/edit.partialview.js" type="text/javascript"></script>
 <script type="text/javascript">
     //Do du lieu vao dropdowlist
     $(document).ready(function () {
@@ -39,8 +37,20 @@
         });
     });
 </script>
-<div class="panel panel-primary">
-    <div class="panel-heading"><h5>Thêm thông tin nhân viên</h5></div>
+@*<script type="text/javascript">
+    $(document).ready(function () {
+        $("#buttonExitEdit").button().click(function () {
+            $('.buttonEdit').prop("disabled", false);
+            $('.buttonDelete').prop("disabled", false);
+            alert("vao day nut exit");
+            $("#editFormCustomer").dialog("close");
+            
+        })
+
+    });
+</script>*@
+<div class="panel panel-warning">
+    <div class="panel-heading"><h5>Sửa thông tin khách hàng</h5></div>
     <div class="panel-body">
         @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", @id = "customerform" }))
         {
@@ -64,7 +74,7 @@
                     <div class="form-group">
                         <label class="control-label col-lg-2">Tên Khách hàng:</label>
                         <div class="col-lg-10">
-                            @Html.HiddenFor(x => x.CustID);
+                            @Html.HiddenFor(x => x.CustID)
                             @Html.TextBoxFor(x => x.CustName, new { @class = "form-control", @data_rule_required = "true", @data_msg_required = "Tên khách hàng không được rỗng", @data_rule_maxlength = "50", @data_msg_maxlength = "Tên khách hàng tối đa 50 kí tự", @data_rule_minlength = "10", @data_msg_minlength = "Tên khách hàng tối thiểu 10 kí tự", @id = "customerName" })
                             @Html.ValidationMessageFor(x => x.CustName, String.Empty, new { @class = "error" })
 
@@ -115,7 +125,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    @*<div class="form-group">
                         <div class="col-lg-12">
                             <button type="button" class="btn btn-default pull-right" id="btnExtra">
                                 Thông tin mở rộng   <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
@@ -159,11 +169,11 @@
                             @Html.TextAreaFor(x => x.Description, new { @class = "form-control", @data_rule_maxlength = "100", @data_msg_maxlength = "Miêu tả tối đa 50 kí tự", @data_rule_minlength = "10", @data_msg_minlength = "Miêu tả tối thiểu 10 kí tự", @id = "description" })
                             @Html.ValidationMessageFor(x => x.Description, String.Empty, new { @class = "error" })
                         </div>
-                    </div>
+                    </div>*@
                     <div class="form-group">
                         <div class="col-lg-offset-2 col-lg-10">
                             <input type="button" class="btn btn-primary submit" value="Cập nhật" id="create-button">
-                            <input type="button" class="btn btn-primary " id="buttonExitCreate" value="Thoát">
+                            <input type="button" class="btn btn-primary " id="buttonExitEdit" value="Thoát">
                         </div>
                     </div>
                 </div>

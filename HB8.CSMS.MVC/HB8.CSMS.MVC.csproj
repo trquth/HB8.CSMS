@@ -315,7 +315,6 @@
     <Content Include="Views\Shared\EditCustomerPartialView.cshtml" />
     <Content Include="Views\CustomerManager\ListCustomer.cshtml" />
     <Content Include="Views\Shared\CustomerPartialView.cshtml" />
-    <Content Include="Views\CustomerManager\Index2.cshtml" />
     <Content Include="Views\Shared\DetailCustomerParitalView.cshtml" />
   </ItemGroup>
   <ItemGroup>

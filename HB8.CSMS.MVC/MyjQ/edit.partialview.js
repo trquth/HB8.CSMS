@@ -98,3 +98,10 @@ $(document).ready(function () {
     });
 });
 
+//PHAN CHO EDIT CUSTOMER
+//Dung de dong diaglog chua form
+$("#buttonExitEdit").button().click(function () {
+    //$('.buttonEdit').prop("disabled", false);
+    //$('.buttonDelete').prop("disabled", false);
+    $("#editFormCustomer").dialog("close");  
+})

@@ -140,7 +140,7 @@ namespace HB8.CSMS.MVC.Controllers
 
         public ViewResult EditCustomer(string custId)
         {
-            var model = GetStaffByStaffId(custId);
+            var model = GetCustomerByCustomerId(custId);
             //ViewBag.Position = GetListPosition();
             return View(model);
         }
@@ -157,7 +157,7 @@ namespace HB8.CSMS.MVC.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public CustomerModel GetStaffByStaffId(string id)
+        public CustomerModel GetCustomerByCustomerId(string id)
         {
             var item = customerService.GetCustomerById(id);
             var model = new CustomerModel();
@@ -184,10 +184,10 @@ namespace HB8.CSMS.MVC.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult EditStaffPV(string id)
+        public ActionResult EditCustomerPV(string id)
         {
-            var model = GetStaffByStaffId(id);
-            return PartialView("EditStaffPartialView", model);
+            var model = GetCustomerByCustomerId(id);
+            return PartialView("EditCustomerPartialView", model);
         }
         #endregion
         /// <summary>
