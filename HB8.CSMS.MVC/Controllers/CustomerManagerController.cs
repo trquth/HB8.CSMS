@@ -13,30 +13,21 @@ namespace HB8.CSMS.MVC.Controllers
 {
     public class CustomerManagerController : Controller
     {
+        #region Khai bao
         private ICustomerManagerService customerService;
-        //const int recordsPerPage = 1;
-        public const int pageSize = 1;
+        public const int pageSize = 1;//So nhan vien duoc hien thi tren mot trang
         public CustomerManagerController(ICustomerManagerService customerService)
         {
             this.customerService = customerService;
         }
+        #endregion
+        #region Ghi chu 2
         /// <summary>
         /// Trả về một danh sách các chức vụ dang JSON
         /// </summary>
         /// <returns>JSON</returns>
 
-        [HttpGet]
-        public JsonResult ListStatus()
-        {
-            var model = customerService.GetListStatus();
-            var data = (from a in model
-                        select new CustomerModel
-                        {
-                            StatusID = a.StatusId,
-                            StatusName = a.StatusName,
-                        }).OrderBy(x => x.StatusName);
-            return Json(data, JsonRequestBehavior.AllowGet);
-        }
+
         /// <summary>
         /// Kiem tra ma nv co ton tai hay khong 
         /// </summary>
@@ -80,6 +71,8 @@ namespace HB8.CSMS.MVC.Controllers
         //{           
         //    return View();
         //}
+        #endregion
+        #region Code xu li trang LIST CUSTOMER
         /// <summary>
         /// Danh sach khach hang
         /// </summary>
@@ -87,14 +80,11 @@ namespace HB8.CSMS.MVC.Controllers
         /// <returns></returns>
         public ActionResult ListCustomer(int? id)
         {
-
             var customer = new PagedData<CustomerModel>();
-
             var page = id ?? 0;
-
             if (Request.IsAjaxRequest())
             {
-                return PartialView("CustomerPartialView", GetPaginatedProducts(page));
+                return PartialView("CustomerPartialView", GetPaginatedProducts(page));//Tra ve VIEW dang GRID 
             }
             var model = customerService.GetListCustomers();
             int count = model.Count();
@@ -113,6 +103,111 @@ namespace HB8.CSMS.MVC.Controllers
             customer.PageSize = pageSize;
             return View("ListCustomer", customer);
         }
+        #endregion
+        #region Code xu li phan phan trang
+        /// <summary>
+        /// Xu li phan trang dang LIST 
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        public ActionResult CustomerList(int page)
+        {
+            var customer = new PagedData<CustomerModel>();
+            var model = customerService.GetListCustomers();
+            int count = model.Count();
+            var listOfCustomer = (from a in model
+                                  select new CustomerModel
+                                  {
+                                      CustID = a.CustID,
+                                      CustName = a.CustName,
+                                      Address = a.Address,
+                                      Phone = a.Phone,
+                                      Email =a.Email
+                                  }).OrderBy(x => x.CustName).Skip(pageSize * (page - 1)).Take(pageSize).ToList();
+            customer.Data = listOfCustomer;
+            customer.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
+            customer.CurrentPage = page;
+            //return Json(customer, JsonRequestBehavior.AllowGet); //thu tra ve JSON xu li
+            return PartialView("CustomerPartialView", customer);
+        }
+        /// <summary>
+        /// Nhan ve danh sach thong tin CUSTOMER de hien thi
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        private PagedData<CustomerModel> GetPaginatedProducts(int page)
+        {
+            var customer = new PagedData<CustomerModel>();
+            var skipRecords = page * pageSize;
+            var model = customerService.GetListCustomers();
+            int count = model.Count();
+            var listOfCustomer = (from a in model
+                                  select new CustomerModel
+                                  {
+                                      CustID = a.CustID,
+                                      CustName = a.CustName,
+                                      Address = a.Address,
+                                      Phone = a.Phone
+                                  }).OrderBy(x => x.CustName).Skip(skipRecords).Take(pageSize).ToList();
+            customer.Data = listOfCustomer;
+            customer.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
+            customer.Count = count;
+            customer.PageSize = pageSize;
+            return customer;
+        }
+
+        private CustomerModel GetCustomerDetail(string custId)
+        {
+            var customer = new CustomerModel();
+            var model = customerService.GetCustomerById(custId);
+            customer.Image = model.Image;
+            customer.CustName = model.CustName;
+            customer.Address = model.Address;
+            customer.Phone = model.Phone;
+            customer.Fax = model.Fax;
+            customer.Email = model.Email;
+            customer.StatusID = model.StatusID;
+            customer.Description = model.Description;
+            customer.BirthDate = (DateTime)model.BirthDate;
+            customer.CreateDate = model.CreateDate;
+            return customer;
+        }
+        #endregion
+        #region Code xu li hien thi thong tin chi tiet cua CUSTOMER
+        /// <summary>
+        /// Hien thi thong tin chi tiet cua CUSTOMER
+        /// </summary>
+        /// <param name="custId"></param>
+        /// <returns></returns>
+        public ActionResult DetailCustomer(string custId)
+        {
+            var model = GetCustomerDetail(custId);
+            return PartialView("DetailCustomerParitalView", model);
+        }
+        /// <summary>
+        /// Lay ve thong tin CUSTOMER dua vao ID
+        /// </summary>
+        /// <param name="custId"></param>
+        /// <returns></returns>
+        #endregion
+        #region Code phan EDIT CUSTOMER
+        /// <summary>
+        /// Lay tu ve danh sach status trong database
+        /// </summary>
+        /// <returns>JSON</returns>
+        [HttpGet]
+        public JsonResult ListStatus()
+        {
+            var model = customerService.GetListStatus();
+            var data = (from a in model
+                        select new CustomerModel
+                        {
+                            StatusID = a.StatusId,
+                            StatusName = a.StatusName,
+                        }).OrderBy(x => x.StatusName);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
         /// <summary>
         /// Lay ve danh sach khach hang
         /// </summary>
@@ -135,9 +230,6 @@ namespace HB8.CSMS.MVC.Controllers
                          });
             return model;
         }
-        #region Ghi chu
-
-
         public ViewResult EditCustomer(string custId)
         {
             var model = GetCustomerByCustomerId(custId);
@@ -147,9 +239,9 @@ namespace HB8.CSMS.MVC.Controllers
         [HttpPost]
         public void EditCustomer(CustomerModel customer)
         {
+            var dateCreate = DateTime.Now;
             var model = new CustomerDomain(customer.CustID, customer.CustName, customer.Address,
-                customer.Phone, customer.Fax, customer.Email, customer.Overdue, (decimal)customer.Amount, (decimal)customer.OverdueAmt,
-                (decimal)customer.DueAmt, customer.StatusID, customer.Description, customer.BirthDate, (DateTime)customer.CreateDate, customer.Image);
+                customer.Phone, customer.Fax, customer.Email, customer.StatusID, customer.Description, customer.BirthDate, dateCreate, customer.Image);
             customerService.UpdateCustomer(model);
         }
         /// <summary>
@@ -167,10 +259,6 @@ namespace HB8.CSMS.MVC.Controllers
             model.Phone = item.Phone;
             model.Fax = item.Fax;
             model.Email = item.Email;
-            model.Overdue = item.Overdue;
-            model.Amount = item.Amount;
-            model.OverdueAmt = item.OverdueAmt;
-            model.DueAmt = item.DueAmt;
             model.StatusID = item.StatusID;
             model.Description = item.Description;
             model.BirthDate = (DateTime)item.BirthDate;
@@ -194,7 +282,6 @@ namespace HB8.CSMS.MVC.Controllers
         /// Goi form  them khach hang
         /// </summary>
         /// <returns></returns>
-
         public ActionResult CreateCustomerPV()
         {
             return PartialView("CreateCustomerPartialView");
@@ -242,70 +329,6 @@ namespace HB8.CSMS.MVC.Controllers
         //    return View(customer);
         //}
         #endregion
-        public ActionResult CustomerList(int page)
-        {
-            var customer = new PagedData<CustomerModel>();
 
-            var model = customerService.GetListCustomers();
-            int count = model.Count();
-            var listOfCustomer = (from a in model
-                                  select new CustomerModel
-                                  {
-                                      CustID = a.CustID,
-                                      CustName = a.CustName,
-                                      Address = a.Address,
-                                      Phone = a.Phone
-                                  }).OrderBy(x => x.CustName).Skip(pageSize * (page - 1)).Take(pageSize).ToList();
-            customer.Data = listOfCustomer;
-            customer.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
-            customer.CurrentPage = page;
-            //return Json(customer, JsonRequestBehavior.AllowGet);
-            return PartialView("CustomerPartialView", customer);
-        }
-        private PagedData<CustomerModel> GetPaginatedProducts(int page)
-        {
-            var customer = new PagedData<CustomerModel>();
-            var skipRecords = page * pageSize;
-            var model = customerService.GetListCustomers();
-            int count = model.Count();
-            var listOfCustomer = (from a in model
-                                  select new CustomerModel
-                                  {
-                                      CustID = a.CustID,
-                                      CustName = a.CustName,
-                                      Address = a.Address,
-                                      Phone = a.Phone
-                                  }).OrderBy(x => x.CustName).Skip(skipRecords).Take(pageSize).ToList();
-            customer.Data = listOfCustomer;
-            customer.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
-            customer.Count = count;
-            customer.PageSize = pageSize;
-            return customer;
-        }
-        public ActionResult DetailCustomer(string custId)
-        {
-            var model = GetCustomerDetail(custId);
-            return PartialView("DetailCustomerParitalView", model);
-        }
-        private CustomerModel GetCustomerDetail(string custId)
-        {
-            var customer = new CustomerModel();
-            var model = customerService.GetCustomerById(custId);
-            customer.Image = model.Image;
-            customer.CustName = model.CustName;
-            customer.Address = model.Address;
-            customer.Phone = model.Phone;
-            customer.Fax = model.Fax;
-            customer.Email = model.Email;
-            customer.Overdue = model.Overdue;
-            customer.Amount = model.Amount;
-            customer.OverdueAmt = model.OverdueAmt;
-            customer.DueAmt = model.DueAmt;
-            customer.StatusID = model.StatusID;
-            customer.Description = model.Description;
-            customer.BirthDate = (DateTime)model.BirthDate;
-            customer.CreateDate = model.CreateDate;
-            return customer;
-        }
     }
 }

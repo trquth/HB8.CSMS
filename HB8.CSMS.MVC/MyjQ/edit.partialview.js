@@ -98,6 +98,9 @@ $(document).ready(function () {
     });
 });
 
+
+
+
 //PHAN CHO EDIT CUSTOMER
 //Dung de dong diaglog chua form
 $("#buttonExitEdit").button().click(function () {
@@ -105,3 +108,52 @@ $("#buttonExitEdit").button().click(function () {
     //$('.buttonDelete').prop("disabled", false);
     $("#editFormCustomer").dialog("close");  
 })
+
+
+//Do du lieu vao dropdowlist
+$(document).ready(function () {
+    $.ajax({
+        url: "/CustomerManager/ListStatus",
+        type: 'Get',
+        data: "{}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            $.each(data, function (key, value) {
+                $("#ddlStatus").append($("<option></option>").val(value.StatusID).html(value.StatusName));
+            });
+        },
+        error: function (result) {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+    });
+})
+
+//Dung cho update thong tin cua form EDIT
+$(document).ready(function () {
+    $("#updateCustomer-button").click(function () {
+        $(this).attr('type', 'button');
+        var id = $("#Id").val();
+        var name = $("#customerName").val();
+        var date = $("#birthdatepicker").val();
+        alert(date);
+        var address = $("#address").val();
+        var phone = $("#numberphone").val();
+        var fax = $("#fax").val();
+        var mail = $("#email").val();
+        var status = $("#ddlStatus").val();
+        var image = $("#uploadFile").val();
+        var description = $("#description").val();
+        //Dung kiem tra xem cac thong tin nhap vao dung hay sai
+        if (name.length <= 10 || name.length >= 50 || date.length == 0 || address.length < 2 || phone.length < 1|| mail.length == 0 || status.length == 0) {
+            $(this).attr('type', 'submit');
+            //$("#customerform").submit();
+        } else {
+            $("#editFormCustomer").dialog("close");
+            $.post('/CustomerManager/EditCustomer', { "CustID": id, "CustName": name, "BirthDate": date, "StatusId": status, "address": address, "numberphone": phone, "fax": fax, "email": mail, "Image": image, "description": description }, function () {
+                swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 20000, showConfirmButton: false });
+                window.location.reload(true);
+            })
+        }
+    });
+});

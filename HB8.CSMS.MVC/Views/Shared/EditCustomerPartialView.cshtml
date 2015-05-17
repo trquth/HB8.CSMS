@@ -74,7 +74,7 @@
                     <div class="form-group">
                         <label class="control-label col-lg-2">Tên Khách hàng:</label>
                         <div class="col-lg-10">
-                            @Html.HiddenFor(x => x.CustID)
+                            @Html.HiddenFor(x => x.CustID, new { @id= "Id"})
                             @Html.TextBoxFor(x => x.CustName, new { @class = "form-control", @data_rule_required = "true", @data_msg_required = "Tên khách hàng không được rỗng", @data_rule_maxlength = "50", @data_msg_maxlength = "Tên khách hàng tối đa 50 kí tự", @data_rule_minlength = "10", @data_msg_minlength = "Tên khách hàng tối thiểu 10 kí tự", @id = "customerName" })
                             @Html.ValidationMessageFor(x => x.CustName, String.Empty, new { @class = "error" })
 
@@ -93,7 +93,6 @@
                         <div class="col-lg-10">
                             @Html.TextBoxFor(x => x.Address, new { @class = "form-control", @data_rule_maxlength = "100", @data_msg_maxlength = "Địa chỉ quá dài", @data_rule_required = "true", @data_msg_required = "Địa chỉ không được rỗng", @data_rule_minlength = "2", @data_msg_minlength = "Địa chỉ quá ngắn", @id = "address", })
                             @Html.ValidationMessageFor(x => x.Address, String.Empty, new { @class = "error" })
-
                         </div>
                     </div>
                     <div class="form-group">
@@ -120,12 +119,12 @@
                     <div class="form-group">
                         <label class="control-label col-lg-2">Trạng thái:</label>
                         <div class="col-lg-3">
-                            <select id="ddlPosition" class="form-control" data-rule-required="true" data-msg-required="Trạng thái không được rỗng">
+                            <select id="ddlStatus" class="form-control" data-rule-required="true" data-msg-required="Trạng thái không được rỗng">
                                 <option selected="selected" value="">--Chọn trạng thái--</option>
                             </select>
                         </div>
                     </div>
-                    @*<div class="form-group">
+                    <div class="form-group">
                         <div class="col-lg-12">
                             <button type="button" class="btn btn-default pull-right" id="btnExtra">
                                 Thông tin mở rộng   <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
@@ -133,7 +132,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group extra" id="">
+                    @*<div class="form-group extra" id="">
                         <label class="control-label col-lg-2">Số ngày quá hạn thanh toán:</label>
                         <div class="col-lg-3">
                             @Html.TextBoxFor(x => x.Overdue, new { @class = "form-control", @data_rule_required = "true", @data_msg_required = "Số ngày quá hạn thanh toán không được rỗng", @data_val_number = "Số ngày quá hạn thanh toán là một số", @data_rule_min = "0", @data_msg_min = "Số ngày quá hạn thanh toán tối thiểu là 0", @data_rule_max = "30", @data_msg_max = "Số ngày quá hạn thanh toán tối đa là 30", @id = "overdue" })
@@ -161,7 +160,7 @@
                             @Html.TextBoxFor(x => x.DueAmt, new { @class = "form-control", @data_val_number = "Nợ đến hạn là một số", @id = "dueamt" })
                             @Html.ValidationMessageFor(x => x.DueAmt, String.Empty, new { @class = "error" })
                         </div>
-                    </div>
+                    </div>*@
 
                     <div class="form-group extra">
                         <label class="control-label col-lg-2">Miêu tả:</label>
@@ -169,10 +168,10 @@
                             @Html.TextAreaFor(x => x.Description, new { @class = "form-control", @data_rule_maxlength = "100", @data_msg_maxlength = "Miêu tả tối đa 50 kí tự", @data_rule_minlength = "10", @data_msg_minlength = "Miêu tả tối thiểu 10 kí tự", @id = "description" })
                             @Html.ValidationMessageFor(x => x.Description, String.Empty, new { @class = "error" })
                         </div>
-                    </div>*@
+                    </div>
                     <div class="form-group">
                         <div class="col-lg-offset-2 col-lg-10">
-                            <input type="button" class="btn btn-primary submit" value="Cập nhật" id="create-button">
+                            <input type="button" class="btn btn-primary submit" value="Cập nhật" id="updateCustomer-button">
                             <input type="button" class="btn btn-primary " id="buttonExitEdit" value="Thoát">
                         </div>
                     </div>

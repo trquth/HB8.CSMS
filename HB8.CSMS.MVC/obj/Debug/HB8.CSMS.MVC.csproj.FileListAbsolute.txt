@@ -9,9 +9,6 @@ D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\HB8.CSMS.DAL.dll
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\Microsoft.Web.Infrastructure.dll
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\Newtonsoft.Json.dll
-D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\Rhino.Mocks.dll
-D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\StructureMap.AutoMocking.dll
-D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\StructureMap.dll
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\System.Web.Mvc.dll
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\System.Web.Optimization.dll
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\System.Web.Providers.dll

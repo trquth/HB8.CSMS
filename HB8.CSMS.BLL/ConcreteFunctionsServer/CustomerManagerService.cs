@@ -25,11 +25,7 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             model.Address = customer.Address;
             model.Phone = customer.Phone;
             model.Fax = customer.Fax;
-            model.Email = customer.Email;
-            model.Overdue = customer.Overdue;
-            model.Amount = customer.Amount;
-            model.OverdueAmt = customer.OverdueAmt;
-            model.DueAmt = customer.DueAmt;
+            model.Email = customer.Email;         
             model.StatusId = customer.StatusID;
             model.Description = customer.Description;
             model.BirthDate = customer.BirthDate;
@@ -55,10 +51,6 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             model.Phone = customer.Phone;
             model.Fax = customer.Fax;
             model.Email = customer.Email;
-            model.Overdue = customer.Overdue;
-            model.Amount = customer.Amount;
-            model.OverdueAmt = customer.OverdueAmt;
-            model.DueAmt = customer.DueAmt;
             model.Status = model.Status;
             model.Description = model.Description;
             model.BirthDate = model.BirthDate;
@@ -79,37 +71,39 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
         {
             return context.Status.GetAllItem().ToList();
         }
-
+        #region Ghi chu
         /// <summary>
         /// Lay ra nguoi khach hang tiep theo de show
         /// </summary>
         /// <param name="id"></param>
         /// <param name="isHistoryBack"></param>
         /// <returns></returns>
-        public DomainModels.CustomerDomain GetNextCustomerTopList(string id, bool isHistoryBack)
-        {
-            var model = new CustomerDomain();
-            if (isHistoryBack)
-            {
-                var customer = context.Customers.GetItemById(id);
-                model.Image = customer.Image;
-                model.CustName = customer.CustName;
-                model.Address = customer.Address;
-                model.Phone = customer.Phone;
-                return model;
-            }
-            else
-            {
-                return model;
-            }
-        }
+      
+        //public DomainModels.CustomerDomain GetNextCustomerTopList(string id, bool isHistoryBack)
+        //{
+        //    var model = new CustomerDomain();
+        //    if (isHistoryBack)
+        //    {
+        //        var customer = context.Customers.GetItemById(id);
+        //        model.Image = customer.Image;
+        //        model.CustName = customer.CustName;
+        //        model.Address = customer.Address;
+        //        model.Phone = customer.Phone;
+        //        return model;
+        //    }
+        //    else
+        //    {
+        //        return model;
+        //    }
+        //}
 
-
+        #endregion
         CustomerDomain ICustomerManagerService.GetCustomerById(string id)
         {
             var model = context.Customers.GetItemById(id);
             var customer = new CustomerDomain();
             customer.Image = model.Image;
+            customer.CustID = model.CustID;
             customer.CustName = model.CustName;
             customer.Address = model.Address;
             customer.Phone = model.Phone;
