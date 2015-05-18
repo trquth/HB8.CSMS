@@ -8,16 +8,16 @@
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
 @*<script type="text/javascript">
-    $(document).ready(function () {
-        $("#buttonExitEdit").button().click(function () {
-            $('.buttonEdit').prop("disabled", false);
-            $('.buttonDelete').prop("disabled", false);
-            alert("vao day nut exit");
-            $("#editFormCustomer").dialog("close");
-        })
+        $(document).ready(function () {
+            $("#buttonExitEdit").button().click(function () {
+                $('.buttonEdit').prop("disabled", false);
+                $('.buttonDelete').prop("disabled", false);
+                alert("vao day nut exit");
+                $("#editFormCustomer").dialog("close");
+            })
 
-    });
-</script>*@
+        });
+    </script>*@
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -55,10 +55,10 @@
         var count = parseInt($('#count').val());
         var pagesize = parseInt($('#pagesize').val());
         $("#btnload").click(function () {
-            var flag =$("#btnGirdView").attr("value");
+            var flag = $("#btnGirdView").attr("value");
             if (flag == 1) {
                 $("#btnGirdView").val("");
-                page = 0;             
+                page = 0;
             } else {
                 if (page > -1 && !_inCallback) {
                     _inCallback = true;
@@ -109,7 +109,22 @@
         });
     });
 </script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#buttonnext").click(function () {
+            var id = $("#getId").val();
+            alert(id);
+            $.ajax({
+                url: '/CustomerManager/NextCustomer',
+                data: { id: id },
+                success: function (data) {
+                }
+            });
+        });
+    });
 
+
+</script>
 <div class="row">
     <div class="col-md-12">
         <nav role="navigation" class="navbar navbar-default">
@@ -142,6 +157,10 @@
 
                     <div class="col-md-4">
                         <div class=" navbar-right pull-right" id="paging">
+                            <ul class="pager">
+                                <li class="previous"><a href="javascript:;" id="buttonnext"><span aria-hidden="true">&larr;</span> Older</a></li>
+                                <li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
+                            </ul>
                         </div>
                     </div>
 

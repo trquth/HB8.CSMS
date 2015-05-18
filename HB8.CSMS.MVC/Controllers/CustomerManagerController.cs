@@ -161,6 +161,7 @@ namespace HB8.CSMS.MVC.Controllers
         {
             var customer = new CustomerModel();
             var model = customerService.GetCustomerById(custId);
+            customer.CustID = model.CustID;
             customer.Image = model.Image;
             customer.CustName = model.CustName;
             customer.Address = model.Address;
@@ -369,6 +370,22 @@ namespace HB8.CSMS.MVC.Controllers
         //}
         #endregion
         #region Code xu li Next va Privous 
+        public string FindNextID(string id)
+        {
+            string nextId = customerService.GetListCustomers().SkipWhile(x => x.CustID != id).Skip(1).First().CustID.ToString();
+            return nextId;
+        }
+        public string FindPreviousID(string id)
+        {
+            string previousId = customerService.GetListCustomers().TakeWhile(x => x.CustID != id).Last().CustID.ToString();
+            return previousId;
+        }
+        public ActionResult NextCustomer(string id)
+        {
+            string nextId = FindNextID(id);
+            string previousId = FindPreviousID(id);
+            return View();
+        }
         
         #endregion
 
