@@ -9,6 +9,7 @@ $(document).ready(function () {
         dataType: "json",
         success: function (data) {
             $.each(data, function (key, value) {
+                $("#ddlPosition").empty();
                 $("#ddlPosition").append($("<option></option>").val(value.UserId).html(value.UserName));
             });
         },
@@ -133,10 +134,10 @@ $(document).ready(function () {
 $(document).ready(function () {
     $("#updateCustomer-button").click(function () {
         $(this).attr('type', 'button');
+        var page = $(".currentpage").text();
         var id = $("#Id").val();
         var name = $("#customerName").val();
         var date = $("#birthdatepicker").val();
-        alert(date);
         var address = $("#address").val();
         var phone = $("#numberphone").val();
         var fax = $("#fax").val();
@@ -150,10 +151,24 @@ $(document).ready(function () {
             //$("#customerform").submit();
         } else {
             $("#editFormCustomer").dialog("close");
-            $.post('/CustomerManager/EditCustomer', { "CustID": id, "CustName": name, "BirthDate": date, "StatusId": status, "address": address, "numberphone": phone, "fax": fax, "email": mail, "Image": image, "description": description }, function () {
-                swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 20000, showConfirmButton: false });
-                window.location.reload(true);
+            $.post('/CustomerManager/EditCustomer', { "CustID": id, "CustName": name, "BirthDate": date, "StatusId": status, "address": address, "Phone": phone, "fax": fax, "email": mail, "Image": image, "description": description }, function () {
+                swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
+                $("#person-list").empty();
+                //window.location.reload(true);
+                $.ajax({
+                    url: "/CustomerManager/CallBackCustomerPartialView",
+                    type: 'Get',
+                    data: { page: page},
+                    success: function (data) {
+                        $("#person-list").empty();
+
+                        $("#person-list").append(data);
+                        $(".gridView").hide();
+                        $("#listView").show();
+                    }
+                });
             })
+          
         }
     });
 });

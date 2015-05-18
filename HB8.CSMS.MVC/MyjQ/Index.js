@@ -192,7 +192,7 @@ $("#btnGirdView").button().click(function () {
         },
     });  
 });
-//Goi ra form EDIT cho nhan vien
+//Goi ra form EDIT cho CUSTOMER
 $(".buttonEditForCustomer").button().click(function () {
     // Lấy về Id và gán cho biến selectedId 
     var selectedId = $(this).parents('tr:first').children('td:first').children('input:first').attr('value');
@@ -219,7 +219,7 @@ $(".buttonEditForCustomer").button().click(function () {
 $("#editFormCustomer").dialog({
     autoOpen: false,
     height: 400,
-    width: 1400,
+    width: 1200,
     resizable: false,
     modal: true,
     open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },

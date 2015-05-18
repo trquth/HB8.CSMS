@@ -12,5 +12,7 @@ namespace HB8.CSMS.MVC.Models.Paging
         public int CurrentPage { get; set; }
         public int Count { get; set; }
         public int PageSize { get; set; }
+        public string NextID { get; set; }
+        public string PrevousID { get; set; }
     }
 }

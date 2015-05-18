@@ -122,7 +122,7 @@ namespace HB8.CSMS.MVC.Controllers
                                       CustName = a.CustName,
                                       Address = a.Address,
                                       Phone = a.Phone,
-                                      Email =a.Email
+                                      Email = a.Email
                                   }).OrderBy(x => x.CustName).Skip(pageSize * (page - 1)).Take(pageSize).ToList();
             customer.Data = listOfCustomer;
             customer.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
@@ -130,6 +130,7 @@ namespace HB8.CSMS.MVC.Controllers
             //return Json(customer, JsonRequestBehavior.AllowGet); //thu tra ve JSON xu li
             return PartialView("CustomerPartialView", customer);
         }
+
         /// <summary>
         /// Nhan ve danh sach thong tin CUSTOMER de hien thi
         /// </summary>
@@ -277,6 +278,44 @@ namespace HB8.CSMS.MVC.Controllers
             var model = GetCustomerByCustomerId(id);
             return PartialView("EditCustomerPartialView", model);
         }
+        /// <summary>
+        /// Goi lai PartialView sau khi edit CUSTOMER de show lai
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        public ActionResult CallBackCustomerPartialView(int page)
+        {
+            return PartialView("CustomerPartialView", GetCustomerAfterEdit(page));
+        }
+        #region * Y tuong
+        //Luc dau dinh lam la se dung JQUERY thay doi gia tri trong cac cot cua LIST thoi
+        #endregion
+        /// <summary>
+        /// Tra ve doi tuong sau khi da sua
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public PagedData<CustomerModel> GetCustomerAfterEdit(int page)
+        {
+            var customer = new PagedData<CustomerModel>();
+            var skipRecords = (page-1) * pageSize;//chi den du lieu trong phan phan trang truoc do
+            var model = customerService.GetListCustomers();
+            int count = model.Count();
+            var listOfCustomer = (from a in model
+                                  select new CustomerModel
+                                  {
+                                      CustID = a.CustID,
+                                      CustName = a.CustName,
+                                      Address = a.Address,
+                                      Phone = a.Phone
+                                  }).OrderBy(x => x.CustName).Skip(skipRecords).Take(pageSize).ToList();
+            customer.Data = listOfCustomer;
+            customer.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
+            customer.Count = count;
+            customer.PageSize = pageSize;
+            customer.CurrentPage = page;//chi trang hien tai dang sua
+            return customer;
+        }
         #endregion
         /// <summary>
         /// Goi form  them khach hang
@@ -328,6 +367,9 @@ namespace HB8.CSMS.MVC.Controllers
         //    customer.CurrentPage = 1;
         //    return View(customer);
         //}
+        #endregion
+        #region Code xu li Next va Privous 
+        
         #endregion
 
     }

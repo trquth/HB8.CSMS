@@ -13,7 +13,7 @@ namespace HB8.CSMS.BLL.DomainModels
         {
             CustID = id;
             CustName = name;
-            Address = name;
+            Address = address;
             Phone = phone;
             Fax = fax;
             Email = email;     

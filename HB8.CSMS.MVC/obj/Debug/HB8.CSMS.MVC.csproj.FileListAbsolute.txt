@@ -20,7 +20,6 @@ D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\WebGrease.dll
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\HB8.CSMS.BLL.pdb
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\HB8.CSMS.DAL.pdb
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\StructureMap.xml
-D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\StructureMap.AutoMocking.xml
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\EntityFramework.xml
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\Newtonsoft.Json.xml
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\System.Web.Mvc.xml
@@ -36,3 +35,4 @@ D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\PagedList.dll
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\PagedList.Mvc.dll
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\PagedList.xml
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\PagedList.Mvc.xml
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\StructureMap.dll
