@@ -1,4 +1,32 @@
 ﻿@model HB8.CSMS.MVC.Models.Customer.CustomerModel
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#buttonnext").click(function () {
+            var id = $("#getId").val();
+            $.ajax({
+                url: '/CustomerManager/NextCustomer',
+                data: { id: id },
+                success: function (data) {
+                    $("#person-list").html(data);
+                }
+            });
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#buttonprevious").click(function () {
+            var id = $("#getId").val();
+            $.ajax({
+                url: '/CustomerManager/PreviousCustomer',
+                data: { id: id },
+                success: function (data) {
+                    $("#person-list").html(data);
+                }
+            });
+        });
+    });
+</script>
 <div class="row">
     <div class="col-md-3">
         <a href="#">
@@ -6,7 +34,7 @@
         </a>
     </div>
     <div class="col-md-3">
-        <input id="getId" type="hidden" value="@Model.CustID"/>
+        <input id="getId" type="hidden" value="@Model.CustID" />
         <h3> <b>Tên khách hàng: </b></h3>
         <h3><b> Ngày sinh:</b> </h3>
     </div>

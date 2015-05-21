@@ -25,6 +25,8 @@
         $("#showspinnerForm").hide();
         $("#showLoading").hide();
         $(".pagination").hide();
+        $("#buttonprevious").hide();
+        $("#buttonnext").hide();
     });
 </script>
 @*<script type="text/javascript">
@@ -109,22 +111,8 @@
         });
     });
 </script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#buttonnext").click(function () {
-            var id = $("#getId").val();
-            alert(id);
-            $.ajax({
-                url: '/CustomerManager/NextCustomer',
-                data: { id: id },
-                success: function (data) {
-                }
-            });
-        });
-    });
 
 
-</script>
 <div class="row">
     <div class="col-md-12">
         <nav role="navigation" class="navbar navbar-default">
@@ -158,8 +146,8 @@
                     <div class="col-md-4">
                         <div class=" navbar-right pull-right" id="paging">
                             <ul class="pager">
-                                <li class="previous"><a href="javascript:;" id="buttonnext"><span aria-hidden="true">&larr;</span> Older</a></li>
-                                <li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
+                                <li class="previous"><a href="javascript:;" id="buttonprevious"><span aria-hidden="true">&larr;</span> Trước</a></li>
+                                <li class="next"><a href="javascript:;" id="buttonnext">Sau <span aria-hidden="true">&rarr;</span></a></li>
                             </ul>
                         </div>
                     </div>
@@ -218,5 +206,4 @@
         </div>
     </div>
 </div>
-@*<script src="~/Scripts/jquery-ui-1.11.4.js"></script>*@
 <script src="~/MyjQ/Index.js" type="text/javascript"></script>

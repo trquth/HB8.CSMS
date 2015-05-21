@@ -103,8 +103,57 @@
         });
     });
 
-</script>*@
+</script>
+<script src="~/MyjQ/edit.partialview.js" type="text/javascript"></script>*@
 <script src="~/MyjQ/edit.partialview.js" type="text/javascript"></script>
+<script type="text/javascript">
+    //Do du lieu vao dropdowlist
+    $(document).ready(function () {
+        $("#birthdatepicker").datepicker();//Hien lich cho nguoi dung chon ngay thang nam
+        $.ajax({
+            url: "/CustomerManager/ListStatus",
+            type: 'Get',
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                $.each(data, function (key, value) {
+                    $("#ddlPosition").append($("<option></option>").val(value.StatusId).html(value.StatusName));
+                });
+            },
+            error: function (result) {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
+    })
+</script>
+<script type="text/javascript">
+    //Kiem tra thong tin nhap vao dung hay sai
+    $(document).ready(function () {
+        $('#customerform').validate();
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".extra").hide();
+        $("#btnExtra").on('click', function (e) {
+            $(this).find('span').toggleClass('glyphicon glyphicon-triangle-bottom  glyphicon glyphicon-triangle-top');
+            $(".extra").toggle("slow");
+        });
+    });
+</script>
+@*<script type="text/javascript">
+        $(document).ready(function () {
+            $("#buttonExitEdit").button().click(function () {
+                $('.buttonEdit').prop("disabled", false);
+                $('.buttonDelete').prop("disabled", false);
+                alert("vao day nut exit");
+                $("#editFormCustomer").dialog("close");
+
+            })
+
+        });
+    </script>*@
 <div class="panel panel-warning">
     <div class="panel-heading"><h5>Sửa thông tin nhân viên</h5></div>
     <div class="panel-body">

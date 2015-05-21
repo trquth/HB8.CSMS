@@ -157,6 +157,14 @@ namespace HB8.CSMS.MVC.Controllers
             return customer;
         }
 
+     
+        #endregion
+        #region Code xu li hien thi thong tin chi tiet cua CUSTOMER
+        /// <summary>
+        /// Lay thong tin chi tiet cua khach hang dua vao Id
+        /// </summary>
+        /// <param name="custId"></param>
+        /// <returns></returns>
         private CustomerModel GetCustomerDetail(string custId)
         {
             var customer = new CustomerModel();
@@ -174,8 +182,6 @@ namespace HB8.CSMS.MVC.Controllers
             customer.CreateDate = model.CreateDate;
             return customer;
         }
-        #endregion
-        #region Code xu li hien thi thong tin chi tiet cua CUSTOMER
         /// <summary>
         /// Hien thi thong tin chi tiet cua CUSTOMER
         /// </summary>
@@ -299,7 +305,7 @@ namespace HB8.CSMS.MVC.Controllers
         public PagedData<CustomerModel> GetCustomerAfterEdit(int page)
         {
             var customer = new PagedData<CustomerModel>();
-            var skipRecords = (page-1) * pageSize;//chi den du lieu trong phan phan trang truoc do
+            var skipRecords = (page - 1) * pageSize;//chi den du lieu trong phan phan trang truoc do
             var model = customerService.GetListCustomers();
             int count = model.Count();
             var listOfCustomer = (from a in model
@@ -369,24 +375,62 @@ namespace HB8.CSMS.MVC.Controllers
         //    return View(customer);
         //}
         #endregion
-        #region Code xu li Next va Privous 
+       
+        #region Code xu li Next va Privous
+        /// <summary>
+        /// Lay Ma khach hang tiep theo
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public string FindNextID(string id)
         {
-            string nextId = customerService.GetListCustomers().SkipWhile(x => x.CustID != id).Skip(1).First().CustID.ToString();
-            return nextId;
+            string lastId = customerService.GetListCustomers().LastOrDefault().CustID.ToString();
+            //Kiem tra xem MKH vua nhan co phai la MKH cuoi cung k
+            if (lastId == id)
+            {
+                return id;
+            }
+            else
+            {
+                string nextId = customerService.GetListCustomers().SkipWhile(x => x.CustID != id).Skip(1).FirstOrDefault().CustID.ToString();
+                return nextId;
+            }          
         }
+        /// <summary>
+        /// Lay ma khach hang truoc do
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public string FindPreviousID(string id)
         {
-            string previousId = customerService.GetListCustomers().TakeWhile(x => x.CustID != id).Last().CustID.ToString();
-            return previousId;
+            var startId = customerService.GetListCustomers().FirstOrDefault().CustID.ToString();
+            if (startId==id)
+            {
+                return startId;
+            }
+            else
+            {
+                string previousId = customerService.GetListCustomers().TakeWhile(x => x.CustID != id).LastOrDefault().CustID.ToString();
+                return previousId;
+            }         
         }
+        /// <summary>
+        /// Hien thi khach hang tiep theo
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult NextCustomer(string id)
         {
             string nextId = FindNextID(id);
-            string previousId = FindPreviousID(id);
-            return View();
+            var model = GetCustomerDetail(nextId);
+            return PartialView("DetailCustomerParitalView", model);
         }
-        
+        public ActionResult PreviousCustomer(string id)
+        {
+            string previousId = FindPreviousID(id);
+            var model = GetCustomerDetail(previousId);
+            return PartialView("DetailCustomerParitalView", model);
+        }
         #endregion
 
     }
