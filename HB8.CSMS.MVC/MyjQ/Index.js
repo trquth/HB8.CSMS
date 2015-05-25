@@ -2,15 +2,19 @@
 //PHAN DANH CHO STAFF
 //**************************************************************************************//
 var selectedId = 0;
+var page = 0;
 $(document).ready(function () {
     $('.buttonEdit').prop("disabled", false);
     $('.buttonCreate').prop("disabled", false);
     $('.buttonDelete').prop("disabled", false);
 
 });
+//An di nhung thu khong can thiet khi load vao page
 $(document).ready(function () {
     $(".itemIdClass").hide();
     $("#deleteForm").hide();
+    $("#buttonprevious").hide();//An di 2 nut Next va Previous
+    $("#buttonnext").hide();
 
 });
 //jQueryUI method to create dialog box
@@ -155,6 +159,33 @@ $(".okDelete").button().click(function () {
     });
 });
 
+//Dung de hien thi thong tin dang GRID 
+$(document).ready(function () {
+    var _inCallback = false;
+    var numberPage = $(".getnumberpages").val();
+    var pageSize = $(".pagesize").val();
+    $("#btnloadstaff").click(function () {
+        if (page > -1 && !_inCallback) {
+            _inCallback = true;
+            page++;
+            $.get("/StaffManager/ListStaff/" + page, function (data) {
+                if (data != "") {
+                    var value = (pageSize * (page));//Tinh so nhan vien con lai 
+                    $("#btnloadstaff").text('Còn ' + value + ' nhân viên')
+                    $("#staff-list").append(data);
+                    if (page == numberPage - 1) {
+                        $("#btnloadstaff").hide();
+                    }
+                }
+                else {
+                    page = -1;
+                }
+                _inCallback = false;
+                $("#showLoading").dialog("open");
+            });
+        }
+    });
+});
 
 //********************************************************************************************//
 //PHAN JS DANH CHO CUSTOMER

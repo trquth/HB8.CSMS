@@ -8,12 +8,10 @@ namespace HB8.CSMS.DAL.Models
         public Unit()
         {
             this.Inventories = new List<Inventory>();
-            this.Inventories1 = new List<Inventory>();
         }
 
         public int UnitID { get; set; }
         public string UnitName { get; set; }
         public virtual ICollection<Inventory> Inventories { get; set; }
-        public virtual ICollection<Inventory> Inventories1 { get; set; }
     }
 }

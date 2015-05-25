@@ -34,8 +34,7 @@ namespace HB8.CSMS.DAL.Models.Mapping
             this.Property(t => t.InvtID).HasColumnName("InvtID");
             this.Property(t => t.InvtName).HasColumnName("InvtName");
             this.Property(t => t.ClassName).HasColumnName("ClassName");
-            this.Property(t => t.UnitID_T).HasColumnName("UnitID_T");
-            this.Property(t => t.UnitID_L).HasColumnName("UnitID_L");
+            this.Property(t => t.UnitID).HasColumnName("UnitID");
             this.Property(t => t.UnitRate).HasColumnName("UnitRate");
             this.Property(t => t.SalesPriceT).HasColumnName("SalesPriceT");
             this.Property(t => t.SalesPriceL).HasColumnName("SalesPriceL");
@@ -47,10 +46,7 @@ namespace HB8.CSMS.DAL.Models.Mapping
             // Relationships
             this.HasOptional(t => t.Unit)
                 .WithMany(t => t.Inventories)
-                .HasForeignKey(d => d.UnitID_L);
-            this.HasOptional(t => t.Unit1)
-                .WithMany(t => t.Inventories1)
-                .HasForeignKey(d => d.UnitID_T);
+                .HasForeignKey(d => d.UnitID);
 
         }
     }

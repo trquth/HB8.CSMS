@@ -31,9 +31,6 @@ namespace HB8.CSMS.DAL.Models.Mapping
             this.Property(t => t.Amount).HasColumnName("Amount");
 
             // Relationships
-            this.HasOptional(t => t.Inventory)
-                .WithMany(t => t.StkTransDetails)
-                .HasForeignKey(d => d.InvtID);
             this.HasOptional(t => t.StockTransfer)
                 .WithMany(t => t.StkTransDetails)
                 .HasForeignKey(d => d.TransID);

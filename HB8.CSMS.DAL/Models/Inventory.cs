@@ -9,15 +9,13 @@ namespace HB8.CSMS.DAL.Models
         {
             this.BillPurchaseOrdDetails = new List<BillPurchaseOrdDetail>();
             this.BillSlsOrderDetails = new List<BillSlsOrderDetail>();
-            this.StkTransDetails = new List<StkTransDetail>();
             this.StockRequisitionDetails = new List<StockRequisitionDetail>();
         }
 
         public string InvtID { get; set; }
         public string InvtName { get; set; }
         public string ClassName { get; set; }
-        public Nullable<int> UnitID_T { get; set; }
-        public Nullable<int> UnitID_L { get; set; }
+        public Nullable<int> UnitID { get; set; }
         public Nullable<int> UnitRate { get; set; }
         public decimal SalesPriceT { get; set; }
         public decimal SalesPriceL { get; set; }
@@ -28,8 +26,6 @@ namespace HB8.CSMS.DAL.Models
         public virtual ICollection<BillPurchaseOrdDetail> BillPurchaseOrdDetails { get; set; }
         public virtual ICollection<BillSlsOrderDetail> BillSlsOrderDetails { get; set; }
         public virtual Unit Unit { get; set; }
-        public virtual Unit Unit1 { get; set; }
-        public virtual ICollection<StkTransDetail> StkTransDetails { get; set; }
         public virtual ICollection<StockRequisitionDetail> StockRequisitionDetails { get; set; }
     }
 }

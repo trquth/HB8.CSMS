@@ -9,7 +9,6 @@ namespace HB8.CSMS.DAL.Models
         public string InvtID { get; set; }
         public int Qty { get; set; }
         public decimal Amount { get; set; }
-        public virtual Inventory Inventory { get; set; }
         public virtual StockTransfer StockTransfer { get; set; }
     }
 }

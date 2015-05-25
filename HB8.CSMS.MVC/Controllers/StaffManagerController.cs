@@ -10,16 +10,91 @@ using System.Web.Hosting;
 using System.Web.Mvc;
 using PagedList;
 using HB8.CSMS.BLL.DomainModels;
+using HB8.CSMS.MVC.Models.Paging;
 
 namespace HB8.CSMS.MVC.Controllers
 {
+
     public class StaffManagerController : Controller
     {
+        #region  Khai bao
+        public const int pageSize = 2;//So nhan vien duoc hien thi tren mot trang
         private IStaffManagerService staffService;
         public StaffManagerController(IStaffManagerService staffService)
         {
             this.staffService = staffService;
         }
+        #endregion
+
+        #region Code show danh sach nhan vien dang GRID VIEW
+        /// <summary>
+        /// Hien thi danh sach nhan vien dang GRID VIEW 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult ListStaff(int? id)
+        {
+            var staff = new PagedData<StaffModel>();
+            var page = id ?? 0;
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("LargeStaffPartialView", GetPaginatedStaffs(page));//Tra ve VIEW dang GRID 
+            }
+            var model = staffService.GetListStaff();
+            int count = model.Count();
+            var listOfStaff = (from a in model
+                                  select new StaffModel
+                                  {
+                                      ID = a.StaffID,
+                                      StaffName = a.StaffName,
+                                      NumberPhone = a.NumberPhone,
+                                      Address = a.Address
+                                  }).ToList();
+            staff.Data = listOfStaff.Take(pageSize);
+            staff.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
+            staff.CurrentPage = 1;
+            staff.Count = count;
+            staff.PageSize = pageSize;
+            return View("ListStaff", staff);
+        }
+        /// <summary>
+        /// Nhan ve danh sach thong tin STAFF de hien thi
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        private PagedData<StaffModel> GetPaginatedStaffs(int page)
+        {
+            var staff = new PagedData<StaffModel>();
+            var skipRecords = page * pageSize;
+            var model = staffService.GetListStaff();
+            int count = model.Count();
+            var listOfStaff = (from a in model
+                                  select new StaffModel
+                                  {
+                                      ID = a.StaffID,
+                                      StaffName = a.StaffName,   
+                                      Image =a.Image,
+                                      Address =a.Address,
+                                      NumberPhone =a.NumberPhone,
+                                      Email =a.Email
+                                  }).OrderBy(x => x.StaffName).Skip(skipRecords).Take(pageSize).ToList();
+            staff.Data = listOfStaff;
+            staff.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
+            staff.Count = count;
+            staff.PageSize = pageSize;
+            return staff;
+        }
+        /// <summary>
+        /// Hien thi danh sach nhan vien dang LIST VIEW
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ListStaffView()
+        {
+            var page = 0;
+            return View("ListStaffPartialView", GetPaginatedStaffs(page));
+        }
+        #endregion
+
         /// <summary>
         /// Trả về một danh sách các chức vụ dang JSON
         /// </summary>
@@ -77,17 +152,10 @@ namespace HB8.CSMS.MVC.Controllers
         }
         [HttpPost]
         public ViewResult CreateNewStaff(StaffModel staff)
-        {           
-            return View();
-        }
-        public ViewResult ListStaff(int? page)
         {
-            var model = ListAllStaff();
-            int numberPage = page ?? 1;
-            var onePageOfStaffs = model.ToPagedList(numberPage, 8);
-            ViewBag.OnePageOfStaffs = onePageOfStaffs;
             return View();
         }
+
         /// <summary>
         /// Lay ve danh sach nhan vien
         /// </summary>
