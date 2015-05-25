@@ -77,21 +77,30 @@ namespace HB8.CSMS.MVC.Controllers
                                       Address =a.Address,
                                       NumberPhone =a.NumberPhone,
                                       Email =a.Email
-                                  }).OrderBy(x => x.StaffName).Skip(skipRecords).Take(pageSize).ToList();
+                                  }).OrderBy(x=>x.StaffName).Skip(skipRecords).Take(pageSize).ToList();
             staff.Data = listOfStaff;
             staff.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
             staff.Count = count;
             staff.PageSize = pageSize;
+            staff.CurrentPage = page+1;
             return staff;
         }
         /// <summary>
         /// Hien thi danh sach nhan vien dang LIST VIEW
         /// </summary>
         /// <returns></returns>
-        public ActionResult ListStaffView()
+        public ActionResult ListStaffView(int? page)
         {
-            var page = 0;
-            return View("ListStaffPartialView", GetPaginatedStaffs(page));
+            var pageNumber =0;
+            if (page==null)
+            {
+                 pageNumber = page ?? 0;
+            }
+            else
+            {
+                 pageNumber =(int)page - 1;
+            }
+            return View("ListStaffPartialView", GetPaginatedStaffs(pageNumber));
         }
         #endregion
 

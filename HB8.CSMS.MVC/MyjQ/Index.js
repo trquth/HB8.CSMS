@@ -187,6 +187,75 @@ $(document).ready(function () {
     });
 });
 
+//Dung de hien thi thong tin dang LIST
+$(document).ready(function () {
+    $("#btnListView").click(function () {
+        $.ajax({
+            url: '/StaffManager/ListStaffView',
+            data: {},
+            type: 'GET',
+            success: function (data) {
+                $("#showLoading").dialog("close");
+                $("#staff-list").empty();
+                $("#btnloadstaff").hide();
+                $("#staff-list").append(data);
+               
+            },
+            beforeSend: function () {
+                $("#showLoading").dialog("open");
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        })
+    });
+});
+var opt = {
+    autoOpen: false,
+    modal: true,
+    height: 200,
+    width: 600,
+    resizable: false,
+    modal: true,
+    open: function (event, ui) {
+        $(".ui-dialog-titlebar-close").hide();
+        setTimeout("$('#showLoading').dialog('close')", 150);
+    },
+};
+//Hien thi danh sach khach hang dang list tung trang
+$(document).ready(function () {
+    $("#showLoading").dialog({
+        autoOpen: false,
+    });
+    $(".page-number").on('click', function () {
+        var page = parseInt($(this).html());
+        $.ajax({
+            url: '/StaffManager/ListStaffView',
+            data: { "page": page },
+            type: 'GET',
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                //$("#showLoading").dialog("close");
+                $("#staff-list").empty();
+                $("#staff-list").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+                //$("#showLoading").dialog("open");
+             
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
+       
+    });
+});
+
+
+
 //********************************************************************************************//
 //PHAN JS DANH CHO CUSTOMER
 //*******************************************************************************************//
@@ -557,148 +626,148 @@ $(document).ready(function () {
 //        }
 //    });
 //});
-$("#btnListView").button().click(function () {
-    $("#showLoading").dialog("open");
-    //$("#listView").show();
-    //$(".gridView").hide();
-    $(".pagination").show();
-    $("#btnload").hide();
-    $(".buttonEdit").hide();
-    $("#buttonnext").hide();
-    $("#buttonprevious").hide();
-    $.ajax({
-        url: "/CustomerManager/ListCustomer/",
-        type: 'Get',
-        success: function (data) {
-            $("#person-list").empty();
-            //var flag = $("#btnload").add('value');
-            //if (flag != "") {
-            //    $("#btnload").val("");
-            //}
-            //$("#btnGirdView").val("1");//danh dau xem biet la co click nut gridview lan nao chua        
-            $("#person-list").append(data);
-            $(".gridView").hide();
-            $("#listView").show();
-        },
-    });
-});
+//$("#btnListView").button().click(function () {
+//    $("#showLoading").dialog("open");
+//    //$("#listView").show();
+//    //$(".gridView").hide();
+//    $(".pagination").show();
+//    $("#btnload").hide();
+//    $(".buttonEdit").hide();
+//    $("#buttonnext").hide();
+//    $("#buttonprevious").hide();
+//    $.ajax({
+//        url: "/CustomerManager/ListCustomer/",
+//        type: 'Get',
+//        success: function (data) {
+//            $("#person-list").empty();
+//            //var flag = $("#btnload").add('value');
+//            //if (flag != "") {
+//            //    $("#btnload").val("");
+//            //}
+//            //$("#btnGirdView").val("1");//danh dau xem biet la co click nut gridview lan nao chua        
+//            $("#person-list").append(data);
+//            $(".gridView").hide();
+//            $("#listView").show();
+//        },
+//    });
+//});
 
-$("#btnGirdView").button().click(function () {
-    $("#showLoading").dialog("open");
-    $("#listView").hide();
-    $(".gridView").show();
-    $(".pagination").hide();
-    $(".buttonEdit").hide();
-    $("#buttonnext").hide();
-    $("#buttonprevious").hide();
-    //var flag = $("#btnload").attr('value');
-    //if (flag != "") {
-    //    $("#btnload").hide();
-    //} else {
-    //    $("#btnload").show();
-    //}
-    $.ajax({
-        url: "/CustomerManager/ListCustomer/",
-        type: 'Get',
-        success: function (data) {
-            $("#person-list").empty();
-            var flag = $("#btnload").add('value');
-            if (flag != "") {
-                $("#btnload").val("");
-            }
-            $("#btnGirdView").val("1");//danh dau xem biet la co click nut gridview lan nao chua
-            $("#btnload").show();
-            $("#btnload").text("Hiển thị thêm")
-            $("#person-list").append(data);
-        },
-    });
-});
-//Goi ra form EDIT cho CUSTOMER
-$(".buttonEditForCustomer").button().click(function () {
-    // Lấy về Id và gán cho biến selectedId 
-    var selectedId = $(this).parents('tr:first').children('td:first').children('input:first').attr('value');
-    // selectedStaffName = $(this).parents('tr:first').children('td:nth-child(3)').text().trim();
-    $.ajax({
-        // Gọi 
-        url: "/CustomerManager/EditCustomerPV",
-        data: { id: selectedId },
-        type: 'Get',
-        success: function (msg) {
-            $("#editFormCustomer").dialog("open");
-            $("#editFormCustomer").empty().append(msg);
-            //$("#createForm").hide();
-            //$(".buttonEdit").attr('disabled', 'disabled');
-            //$(".buttonDelete").attr('disabled', 'disabled');
-        },
-        error: function () {
-            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
-        }
-    });
-});
+//$("#btnGirdView").button().click(function () {
+//    $("#showLoading").dialog("open");
+//    $("#listView").hide();
+//    $(".gridView").show();
+//    $(".pagination").hide();
+//    $(".buttonEdit").hide();
+//    $("#buttonnext").hide();
+//    $("#buttonprevious").hide();
+//    //var flag = $("#btnload").attr('value');
+//    //if (flag != "") {
+//    //    $("#btnload").hide();
+//    //} else {
+//    //    $("#btnload").show();
+//    //}
+//    $.ajax({
+//        url: "/CustomerManager/ListCustomer/",
+//        type: 'Get',
+//        success: function (data) {
+//            $("#person-list").empty();
+//            var flag = $("#btnload").add('value');
+//            if (flag != "") {
+//                $("#btnload").val("");
+//            }
+//            $("#btnGirdView").val("1");//danh dau xem biet la co click nut gridview lan nao chua
+//            $("#btnload").show();
+//            $("#btnload").text("Hiển thị thêm")
+//            $("#person-list").append(data);
+//        },
+//    });
+//});
+////Goi ra form EDIT cho CUSTOMER
+//$(".buttonEditForCustomer").button().click(function () {
+//    // Lấy về Id và gán cho biến selectedId 
+//    var selectedId = $(this).parents('tr:first').children('td:first').children('input:first').attr('value');
+//    // selectedStaffName = $(this).parents('tr:first').children('td:nth-child(3)').text().trim();
+//    $.ajax({
+//        // Gọi 
+//        url: "/CustomerManager/EditCustomerPV",
+//        data: { id: selectedId },
+//        type: 'Get',
+//        success: function (msg) {
+//            $("#editFormCustomer").dialog("open");
+//            $("#editFormCustomer").empty().append(msg);
+//            //$("#createForm").hide();
+//            //$(".buttonEdit").attr('disabled', 'disabled');
+//            //$(".buttonDelete").attr('disabled', 'disabled');
+//        },
+//        error: function () {
+//            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+//        }
+//    });
+//});
 
-//jQueryUI hien FORM EDIT
-$("#editFormCustomer").dialog({
-    autoOpen: false,
-    height: 400,
-    width: 1200,
-    resizable: false,
-    modal: true,
-    open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
-});
+////jQueryUI hien FORM EDIT
+//$("#editFormCustomer").dialog({
+//    autoOpen: false,
+//    height: 400,
+//    width: 1200,
+//    resizable: false,
+//    modal: true,
+//    open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
+//});
 
-$(window).resize(function () {
-    $("#editFormCustomer").dialog("option", "position", { my: "center", at: "center", of: window });
-});
-
-
-$("#deleteFormCustomer").dialog({
-    autoOpen: false,
-    modal: true,
-    height: 200,
-    width: 600,
-    resizable: false,
-    modal: true,
-    open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
-});
-$(".buttonDelete").button().click(function () {
-    $(".buttonEdit").attr('disabled', 'disabled');
-    $(".buttonCreate").attr('disabled', 'disabled');
-    $(".buttonDelete").attr('disabled', 'disabled');
-    //Open the dialog box
-    $("#deleteForm").dialog("open");
-    //Get the TrainingId
-    selectedId = $(this).parents('tr:first').children('td:first').children('input:first').attr('value');
-});
-$(".buttonCloseDelete").button().click(function () {
-    $('.buttonEdit').prop("disabled", false);
-    $('.buttonCreate').prop("disabled", false);
-    $('.buttonDelete').prop("disabled", false);
-    //Open the dialog box
-    $("#deleteForm").dialog("close");
+//$(window).resize(function () {
+//    $("#editFormCustomer").dialog("option", "position", { my: "center", at: "center", of: window });
+//});
 
 
-});
-$(".okDelete").button().click(function () {
-    $('.buttonEdit').prop("disabled", false);
-    $('.buttonCreate').prop("disabled", false);
-    $('.buttonDelete').prop("disabled", false);
-    // Close the dialog box on Yes button is clicked
-    $("#deleteForm").dialog("close");
-    $.ajax({
-        // Call Delete action method
-        url: "/StaffManager/DeleteStaff",
-        data: { id: selectedId },
-        type: 'Get',
-        success: function (msg) {
+//$("#deleteFormCustomer").dialog({
+//    autoOpen: false,
+//    modal: true,
+//    height: 200,
+//    width: 600,
+//    resizable: false,
+//    modal: true,
+//    open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
+//});
+//$(".buttonDelete").button().click(function () {
+//    $(".buttonEdit").attr('disabled', 'disabled');
+//    $(".buttonCreate").attr('disabled', 'disabled');
+//    $(".buttonDelete").attr('disabled', 'disabled');
+//    //Open the dialog box
+//    $("#deleteForm").dialog("open");
+//    //Get the TrainingId
+//    selectedId = $(this).parents('tr:first').children('td:first').children('input:first').attr('value');
+//});
+//$(".buttonCloseDelete").button().click(function () {
+//    $('.buttonEdit').prop("disabled", false);
+//    $('.buttonCreate').prop("disabled", false);
+//    $('.buttonDelete').prop("disabled", false);
+//    //Open the dialog box
+//    $("#deleteForm").dialog("close");
 
-            window.location.reload(true);
-        },
-        beforeSend: function () {
-            //$("#showspinner").html("<center><i class='fa fa-spinner fa-spin fa-5x ' id='spinner'></i></center>").delay(10000000).fadeOut();
-            $("#showspinnerForm").dialog("open");
-        },
-        error: function (xhr) {
-            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
-        }
-    });
-});
+
+//});
+//$(".okDelete").button().click(function () {
+//    $('.buttonEdit').prop("disabled", false);
+//    $('.buttonCreate').prop("disabled", false);
+//    $('.buttonDelete').prop("disabled", false);
+//    // Close the dialog box on Yes button is clicked
+//    $("#deleteForm").dialog("close");
+//    $.ajax({
+//        // Call Delete action method
+//        url: "/StaffManager/DeleteStaff",
+//        data: { id: selectedId },
+//        type: 'Get',
+//        success: function (msg) {
+
+//            window.location.reload(true);
+//        },
+//        beforeSend: function () {
+//            //$("#showspinner").html("<center><i class='fa fa-spinner fa-spin fa-5x ' id='spinner'></i></center>").delay(10000000).fadeOut();
+//            $("#showspinnerForm").dialog("open");
+//        },
+//        error: function (xhr) {
+//            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+//        }
+//    });
+//});

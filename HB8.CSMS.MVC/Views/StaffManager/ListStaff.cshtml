@@ -5,23 +5,6 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#btnListView").click(function () {
-            $.ajax({
-                url: '/StaffManager/ListStaffView',
-                data: {},
-                success: function (data) {
-                    $("#staff-list").empty();
-                    alert(data)
-                    $("#staff-list").html(data);
-
-                    $("#btnloadstaff").hide();
-                }
-            });
-        });
-    });
-</script>
-<script type="text/javascript">
-    $(document).ready(function () {
         $("#btnLargeView").click(function () {
             $.ajax({
                 url: '/StaffManager/ListStaff',
@@ -41,6 +24,7 @@
         });
     });
 </script>
+
 <div class="row">
     <div class="col-md-12">
         <nav role="navigation" class="navbar navbar-default">
@@ -133,4 +117,3 @@
     </div>
 </div>
 <script src="~/MyjQ/Index.js"></script>
-<script src="~/Scripts/jquery-ui-1.11.4.js"></script>

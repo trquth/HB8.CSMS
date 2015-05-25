@@ -8,13 +8,13 @@ namespace HB8.CSMS.MVC
         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                          "~/js/bootstrap.js", "~/Scripts/jquery.validate.js", "~/Scripts/jquery.validate.unobtrusive.js", "~/Scripts/jquery-ui-1.11.4.js", "~/Scripts/jquery-1.9.1.js", "~/Scripts/sweetalert-{version}.js"));
+            bundles.Add(new ScriptBundle("~/bundles/jquery").Include( "~/Scripts/jquery-1.9.1.js",
+                          "~/js/bootstrap.js", "~/Scripts/jquery.validate.js", "~/Scripts/jquery.validate.unobtrusive.js", "~/Scripts/jquery-ui-1.11.4.js", "~/Scripts/sweetalert-{version}.js"));
             bundles.Add(new ScriptBundle("~/bundles/morris").Include(
                         "~/js/plugins/morris/morris-data.js", "~/js/plugins/morris/morris.js", "~/js/plugins/morris/raphael.min.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
-                        "~/Scripts/jquery-ui-{version}.js"));
+            //bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
+            //            "~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.unobtrusive*",
