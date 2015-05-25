@@ -2,29 +2,6 @@
     ViewBag.Title = "Trang quản trị nhân lực";
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#btnLargeView").click(function () {
-            $.ajax({
-                url: '/StaffManager/ListStaff',
-                data: {},
-                type: 'GET',
-                success: function (data) {
-                    $("#staff-list").empty();
-                    $("#staff-list").append(data);
-                },
-                beforeSend: function () {
-                    $("#showLoading").dialog("open");
-                },
-                error: function () {
-                    swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
-                }
-            })
-        });
-    });
-</script>
-
 <div class="row">
     <div class="col-md-12">
         <nav role="navigation" class="navbar navbar-default">
