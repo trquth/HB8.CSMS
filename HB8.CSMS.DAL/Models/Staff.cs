@@ -9,6 +9,7 @@ namespace HB8.CSMS.DAL.Models
         {
             this.BillPurchaseOrdDetails = new List<BillPurchaseOrdDetail>();
             this.BillSlsOrderDetails = new List<BillSlsOrderDetail>();
+            this.Inventories = new List<Inventory>();
             this.StockRequisitions = new List<StockRequisition>();
         }
 
@@ -23,6 +24,7 @@ namespace HB8.CSMS.DAL.Models
         public Nullable<System.DateTime> CreateDate { get; set; }
         public virtual ICollection<BillPurchaseOrdDetail> BillPurchaseOrdDetails { get; set; }
         public virtual ICollection<BillSlsOrderDetail> BillSlsOrderDetails { get; set; }
+        public virtual ICollection<Inventory> Inventories { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<StockRequisition> StockRequisitions { get; set; }
     }

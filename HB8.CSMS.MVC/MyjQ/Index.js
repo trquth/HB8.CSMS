@@ -2,7 +2,6 @@
 //PHAN DANH CHO STAFF
 //**************************************************************************************//
 var selectedId = 0;
-var page = 0;
 //Cau hinh dialog
 var opt = {
     autoOpen: false,
@@ -174,9 +173,10 @@ $(".okDelete").button().click(function () {
     });
 });
 
-//Dung de hien thi thong tin dang GRID 
+////Dung de hien thi thong tin dang GRID 
 $(document).ready(function () {
     var _inCallback = false;
+    var page = 0;
     var numberPage = $(".getnumberpages").val();
     var pageSize = $(".pagesize").val();
     $("#btnloadstaff").click(function () {
@@ -204,20 +204,25 @@ $(document).ready(function () {
 
 //Dung de hien thi thong tin dang LIST
 $(document).ready(function () {
+    $("#showLoading").dialog({
+        autoOpen: false,
+    });
     $("#btnListView").click(function () {
         $.ajax({
             url: '/StaffManager/ListStaffView',
             data: {},
             type: 'GET',
             success: function (data) {
-                $("#showLoading").dialog("close");
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
                 $("#staff-list").empty();
                 $("#btnloadstaff").hide();
                 $("#staff-list").append(data);
-               
+
             },
             beforeSend: function () {
-                $("#showLoading").dialog("open");
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
             },
             error: function () {
                 swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
@@ -245,13 +250,13 @@ $(document).ready(function () {
             },
             beforeSend: function () {
                 var theDialog = $("#showLoading").dialog(opt);
-                theDialog.dialog("open");            
+                theDialog.dialog("open");
             },
             error: function () {
                 swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
             }
         });
-       
+
     });
 });
 //Hien thi dang LARGE VIEW
@@ -261,21 +266,51 @@ $(document).ready(function () {
             autoOpen: false,
         });
         $.ajax({
-            url:'/StaffManager/ListStaff',
+            url: '/StaffManager/ListStaff',
             data: {},
             type: 'GET',
             success: function (data) {
-                $("#showLoading").dialog("close");
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
                 $("#staff-list").empty();
+                $("#btnloadstaff").show();
                 $("#staff-list").append(data);
             },
             beforeSend: function () {
-                $("#showLoading").dialog("open");
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
             },
             error: function () {
                 swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
             }
         })
+    });
+});
+
+//Hien thi chi tiet thong tin nhan vien
+$(document).ready(function () {
+    $(".detailstaff").on("click", function () {
+        var id = $(this).attr('value');
+        $.ajax({
+            url: '/StaffManager/DetailStaff',
+            data: { "staffId": id },
+            type: "Get",
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                $("#btnloadstaff").hide();
+                $("#staff-list").empty();
+                $("#staff-list").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
+
     });
 });
 

@@ -48,10 +48,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractRepositories\IClassRepository.cs" />
     <Compile Include="AbstractRepositories\ICustomerRepository.cs" />
+    <Compile Include="AbstractRepositories\IInventoryRepository.cs" />
+    <Compile Include="AbstractRepositories\IStatusInventroyRepository.cs" />
     <Compile Include="AbstractRepositories\IStatusRepository.cs" />
+    <Compile Include="AbstractRepositories\IUnitRepository.cs" />
+    <Compile Include="ConcreteFunctions\ClassRepository.cs" />
     <Compile Include="ConcreteFunctions\CustomerRepository.cs" />
+    <Compile Include="ConcreteFunctions\InventoryRepository.cs" />
+    <Compile Include="ConcreteFunctions\StatusInventoryRepository.cs" />
     <Compile Include="ConcreteFunctions\StatusRepository.cs" />
+    <Compile Include="ConcreteFunctions\UnitRepository.cs" />
     <Compile Include="ConcreteFunctions\UserRepository.cs" />
     <Compile Include="DBContext\IDALContext.cs" />
     <Compile Include="AbstractRepositories\IDataRepository.cs" />
@@ -60,6 +68,7 @@
     <Compile Include="Models\BillPurchaseOrder.cs" />
     <Compile Include="Models\BillSaleOrder.cs" />
     <Compile Include="Models\BillSlsOrderDetail.cs" />
+    <Compile Include="Models\Class.cs" />
     <Compile Include="Models\CSMSContext.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Inventory.cs" />
@@ -68,11 +77,13 @@
     <Compile Include="Models\Mapping\BillPurchaseOrderMap.cs" />
     <Compile Include="Models\Mapping\BillSaleOrderMap.cs" />
     <Compile Include="Models\Mapping\BillSlsOrderDetailMap.cs" />
+    <Compile Include="Models\Mapping\ClassMap.cs" />
     <Compile Include="Models\Mapping\CustomerMap.cs" />
     <Compile Include="Models\Mapping\InventoryMap.cs" />
     <Compile Include="Models\Mapping\InvoiceTypeMap.cs" />
     <Compile Include="Models\Mapping\PaymentMap.cs" />
     <Compile Include="Models\Mapping\StaffMap.cs" />
+    <Compile Include="Models\Mapping\StatusIventoryMap.cs" />
     <Compile Include="Models\Mapping\StatusMap.cs" />
     <Compile Include="Models\Mapping\StkTransDetailMap.cs" />
     <Compile Include="Models\Mapping\StockMap.cs" />
@@ -86,6 +97,7 @@
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\Staff.cs" />
     <Compile Include="Models\Status.cs" />
+    <Compile Include="Models\StatusIventory.cs" />
     <Compile Include="Models\StkTransDetail.cs" />
     <Compile Include="Models\Stock.cs" />
     <Compile Include="Models\StockRequisition.cs" />

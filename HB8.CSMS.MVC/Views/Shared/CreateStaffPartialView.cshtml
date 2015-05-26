@@ -160,7 +160,76 @@
         {
             @Html.ValidationSummary(true);
             <fieldset>
-                <div class="col-lg-2  ">
+                <div class="row">
+                    <div class="col-lg-2  ">
+                        <div id="imagePreview">
+                            <img class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" src="~/Images/no_image.jpg" />
+                        </div>
+                        <br />
+                        <br />
+                        <div class="col-lg-12">
+                            <span class="btn btn-success fileinput-button center-block" id="fix">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                <span>Thêm hình</span>
+                                <input id="uploadFile" type="file" name="fileupload" />
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        
+                            <label class="control-label col-lg-12 ">Mã Nhân viên:</label>
+       
+                        <input id="getId" type="hidden" value="" />
+                        <h3> <b>Tên nhân viên: </b></h3>
+                        <h3><b> Ngày sinh:</b> </h3>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="form-group ">                           
+                            <div class="col-lg-12">
+                                @Html.TextBoxFor(x => x.ID, new { @class = "form-control", @data_rule_maxlength = "5", @data_msg_maxlength = "Mã nhân viên tối đa 5 kí tự", @data_rule_minlength = "5", @data_msg_minlength = "Mã nhân viên it nhất 5 kí tự", @data_rule_required = "true", @data_msg_required = "Mã nhân viên không được rỗng", @data_rule_pattern = "[a-zA-z0-9]{5}", @data_msg_pattern = "Mã nhân viên không chứa kí tự đặc biệt", @id = "manv" })
+                                @Html.ValidationMessageFor(x => x.ID, String.Empty, new { @class = "error" })
+                            </div>
+                        </div>
+                        <h3> </h3>
+                    </div>
+                    <div class="col-md-12">
+                        <ul class="nav nav-tabs" data-tabs="tabs">
+                            <li class="active"><a data-toggle="tab" href="#staff"><h5>Thông tin nhân viên</h5> </a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="staff">
+                                <div class="col-md-8">
+                                    <h3>Thông tin liên hệ:</h3>
+                                    <div class="col-md-4">
+                                        <h4><b>Địa chỉ:</b></h4>
+                                        <h4><b>Số điện thoại: </b></h4>
+                                        <h4><b>Email:</b></h4>
+                                        <h4><b>Fax:</b></h4>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h4></h4>
+                                        <h4></h4>
+                                        <h4></h4>
+                                        <h4></h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <h3>Chức vụ:</h3>
+                                    <div class="col-md-4">
+                                        <h4><b>Chức vụ:</b></h4>
+                                    </div>
+                                    <div class="col-md-8">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                @*<div class="col-lg-2  ">
                     <div id="imagePreview">
                         <img class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" src="~/Images/no_image.jpg" />
                     </div>
@@ -173,7 +242,7 @@
                             <input id="uploadFile" type="file" name="fileupload" />
                         </span>
                     </div>
-                </div>
+                </div>*@
                 <div class="col-lg-10">
                     <div class="form-group ">
                         <label class="control-label col-lg-2">Mã Nhân viên:</label>

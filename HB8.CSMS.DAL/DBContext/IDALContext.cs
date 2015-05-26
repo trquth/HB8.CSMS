@@ -14,5 +14,9 @@ namespace HB8.CSMS.DAL.DBContext
         IUserRepository Users { get; }
         ICustomerRepository Customers { get; }
         IStatusRepository Status { get; }
+        IInventoryRepository Inventories { get; }
+        IUnitRepository Units { get; }
+        IClassRepository Classes { get; }
+        IStatusInventroyRepository StatusInvetories { get; }
     }
 }

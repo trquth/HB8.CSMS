@@ -245,9 +245,23 @@ namespace HB8.CSMS.MVC.Controllers
             var model = new StaffDomain(staff.ID, staff.UserId, staff.StaffName, staff.Image, staff.Address, staff.NumberPhone, staff.Email);
             staffService.CreateStaff(model);
         }
+        /// <summary>
+        /// Xoa thong tin nhan vien
+        /// </summary>
+        /// <param name="id"></param>
         public void DeleteStaff(string id)
         {
             staffService.DeleteStaff(id);
+        }
+        /// <summary>
+        /// Hien thong tin chi tiet cua nhan vien
+        /// </summary>
+        /// <param name="staffId"></param>
+        /// <returns></returns>
+        public ActionResult DetailStaff(string staffId)
+        {
+            var model = GetStaffByStaffId(staffId);
+            return View("DetailStaffPartialView", model);
         }
 
     }
