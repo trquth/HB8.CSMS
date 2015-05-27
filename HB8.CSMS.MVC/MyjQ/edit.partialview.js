@@ -1,5 +1,19 @@
-﻿
+﻿//*****************************************************************//
+//PHAN EDIT CUA NHAN VIEN
+//****************************************************************//
 //Do du lieu vao dropdowlist
+var opt = {
+    autoOpen: false,
+    modal: true,
+    height: 200,
+    width: 600,
+    resizable: false,
+    modal: true,
+    open: function (event, ui) {
+        $(".ui-dialog-titlebar-close").hide();
+        setTimeout("$('#showLoading').dialog('close')", 100);
+    },
+};
 $(document).ready(function () {
     $.ajax({
         url: "/StaffManager/ListPosition",
@@ -8,8 +22,7 @@ $(document).ready(function () {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
-            $.each(data, function (key, value) {
-                $("#ddlPosition").empty();
+            $.each(data, function (key, value) {              
                 $("#ddlPosition").append($("<option></option>").val(value.UserId).html(value.UserName));
             });
         },
@@ -24,7 +37,6 @@ $(document).ready(function () {
     $('#staffform').validate({
     });
 });
-
 
 $(document).ready(function () {
     $("#update-button").click(function () {
@@ -52,9 +64,25 @@ $(document).ready(function () {
 
 //Dung de dong diaglog chua form
 $("#buttonExitEdit").button().click(function () {
-    $('.buttonEdit').prop("disabled", false);
-    $('.buttonDelete').prop("disabled", false);
-    $("#editForm").dialog("close");
+    $.ajax({
+        url: '/StaffManager/ListStaff',
+        data: {},
+        type: 'GET',
+        success: function (data) {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("close");
+            $("#staff-list").empty();
+            $("#btnloadstaff").show();
+            $("#staff-list").append(data);
+        },
+        beforeSend: function () {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("open");
+        },
+        error: function () {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+    })
 })
 
 //Save hinh vao thu muc

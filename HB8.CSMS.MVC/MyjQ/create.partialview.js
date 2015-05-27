@@ -1,4 +1,18 @@
-﻿
+﻿//************************************************************//
+//PHAN DANH CHO NHAN VIEN
+//************************************************************//
+var opt = {
+    autoOpen: false,
+    modal: true,
+    height: 200,
+    width: 600,
+    resizable: false,
+    modal: true,
+    open: function (event, ui) {
+        $(".ui-dialog-titlebar-close").hide();
+        setTimeout("$('#showLoading').dialog('close')", 100);
+    },
+};
 //Do du lieu vao dropdowlist
 $(document).ready(function () {
     $.ajax({
@@ -137,10 +151,25 @@ $(document).ready(function () {
 
 //Dung de dong diaglog chua form
 $("#buttonExitCreate").button().click(function () {
-    $('.buttonEdit').prop("disabled", false);
-    $('.buttonDelete').prop("disabled", false);
-    $("#createForm").dialog("close");
-    window.location.reload(true);
+    $.ajax({
+        url: '/StaffManager/ListStaff',
+        data: {},
+        type: 'GET',
+        success: function (data) {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("close");
+            $("#staff-list").empty();
+            $("#btnloadstaff").show();
+            $("#staff-list").append(data);
+        },
+        beforeSend: function () {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("open");
+        },
+        error: function () {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+    })
 
 })
 

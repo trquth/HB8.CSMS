@@ -15,18 +15,23 @@ var opt = {
         setTimeout("$('#showLoading').dialog('close')", 100);
     },
 };
-$(document).ready(function () {
-    $('.buttonEdit').prop("disabled", false);
-    $('.buttonCreate').prop("disabled", false);
-    $('.buttonDelete').prop("disabled", false);
-
-});
+var optforDel = {
+    autoOpen: false,
+    modal: true,
+    height: 500,
+    width: 600,
+    resizable: false,
+    modal: true,
+    open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
+}
 //An di nhung thu khong can thiet khi load vao page
 $(document).ready(function () {
+    $("#buttonEditForStaff").hide();
     $(".itemIdClass").hide();
     $("#deleteForm").hide();
     $("#buttonprevious").hide();//An di 2 nut Next va Previous
     $("#buttonnext").hide();
+    $("#buttonDeleteForStaff").hide();
 
 });
 //jQueryUI method to create dialog box
@@ -47,11 +52,8 @@ $("#editForm").dialog({
     modal: true,
     open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
 });
-$(window).resize(function () {
-    $("#editForm").dialog("option", "position", { my: "center", at: "center", of: window });
-});
 //jQueryUI method to create dialog box
-$("#deleteForm").dialog({
+$("#deleteFormStaff").dialog({
     autoOpen: false,
     modal: true,
     height: 200,
@@ -82,7 +84,7 @@ $("#showLoading").dialog({
         setTimeout("$('#showLoading').dialog('close')", 150);
     },
 });
-
+//Goi hien ra form them nhan vien
 $(".buttonCreate").button().click(function () {
     $.ajax({
         // Goi CreateStaffPV action
@@ -90,7 +92,8 @@ $(".buttonCreate").button().click(function () {
         type: 'Get',
         success: function (data) {
             var theDialog = $("#showLoading").dialog(opt);
-            theDialog.dialog("open");
+            theDialog.dialog("close");
+            $("#btnloadstaff").hide();
             $("#staff-list").empty().append(data);
         },
         beforeSend: function () {
@@ -102,49 +105,85 @@ $(".buttonCreate").button().click(function () {
         }
     });
 });
-
 var selectedTrainer;
-
+//Goi form ra form sua nhan vien
 $(".buttonEdit").button().click(function () {
     // Lấy về Id và gán cho biến selectedId 
     var selectedId = $(this).parents('tr:first').children('td:first').children('input:first').attr('value');
-    selectedStaffName = $(this).parents('tr:first').children('td:nth-child(3)').text().trim();
     $.ajax({
         // Gọi 
         url: "/StaffManager/EditStaffPV",
         data: { id: selectedId },
         type: 'Get',
-        success: function (msg) {
-            $("#editForm").dialog("open");
-            $("#editForm").empty().append(msg);
-            $("#createForm").hide();
-            $(".buttonEdit").attr('disabled', 'disabled');
-            $(".buttonDelete").attr('disabled', 'disabled');
+        success: function (data) {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("close");
+            $("#btnloadstaff").hide();
+            $("#staff-list").empty().append(data);
+        },
+        beforeSend: function () {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("open");
         },
         error: function () {
             swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
         }
     });
 });
-
-
-
-
+//Sua thong tin khi dang o trang xem chi tiet
+$("#buttonEditForStaff").click(function () {
+    var selectedId = $("#getId").attr('value');
+    $.ajax({
+        // Gọi 
+        url: "/StaffManager/EditStaffPV",
+        data: { id: selectedId },
+        type: 'Get',
+        success: function (data) {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("close");
+            $("#btnloadstaff").hide();
+            $("#staff-list").empty().append(data);
+        },
+        beforeSend: function () {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("open");
+        },
+        error: function () {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+    });
+})
+//Hien thong bao cho nguoi dung co dong y xoa hay khong
 $(".buttonDelete").button().click(function () {
     $(".buttonEdit").attr('disabled', 'disabled');
     $(".buttonCreate").attr('disabled', 'disabled');
     $(".buttonDelete").attr('disabled', 'disabled');
     //Open the dialog box
-    $("#deleteForm").dialog("open");
+   
+    var theDialog = $("#deleteFormStaff").dialog(optforDel);
+    theDialog.dialog("open");
     //Get the TrainingId
     selectedId = $(this).parents('tr:first').children('td:first').children('input:first').attr('value');
+});
+//Hien thong bao xoa o trang chi tiet nhan vien
+$("#buttonDeleteForStaff").button().click(function () {
+    $(".buttonEdit").attr('disabled', 'disabled');
+    $(".buttonCreate").attr('disabled', 'disabled');
+    $(".buttonDelete").attr('disabled', 'disabled');
+    //Open the dialog box
+  
+    var theDialog = $("#deleteFormStaff").dialog(optforDel);
+    theDialog.dialog("open");
+    //Get the TrainingId
+    selectedId = $("#getId").attr('value');
 });
 $(".buttonCloseDelete").button().click(function () {
     $('.buttonEdit').prop("disabled", false);
     $('.buttonCreate').prop("disabled", false);
     $('.buttonDelete').prop("disabled", false);
     //Open the dialog box
-    $("#deleteForm").dialog("close");
+    var theDialog = $("#deleteFormStaff").dialog(optforDel);
+    theDialog.dialog("close");
 
 
 });
@@ -201,7 +240,6 @@ $(document).ready(function () {
         }
     });
 });
-
 //Dung de hien thi thong tin dang LIST
 $(document).ready(function () {
     $("#showLoading").dialog({
@@ -230,7 +268,6 @@ $(document).ready(function () {
         })
     });
 });
-
 //Hien thi danh sach khach hang dang list tung trang
 $(document).ready(function () {
     $("#showLoading").dialog({
@@ -299,6 +336,8 @@ $(document).ready(function () {
                 var theDialog = $("#showLoading").dialog(opt);
                 theDialog.dialog("close");
                 $("#btnloadstaff").hide();
+                $("#buttonEditForStaff").show();
+                $("#buttonDeleteForStaff").show();
                 $("#staff-list").empty();
                 $("#staff-list").append(data);
             },

@@ -28,7 +28,9 @@
                     <div class="col-md-6">
                         <div class=" navbar-left" id="addbutton">
                             <br />
-                            <input type="button" value="Thêm nhân viên mới" class="buttonCreate btn btn-default " />
+                            <input type="button" value="Thêm mới" class="buttonCreate btn btn-default " />
+                            <input type="button" value="Sửa " class="btn btn-default " id="buttonEditForStaff" />
+                            <input type="button" value="Xóa" class="btn btn-default " id="buttonDeleteForStaff" />
                         </div>
                     </div>
 
@@ -68,16 +70,14 @@
                 <button class="btn btn-default " id="btnloadstaff" value="">Hiện thêm</button>
             </div>
             <div id="showspinner"></div>
-            <div id="createForm"></div>
-            <div id="editFormCustomer"></div>
-            <div id="deleteFormCustomer" style="display:none">
+            <div id="deleteFormStaff" style="display:none">
                 <div class="panel panel-warning">
                     <div class="panel-heading"> <span><i class="fa fa-exclamation-triangle fa-2x"></i>  <b>Xóa thông tin nhân viên</b> </span> </div>
                     <div class="alert alert-error " style="text-align: center">
                         <strong>Cảnh báo!</strong> <p>Bạn có chắc là sẽ xóa thông tin nhân viên này</p>
                         <br />
                         <input type="button" value="Đồng ý" class="okDelete btn btn-danger right" />
-                        <input type="button" value="Thoát" class="buttonCloseDelete btn btn-primary right " />
+                        <input type="button" value="Thoát" class="buttonCloseDelete btn btn-primary right " />                        
                     </div>
                 </div>
             </div>
