@@ -1,0 +1,19 @@
+﻿@model  HB8.CSMS.MVC.Models.Paging.PagedData<HB8.CSMS.MVC.Models.Customer.CustomerModel>
+@{
+    foreach (var item in Model.Data)
+    {
+        <div class="col-md-4 gridView">
+            <div class=" col-md-4 thumbnail">
+                <img src="~/Images/no_image.jpg" class="img-rounded" width="110" alt="" />
+            </div>
+            <div class="caption col-md-8">
+                <a class="detailcustomer" href="javascript:;" value="@item.CustID"><h3 id="getname">@item.CustName</h3></a>
+                <p id="getaddress">@item.Address</p>
+                <p id="getphone">@item.Phone</p>
+                <input type="hidden" id="getnumberpages" value="@Model.NumberOfPages" />
+                <input type="hidden" id="count" value="@Model.Count" />
+                <input type="hidden" id="pagesize" value="@Model.PageSize" />
+            </div>
+        </div>
+    }
+}

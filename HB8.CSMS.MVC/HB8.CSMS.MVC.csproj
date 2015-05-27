@@ -308,7 +308,7 @@
     <Content Include="Views\Shared\CreateCustomerPartialView.cshtml" />
     <Content Include="Views\Shared\EditCustomerPartialView.cshtml" />
     <Content Include="Views\CustomerManager\ListCustomer.cshtml" />
-    <Content Include="Views\Shared\CustomerPartialView.cshtml" />
+    <Content Include="Views\Shared\ListCustomerPartialView.cshtml" />
     <Content Include="Views\Shared\DetailCustomerParitalView.cshtml" />
     <Content Include="Views\Shared\LargeStaffPartialView.cshtml" />
     <Content Include="Views\Shared\ListStaffPartialView.cshtml" />
@@ -316,6 +316,7 @@
     <Content Include="Views\Shared\LargeInventoryPartialView.cshtml" />
     <Content Include="Views\Shared\ListInventoryPartialView.cshtml" />
     <Content Include="Views\Shared\DetailStaffPartialView.cshtml" />
+    <Content Include="Views\Shared\LargeCustomerPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

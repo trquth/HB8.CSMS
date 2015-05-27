@@ -28,41 +28,75 @@
     });
 </script>
 <div class="row">
-    <div class="col-md-3">
-        <a href="#">
-            <img class="img-responsive" src="http://placehold.it/700x300" alt="">
-        </a>
+    <div class="col-lg-2  ">
+        <div id="imagePreview">
+            <img class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" src="~/Images/no_image.jpg" />
+        </div>
     </div>
-    <div class="col-md-3">
-        <input id="getId" type="hidden" value="@Model.CustID" />
-        <h3> <b>Tên khách hàng: </b></h3>
-        <h3><b> Ngày sinh:</b> </h3>
-    </div>
-    <div class="col-md-6">
+    <div class="col-lg-10 ">
         <h3>@Model.CustName</h3>
-        <h3>@Model.BirthDate </h3>
     </div>
-</div>
-<div class="row">
-    <br />
-    <div class="col-md-6">
-        <div class="col-md-3">
-            <h4><b>Địa chỉ:</b></h4>
+    <div class="col-lg-12">
+        <div class="col-lg-6">
+            <label class="control-label col-lg-2">Địa chỉ:</label>
+            <div class="col-lg-10">
+                @Model.Address
+            </div>
         </div>
-        <div class="col-md-9">
-            <h4>@Model.Address</h4>
+        <div class="col-lg-6">
+
+            <label class="control-label col-lg-2">Số điện thoại:</label>
+            <div class="col-lg-5">
+                @Model.Phone
+            </div>
+
+
+            <label class="control-label col-lg-2">Fax:</label>
+            <div class="col-lg-5">
+                @Model.Fax
+            </div>
+            <label class="control-label col-lg-2">Email:</label>
+            <div class="col-lg-10">
+                @Model.Email
+            </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="col-md-4">
-            <h4><b>Số điện thoại: </b></h4>
-            <h4><b>Email:</b></h4>
-            <h4><b>Fax:</b></h4>
-        </div>
-        <div class="col-md-8">
-            <h4>@Model.Phone</h4>
-            <h4>@Model.Email</h4>
-            <h4>@Model.Fax</h4>
+    <div class="col-lg-12">
+        <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a data-toggle="tab" href="#description"><h5>Lưu ý nội bộ</h5> </a></li>
+            <li class=""><a data-toggle="tab" href="#second"><h5>Mua hàng và bán hàng</h5> </a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="description">
+                <div class="col-lg-12">
+                    <br />
+                    <div class="col-lg-10">
+                        @Model.Description
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane " id="second">
+                <br />
+                <div class="col-lg-12 ">
+                    <div class="col-lg-6">
+
+                        <label class="control-label col-lg-4  ">Nhân viên phụ trách:</label>
+                        <div class="col-lg-8">                                                                          </div>
+
+                        <label class="control-label col-lg-4">Ngày tạo:</label>
+                        <div class="col-lg-4">
+                            @Model.CreateDate
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="control-label col-lg-4">Trạng thái:</label>
+                        <div class="col-lg-8">
+                            @Model.StatusName
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
