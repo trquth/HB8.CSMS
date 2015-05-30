@@ -30,20 +30,21 @@ namespace HB8.CSMS.DAL.Models.Mapping
             this.Property(t => t.StaffId)
                 .HasMaxLength(20);
 
+            this.Property(t => t.StockID)
+                .HasMaxLength(20);
+
             // Table & Column Mappings
             this.ToTable("Inventory");
             this.Property(t => t.InvtID).HasColumnName("InvtID");
             this.Property(t => t.InvtName).HasColumnName("InvtName");
             this.Property(t => t.ClassId).HasColumnName("ClassId");
             this.Property(t => t.UnitID).HasColumnName("UnitID");
-            this.Property(t => t.UnitRate).HasColumnName("UnitRate");
-            this.Property(t => t.SalesPriceT).HasColumnName("SalesPriceT");
-            this.Property(t => t.SalesPriceL).HasColumnName("SalesPriceL");
             this.Property(t => t.QtyStock).HasColumnName("QtyStock");
             this.Property(t => t.SlsTax).HasColumnName("SlsTax");
             this.Property(t => t.StInventoryId).HasColumnName("StInventoryId");
             this.Property(t => t.Description).HasColumnName("Description");
             this.Property(t => t.StaffId).HasColumnName("StaffId");
+            this.Property(t => t.StockID).HasColumnName("StockID");
 
             // Relationships
             this.HasRequired(t => t.Class)
@@ -55,9 +56,9 @@ namespace HB8.CSMS.DAL.Models.Mapping
             this.HasRequired(t => t.StatusIventory)
                 .WithMany(t => t.Inventories)
                 .HasForeignKey(d => d.StInventoryId);
-            this.HasOptional(t => t.Unit)
+            this.HasOptional(t => t.Stock)
                 .WithMany(t => t.Inventories)
-                .HasForeignKey(d => d.UnitID);
+                .HasForeignKey(d => d.StockID);
 
         }
     }

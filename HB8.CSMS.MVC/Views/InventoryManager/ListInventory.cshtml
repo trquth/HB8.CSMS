@@ -2,7 +2,7 @@
     ViewBag.Title = "ListInventory";
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
-
+<script src="~/js/bootstrap.js"></script>
 <div class="row">
     <div class="col-md-12">
         <nav role="navigation" class="navbar navbar-default">
@@ -62,7 +62,8 @@
         <div class="panel panel-heading">
             <div class="panel panel-body">
                 <div id="staff-list">
-                    @Html.Partial("LargeInventoryPartialView")
+                    @*@Html.Partial("LargeInventoryPartialView")*@
+                    @Html.Partial("CreateInventoryPartialView")
                 </div>
             </div>
             <div class="text-center">

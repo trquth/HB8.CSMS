@@ -1,8 +1,4 @@
 ﻿@model HB8.CSMS.MVC.Models.Customer.CustomerModel
-@{
-    ViewBag.Title = "ListStaff";
-    Layout = "~/Views/Shared/_MainLayout.cshtml";
-}
 <script type="text/javascript">
     //Do du lieu vao dropdowlist
     $(document).ready(function () {
@@ -31,7 +27,7 @@
     });
 </script>
 <div class="panel panel-primary">
-    <div class="panel-heading"><h5>Thêm thông tin nhân viên</h5></div>
+    <div class="panel-heading"><h5>Thêm thông tin khách hàng</h5></div>
     <div class="panel-body">
         @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", @id = "customerform" }))
         {

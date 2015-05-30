@@ -35,6 +35,8 @@ namespace HB8.CSMS.DAL.Models
         public DbSet<StockTransfer> StockTransfers { get; set; }
         public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<Unit> Units { get; set; }
+        public DbSet<UnitClass> UnitClasses { get; set; }
+        public DbSet<UnitDetail> UnitDetails { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
 
@@ -59,6 +61,8 @@ namespace HB8.CSMS.DAL.Models
             modelBuilder.Configurations.Add(new StockTransferMap());
             modelBuilder.Configurations.Add(new sysdiagramMap());
             modelBuilder.Configurations.Add(new UnitMap());
+            modelBuilder.Configurations.Add(new UnitClassMap());
+            modelBuilder.Configurations.Add(new UnitDetailMap());
             modelBuilder.Configurations.Add(new UserMap());
             modelBuilder.Configurations.Add(new VendorMap());
         }

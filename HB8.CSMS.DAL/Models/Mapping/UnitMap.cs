@@ -18,6 +18,13 @@ namespace HB8.CSMS.DAL.Models.Mapping
             this.ToTable("Unit");
             this.Property(t => t.UnitID).HasColumnName("UnitID");
             this.Property(t => t.UnitName).HasColumnName("UnitName");
+            this.Property(t => t.UnitClassId).HasColumnName("UnitClassId");
+
+            // Relationships
+            this.HasOptional(t => t.UnitClass)
+                .WithMany(t => t.Units)
+                .HasForeignKey(d => d.UnitClassId);
+
         }
     }
 }

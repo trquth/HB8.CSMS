@@ -151,6 +151,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Customer\CustomerModel.cs" />
+    <Compile Include="Models\Inventory\InventoryModel.cs" />
     <Compile Include="Models\Paging\PagedData.cs" />
     <Compile Include="Models\Staff\StaffModel.cs" />
     <Compile Include="Models\UploadImage\UploadImageModel.cs" />
@@ -317,6 +318,9 @@
     <Content Include="Views\Shared\ListInventoryPartialView.cshtml" />
     <Content Include="Views\Shared\DetailStaffPartialView.cshtml" />
     <Content Include="Views\Shared\LargeCustomerPartialView.cshtml" />
+    <Content Include="Views\Shared\CreateInventoryPartialView.cshtml" />
+    <Content Include="Views\Shared\DetailInventoryPartialView.cshtml" />
+    <Content Include="Views\Shared\EditInventoryPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

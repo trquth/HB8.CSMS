@@ -20,6 +20,8 @@ namespace HB8.CSMS.DAL.DBContext
         private IUnitRepository units;
         private IClassRepository classes;
         private IStatusInventroyRepository statusInventories;
+        private IUnitDetailRepository uDetails;
+        private IStockRepository stocks;
         public DALContext()
         {
             dbContext = new CSMSContext();
@@ -128,6 +130,32 @@ namespace HB8.CSMS.DAL.DBContext
                     statusInventories = new StatusInventoryRepository(dbContext);
                 }
                 return statusInventories;
+            }
+        }
+
+
+        public IUnitDetailRepository UnitDetails
+        {
+            get 
+            {
+                if (uDetails == null)
+                {
+                    uDetails = new UnitDetailRepository(dbContext);
+                }
+                return uDetails;
+            }
+        }
+
+
+        public IStockRepository Stocks
+        {
+            get 
+            {
+                if (stocks == null)
+                {
+                    stocks = new StockRepository(dbContext);
+                }
+                return stocks;
             }
         }
     }

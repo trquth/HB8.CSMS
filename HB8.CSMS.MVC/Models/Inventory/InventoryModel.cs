@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace HB8.CSMS.BLL.DomainModels
+namespace HB8.CSMS.MVC.Models.Inventory
 {
-    public class InventoryDomain
+    public class InventoryModel
     {
         public string InvtID { get; set; }
         public string InvtName { get; set; }
         public int ClassId { get; set; }
-        public int UnitID { get; set; }
+        public int UnitID_T { get; set; }
+        public int UnitID_L { get; set; }
         public int UnitRate { get; set; }
         public int QtyStock { get; set; }
         public decimal SlsTax { get; set; }

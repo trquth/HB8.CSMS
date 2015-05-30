@@ -13,7 +13,7 @@ var opt = {
     open: function (event, ui) {
         $(".ui-dialog-titlebar-close").hide();
         setTimeout("$('#showLoading').dialog('close')", 100);
-    },
+    }
 };
 var optforDel = {
     autoOpen: false,
@@ -33,24 +33,6 @@ $(document).ready(function () {
     $("#buttonnext").hide();
     $("#buttonDeleteForStaff").hide();
 
-});
-//jQueryUI method to create dialog box
-$("#createForm").dialog({
-    autoOpen: false,
-    height: 400,
-    width: 1200,
-    resizable: false,
-    modal: true,
-    open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
-});
-//jQueryUI hien FORM EDIT
-$("#editForm").dialog({
-    autoOpen: false,
-    height: 400,
-    width: 1200,
-    resizable: false,
-    modal: true,
-    open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
 });
 //jQueryUI method to create dialog box
 $("#deleteFormStaff").dialog({
@@ -107,13 +89,36 @@ $(".buttonCreate").button().click(function () {
 });
 var selectedTrainer;
 //Goi form ra form sua nhan vien
-$(".buttonEdit").button().click(function () {
-    // Lấy về Id và gán cho biến selectedId 
-    var selectedId = $(this).parents('tr:first').children('td:first').children('input:first').attr('value');
+//$(".buttonEdit").button().click(function () {
+//    // Lấy về Id và gán cho biến selectedId 
+//    var selectedId = $(this).parents('tr:first').children('td:first').children('input:first').attr('value');
+//    $.ajax({
+//        // Gọi 
+//        url: "/StaffManager/EditStaffPV",
+//        data: { id: selectedId },
+//        type: 'Get',
+//        success: function (data) {
+//            var theDialog = $("#showLoading").dialog(opt);
+//            theDialog.dialog("close");
+//            $("#btnloadstaff").hide();
+//            $("#staff-list").empty().append(data);
+//        },
+//        beforeSend: function () {
+//            var theDialog = $("#showLoading").dialog(opt);
+//            theDialog.dialog("open");
+//        },
+//        error: function () {
+//            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+//        }
+//    });
+//});
+
+//TIP
+function btnEdit_Click(id) {
     $.ajax({
         // Gọi 
         url: "/StaffManager/EditStaffPV",
-        data: { id: selectedId },
+        data: { id: id },
         type: 'Get',
         success: function (data) {
             var theDialog = $("#showLoading").dialog(opt);
@@ -129,7 +134,9 @@ $(".buttonEdit").button().click(function () {
             swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
         }
     });
-});
+}
+
+
 //Sua thong tin khi dang o trang xem chi tiet
 $("#buttonEditForStaff").click(function () {
     var selectedId = $("#getId").attr('value');
@@ -159,7 +166,7 @@ $(".buttonDelete").button().click(function () {
     $(".buttonCreate").attr('disabled', 'disabled');
     $(".buttonDelete").attr('disabled', 'disabled');
     //Open the dialog box
-   
+
     var theDialog = $("#deleteFormStaff").dialog(optforDel);
     theDialog.dialog("open");
     //Get the TrainingId
@@ -171,7 +178,7 @@ $("#buttonDeleteForStaff").button().click(function () {
     $(".buttonCreate").attr('disabled', 'disabled');
     $(".buttonDelete").attr('disabled', 'disabled');
     //Open the dialog box
-  
+
     var theDialog = $("#deleteFormStaff").dialog(optforDel);
     theDialog.dialog("open");
     //Get the TrainingId
@@ -211,8 +218,7 @@ $(".okDelete").button().click(function () {
         }
     });
 });
-
-////Dung de hien thi thong tin dang GRID 
+//Dung de hien thi thong tin dang GRID 
 $(document).ready(function () {
     var _inCallback = false;
     var page = 0;
@@ -323,9 +329,36 @@ $(document).ready(function () {
         })
     });
 });
-
 //Hien thi chi tiet thong tin nhan vien
 $(document).ready(function () {
+    a();
+    //$(".detailstaff").on("click", function () {
+    //    var id = $(this).attr('value');
+    //    $.ajax({
+    //        url: '/StaffManager/DetailStaff',
+    //        data: { "staffId": id },
+    //        type: "Get",
+    //        success: function (data) {
+    //            var theDialog = $("#showLoading").dialog(opt);
+    //            theDialog.dialog("close");
+    //            $("#btnloadstaff").hide();
+    //            $("#buttonEditForStaff").show();
+    //            $("#buttonDeleteForStaff").show();
+    //            $("#staff-list").empty();
+    //            $("#staff-list").append(data);
+    //        },
+    //        beforeSend: function () {
+    //            var theDialog = $("#showLoading").dialog(opt);
+    //            theDialog.dialog("open");
+    //        },
+    //        error: function () {
+    //            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+    //        }
+    //    });
+
+    //});
+});
+function a() {
     $(".detailstaff").on("click", function () {
         var id = $(this).attr('value');
         $.ajax({
@@ -351,12 +384,88 @@ $(document).ready(function () {
         });
 
     });
-});
-
-
+}
 //********************************************************************************************//
 //PHAN JS DANH CHO CUSTOMER
 //*******************************************************************************************//
+
+//Goi hien ra form them khách hàng mới
+$(".buttonCreateForCustomer").button().click(function () {
+    $.ajax({
+        // Goi CreateStaffPV action
+        url: "/CustomerManager/CreateCustomerPV",
+        type: 'Get',
+        success: function (data) {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("close");
+            $("#btnloadcustomer").hide();
+            $("#person-list").empty().append(data);
+        },
+        beforeSend: function () {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("open");
+        },
+        error: function () {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+    });
+});
+//Hien thong tin chi tiet khach hang
+$(".detailcustomer").on("click", function () {
+    var id = $(this).attr('value');
+    $.ajax({
+        url: '/CustomerManager/DetailCustomer',
+        data: { custId: id },
+        type: 'GET',
+        success: function (data) {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("close");
+            $("#btnloadcustomer").hide();
+            $("#person-list").empty();
+            $("#person-list").append(data);
+        },
+        beforeSend: function () {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("open");
+        },
+        error: function () {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+
+    })
+});
+////TIP: SƠN HUONG DAN ONCLICK TRUC TIEP
+//function btnListViewForCustomer_Click(id) {
+//    //ToDo: Something
+//    alert('ID');
+//}
+//$('[id*=]').
+//var theDialog = $("#showLoading").dialog(opt);
+//theDialog.dialog("close");
+/*,
+        beforeSend: function () {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("open");
+        },*/
+function btnListViewForCustomer_Click() {
+    $.ajax({
+        url: '/CustomerManager/ListCustomerView',
+        data: {},
+        type: 'GET',
+        success: function (data) {
+         
+            $("#btnloadcustomer").hide();
+            $("#person-list").empty();
+            $("#person-list").append(data);
+        },
+        error: function () {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+
+    })
+}
+
+
 //$(document).ready(function () {
 //    $("#listView").hide();
 //    $("#showspinnerForm").hide();

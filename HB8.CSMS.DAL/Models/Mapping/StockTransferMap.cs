@@ -38,9 +38,6 @@ namespace HB8.CSMS.DAL.Models.Mapping
             this.HasOptional(t => t.Stock)
                 .WithMany(t => t.StockTransfers)
                 .HasForeignKey(d => d.FromStockID);
-            this.HasOptional(t => t.Stock1)
-                .WithMany(t => t.StockTransfers1)
-                .HasForeignKey(d => d.ToStockID);
 
         }
     }

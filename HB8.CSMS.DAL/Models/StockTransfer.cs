@@ -18,6 +18,5 @@ namespace HB8.CSMS.DAL.Models
         public string Description { get; set; }
         public virtual ICollection<StkTransDetail> StkTransDetails { get; set; }
         public virtual Stock Stock { get; set; }
-        public virtual Stock Stock1 { get; set; }
     }
 }

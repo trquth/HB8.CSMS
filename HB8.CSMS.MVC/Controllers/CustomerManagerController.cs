@@ -80,29 +80,41 @@ namespace HB8.CSMS.MVC.Controllers
         /// <returns></returns>
         public ActionResult ListCustomer(int? id)
         {
-            //var customer = new PagedData<CustomerModel>();
-            //var page = id ?? 0;
-            //if (Request.IsAjaxRequest())
-            //{
-            //    return PartialView("LargeCustomerPartialView", GetPaginatedProducts(page));//Tra ve VIEW dang GRID 
-            //}
-            //var model = customerService.GetListCustomers();
-            //int count = model.Count();
-            //var listOfCustomer = (from a in model
-            //                      select new CustomerModel
-            //                      {
-            //                          CustID = a.CustID,
-            //                          CustName = a.CustName,
-            //                          Address = a.Address,
-            //                          Phone = a.Phone
-            //                      }).ToList();
-            //customer.Data = listOfCustomer.Take(pageSize);
-            //customer.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
-            //customer.CurrentPage = 1;
-            //customer.Count = count;
-            //customer.PageSize = pageSize;
-            //return View("ListCustomer", customer);
-            return View("ListCustomer");
+            var customer = new PagedData<CustomerModel>();
+            var page = id ?? 0;
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("LargeCustomerPartialView", GetPaginatedProducts(page));//Tra ve VIEW dang GRID 
+            }
+            var model = customerService.GetListCustomers();
+            int count = model.Count();
+            var listOfCustomer = (from a in model
+                                  select new CustomerModel
+                                  {
+                                      CustID = a.CustID,
+                                      CustName = a.CustName,
+                                      Address = a.Address,
+                                      Phone = a.Phone
+                                  }).ToList();
+            customer.Data = listOfCustomer.Take(pageSize);
+            customer.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
+            customer.CurrentPage = 1;
+            customer.Count = count;
+            customer.PageSize = pageSize;
+            return View("ListCustomer", customer);
+        }
+        public ActionResult ListCustomerView(int?page)
+        {
+            var pageNumber = 0;
+            if (page == null)
+            {
+                pageNumber = page ?? 0;
+            }
+            else
+            {
+                pageNumber = (int)page - 1;
+            }
+            return View("ListCustomerPartialView", GetPaginatedProducts(pageNumber));
         }
         #endregion
         #region Code xu li phan phan trang
@@ -128,7 +140,7 @@ namespace HB8.CSMS.MVC.Controllers
             customer.Data = listOfCustomer;
             customer.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
             customer.CurrentPage = page;
-            return PartialView("CustomerPartialView", customer);
+            return PartialView("ListCustomerPartialView", customer);
         }
 
         /// <summary>
