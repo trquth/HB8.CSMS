@@ -15,8 +15,8 @@ namespace HB8.CSMS.DAL.Models
 
         public string InvtID { get; set; }
         public string InvtName { get; set; }
+        public string Image { get; set; }
         public int ClassId { get; set; }
-        public Nullable<int> UnitID { get; set; }
         public int QtyStock { get; set; }
         public decimal SlsTax { get; set; }
         public string StInventoryId { get; set; }

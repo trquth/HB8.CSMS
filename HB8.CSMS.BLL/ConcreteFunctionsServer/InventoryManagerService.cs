@@ -1,4 +1,5 @@
 ﻿using HB8.CSMS.BLL.Abstract;
+using HB8.CSMS.BLL.DomainModels;
 using HB8.CSMS.DAL.DBContext;
 using HB8.CSMS.DAL.Models;
 using System;
@@ -18,8 +19,10 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
         }
         public int CreateInventory(DomainModels.InventoryDomain inventory)
         {
+
             var model = new Inventory();
-            var unitDetail = new UnitDetail();
+            var unitDetailL = new UnitDetail();
+            var unitDetailT = new UnitDetail();
             model.InvtID = inventory.InvtID;
             model.InvtName = inventory.InvtName;
             model.QtyStock = inventory.QtyStock;
@@ -28,15 +31,26 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             model.StaffId = inventory.StaffId;
             model.StockID = inventory.StockID;
             model.ClassId = inventory.ClassId;
-            unitDetail.InvtID = inventory.InvtID;
-            unitDetail.UnitID = inventory.UnitID;
-            unitDetail.SalePrice = inventory.SalePrice_L;
-            unitDetail.SalePrice = inventory.SalePrice_T;
-            unitDetail.UnitRate = inventory.UnitRate;
-            context.UnitDetails.Create(unitDetail);
+            model.StInventoryId = inventory.StInventoryId;
+            model.SlsTax = inventory.SlsTax;
+            model.Image = inventory.Image;
+
+            //Luu MANY TO MANY 
+            unitDetailL.UnitID = inventory.UnitID_L;
+            unitDetailL.SalePrice = inventory.SalePrice_L;          
+            unitDetailL.InvtID = inventory.InvtID;
+            model.UnitDetails.Add(unitDetailL);
+
+            unitDetailT.InvtID = inventory.InvtID;
+            unitDetailT.UnitID = inventory.UnitID_T;
+            unitDetailT.SalePrice = inventory.SalePrice_T;
+            unitDetailT.UnitRate = inventory.UnitRate;
+            model.UnitDetails.Add(unitDetailT);
+
             context.Inventories.Create(model);
             context.Save();
             return 0;
+
         }
 
 
@@ -69,6 +83,41 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
         public List<Stock> GetListStock()
         {
             return context.Stocks.GetAllItem().ToList();
+        }
+
+
+        public InventoryDomain GetInventoryById(string id)
+        {
+            var model = context.Inventories.GetItemById(id);
+            if (model ==null)
+            {
+                return null;
+            }
+            var inventory = new InventoryDomain();
+            inventory.InvtID = model.InvtID;
+            inventory.InvtName = model.InvtName;
+            inventory.ClassName = model.Class.ClassName;
+            inventory.QtyStock = model.QtyStock;
+            inventory.SlsTax = model.SlsTax;
+            inventory.Description = model.Description;
+            inventory.StaffName = model.Staff.StaffName;
+            inventory.Image = model.Image;
+            inventory.StockName = model.Stock.StockName;
+            var unitDetail = model.UnitDetails.Where(x => x.InvtID == id).ToArray();
+            inventory.UnitName_L = unitDetail[0].Unit.UnitName;
+            inventory.SalePrice_L = (decimal)unitDetail[0].SalePrice;
+            inventory.UnitName_T = unitDetail[1].Unit.UnitName;
+            inventory.SalePrice_T = (decimal)unitDetail[1].SalePrice;
+            inventory.UnitRate = (int)unitDetail[1].UnitRate;
+            inventory.StInvetoryName = model.StatusIventory.StInvetoryName;
+            return inventory;
+
+        }
+
+
+        public List<Inventory> GetListInventory()
+        {
+            return context.Inventories.GetAllItem().ToList();
         }
     }
 }

@@ -204,7 +204,7 @@ $(document).ready(function () {
         dataType: "json",
         success: function (data) {
             $.each(data, function (key, value) {
-                $("#ddlUnitT").append($("<option></option>").val(value.UnitID).html(value.UnitName));
+                $("#ddlUnitT").append($("<option></option>").val(value.UnitID_T).html(value.UnitName));
             });
         },
         error: function (result) {
@@ -222,7 +222,7 @@ $(document).ready(function () {
         dataType: "json",
         success: function (data) {
             $.each(data, function (key, value) {
-                $("#ddlUnitL").append($("<option></option>").val(value.UnitID).html(value.UnitName));
+                $("#ddlUnitL").append($("<option></option>").val(value.UnitID_L).html(value.UnitName));
             });
         },
         error: function (result) {
@@ -258,7 +258,7 @@ $(document).ready(function () {
         dataType: "json",
         success: function (data) {
             $.each(data, function (key, value) {
-                $("#ddlStaff").append($("<option></option>").val(value.StaffID).html(value.StaffName));
+                $("#ddlStaff").append($("<option></option>").val(value.StaffId).html(value.StaffName));
             });
         },
         error: function (result) {
@@ -284,3 +284,50 @@ $(document).ready(function () {
         }
     });
 })
+//Kiem tra thong tin nhap vao dung hay sai
+$(document).ready(function () {
+    $('#inventoryform').validate({
+    });
+});
+//Luu hinh vao thu muc InventoryImages
+$(document).ready(function () {
+    $("#uploadFileForInventory").change(function () {
+        var myfile = $("#uploadFileForInventory").val();
+        var extensionfile = myfile.split('.').pop().toString();
+        if (extensionfile == "jpg" || extensionfile == "png" || extensionfile == "gif") {
+            var data = new FormData();
+            var files = $("#uploadFileForInventory").get(0).files;
+            if (files.length > 0) {
+                data.append("SectionImages", files[0]);
+                data.append("Path", "/Images/InventoryImages");
+            }
+            $.ajax({
+                url: 'Upload/UploadImage',
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: data,
+                dataType: 'json',
+                success: function (response) {
+                    $("#spinner").delay(1000).fadeOut();
+                    var imagename = response["name"];
+                    var srcname = '/Images/InventoryImages/' + imagename;
+                    setTimeout(function () {
+                        $("#imagePreview").append('<img class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" id="changeimage"  />');
+                        $("#changeimage").attr('src', srcname);
+                    }, 1500);
+                },
+                beforeSend: function () {
+                    $("#changeimage").hide();
+                    $("#imagePreview").html("<center><i class='fa fa-spinner fa-spin fa-5x ' id='spinner'></i></center>");
+                },
+                error: function (er) {
+                    swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+                }
+            });
+        } else {
+            sweetAlert("Cảnh báo", "Chỉ hỗ trợ file ảnh jpg, png, gif. Vui lòng chọn lại", "error");
+            $("#changeimage").show();
+        }
+    });
+});

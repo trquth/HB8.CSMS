@@ -46,6 +46,17 @@ namespace HB8.CSMS.BLL.Abstract
         /// </summary>
         /// <returns></returns>
         List<Stock> GetListStock();
+        /// <summary>
+        /// Tra ve thong tin chi tiet cua san pham
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        InventoryDomain GetInventoryById(string id);
+        /// <summary>
+        /// Tra ve danh sach san pham
+        /// </summary>
+        /// <returns></returns>
+        List<Inventory> GetListInventory();
 
     }
 }

@@ -18,27 +18,31 @@ namespace HB8.CSMS.DAL.Models.Mapping
             this.Property(t => t.InvtName)
                 .HasMaxLength(50);
 
+            this.Property(t => t.Image)
+                .HasMaxLength(100);
+
             this.Property(t => t.StInventoryId)
                 .IsRequired()
                 .IsFixedLength()
                 .HasMaxLength(2);
 
             this.Property(t => t.Description)
-                .IsRequired()
                 .HasMaxLength(200);
 
             this.Property(t => t.StaffId)
+                .IsRequired()
                 .HasMaxLength(20);
 
             this.Property(t => t.StockID)
+                .IsRequired()
                 .HasMaxLength(20);
 
             // Table & Column Mappings
             this.ToTable("Inventory");
             this.Property(t => t.InvtID).HasColumnName("InvtID");
             this.Property(t => t.InvtName).HasColumnName("InvtName");
+            this.Property(t => t.Image).HasColumnName("Image");
             this.Property(t => t.ClassId).HasColumnName("ClassId");
-            this.Property(t => t.UnitID).HasColumnName("UnitID");
             this.Property(t => t.QtyStock).HasColumnName("QtyStock");
             this.Property(t => t.SlsTax).HasColumnName("SlsTax");
             this.Property(t => t.StInventoryId).HasColumnName("StInventoryId");
@@ -50,13 +54,13 @@ namespace HB8.CSMS.DAL.Models.Mapping
             this.HasRequired(t => t.Class)
                 .WithMany(t => t.Inventories)
                 .HasForeignKey(d => d.ClassId);
-            this.HasOptional(t => t.Staff)
+            this.HasRequired(t => t.Staff)
                 .WithMany(t => t.Inventories)
                 .HasForeignKey(d => d.StaffId);
             this.HasRequired(t => t.StatusIventory)
                 .WithMany(t => t.Inventories)
                 .HasForeignKey(d => d.StInventoryId);
-            this.HasOptional(t => t.Stock)
+            this.HasRequired(t => t.Stock)
                 .WithMany(t => t.Inventories)
                 .HasForeignKey(d => d.StockID);
 

@@ -1,4 +1,4 @@
-﻿@*@model HB8.CSMS.MVC.Models.Paging.PagedData<HB8.CSMS.MVC.Models.Staff.StaffModel>
+﻿@model HB8.CSMS.MVC.Models.Paging.PagedData<HB8.CSMS.MVC.Models.Inventory.InventoryModel>
 @{
     foreach (var item in Model.Data)
     {
@@ -7,14 +7,15 @@
                 <img src="~/Images/no_image.jpg" class="img-rounded" width="110" alt="" />
             </div>
             <div class="caption col-md-8">
-                <a class="detailcustomer" href="javascript:;" value="@item.ID"><h4 id="getname">@item.StaffName</h4></a>
-                <p id="getaddress">@item.Address</p>
-                <p id="getphone">@item.NumberPhone</p>
-                <input type="hidden" class="getnumberpages" value="@Model.NumberOfPages" />
+                <a class="detailcustomer" href="javascript:;" value="@item.InvtID"><h4 id="getname">@item.InvtName</h4></a>
+                <p id=""><strong>Gía:</strong> @item.SalePrice_L</p>
+                <p id=""><strong>Đang có:</strong>  @(item.UnitRate* item.QtyStock) @item.UnitName</p>
+                
+                @*<input type="hidden" class="getnumberpages" value="@Model.NumberOfPages" />
                 <input type="hidden" class="count" value="@Model.Count" />
-                <input type="hidden" class="pagesize" value="@Model.PageSize" />
+                <input type="hidden" class="pagesize" value="@Model.PageSize" />*@
             </div>
         </div>
     }
 }
-<script src="~/MyjQ/Index.js"></script>*@
+<script src="~/MyjQ/Index.js"></script>

@@ -26,5 +26,7 @@ namespace HB8.CSMS.MVC.Models.Inventory
         public string StInvetoryName { get; set; }
         public string StaffName { get; set; }
         public string StockName { get; set; }
+        public string Image { get; set; }
+        public int Value { get; set; }
     }
 }
