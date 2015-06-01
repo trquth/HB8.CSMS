@@ -23,6 +23,8 @@ namespace HB8.CSMS.MVC.Models.Inventory
         public decimal SalePrice_L { get; set; }
         public string ClassName { get; set; }
         public string UnitName { get; set; }
+        public string UnitName_T { get; set; }
+        public string UnitName_L { get; set; }
         public string StInvetoryName { get; set; }
         public string StaffName { get; set; }
         public string StockName { get; set; }

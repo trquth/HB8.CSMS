@@ -103,13 +103,15 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             inventory.StaffName = model.Staff.StaffName;
             inventory.Image = model.Image;
             inventory.StockName = model.Stock.StockName;
-            var unitDetail = model.UnitDetails.Where(x => x.InvtID == id).ToArray();
-            inventory.UnitName_L = unitDetail[0].Unit.UnitName;
-            inventory.SalePrice_L = (decimal)unitDetail[0].SalePrice;
-            inventory.UnitName_T = unitDetail[1].Unit.UnitName;
-            inventory.SalePrice_T = (decimal)unitDetail[1].SalePrice;
-            inventory.UnitRate = (int)unitDetail[1].UnitRate;
+            var unitDetailT = model.UnitDetails.Where(x => x.InvtID == id && x.UnitRate !=null).First();
+            var unitDetailL = model.UnitDetails.Where(x => x.InvtID == id && x.UnitRate == null).First();
+            inventory.UnitName_L = unitDetailL.Unit.UnitName;
+            inventory.UnitName_T = unitDetailL.Unit.UnitName;
+            inventory.SalePrice_L = (decimal)unitDetailL.SalePrice;
+            inventory.SalePrice_T = (decimal)unitDetailT.SalePrice;
+            inventory.UnitRate = (int)unitDetailT.UnitRate;
             inventory.StInvetoryName = model.StatusIventory.StInvetoryName;
+            inventory.Image = model.Image;
             return inventory;
 
         }

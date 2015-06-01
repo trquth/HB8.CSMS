@@ -978,3 +978,55 @@ function btnListViewForCustomer_Click() {
 //        }
 //    });
 //});
+//**************************************************************************************//
+//PHAN DANH CHO INVENTORY
+//*************************************************************************************//
+//Goi trang them san pham moi
+$(".buttonCreateForInventory").button().click(function () {
+    $.ajax({
+        // Goi CreateStaffPV action
+        url: "/InventoryManager/CreateNewInventory",
+        type: 'Get',
+        success: function (data) {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("close");
+            $("#btnloadstaff").hide();
+            $("#inventory-list").empty().append(data);
+        },
+        beforeSend: function () {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("open");
+        },
+        error: function () {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+    });
+});
+//Hien thi thong tin chi tiet san pham
+$(document).ready(function () {
+    $(".detailinventory").on("click", function () {
+        var id = $(this).attr('value');
+        $.ajax({
+            url: '/InventoryManager/DetailInventory',
+            data: { "id": id },
+            type: "Get",
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                //$("#btnloadstaff").hide();
+                //$("#buttonEditForStaff").show();
+                //$("#buttonDeleteForStaff").show();
+                $("#inventory-list").empty();
+                $("#inventory-list").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
+
+    });
+});

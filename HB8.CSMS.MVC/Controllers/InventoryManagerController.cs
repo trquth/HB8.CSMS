@@ -122,7 +122,7 @@ namespace HB8.CSMS.MVC.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
         #endregion
-        #region Check
+        #region Method
         /// <summary>
         /// Kiem tra ma nv co ton tai hay khong 
         /// </summary>
@@ -140,11 +140,38 @@ namespace HB8.CSMS.MVC.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
 
         }
+        /// <summary>
+        /// Tra ve thong tin chi tiet cua mat hang dua vao cua mat hang do
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public InventoryModel GetInventoryByID(string id)
+        {
+            var item = inventoryService.GetInventoryById(id);
+            var model = new InventoryModel();
+            model.InvtID = item.InvtID;
+            model.InvtName = item.InvtName;
+            model.ClassName = item.ClassName;
+            model.UnitRate = item.UnitRate;
+            model.QtyStock = item.QtyStock;
+            model.Description = item.Description;
+            model.StaffName = item.StaffName;
+            model.StockName = item.StockName;
+            model.SalePrice_L = item.SalePrice_L;
+            model.SalePrice_T = item.SalePrice_T;
+            model.StaffName = item.StaffName;
+            model.Image = item.Image;
+            model.UnitName_L = item.UnitName_L;
+            model.UnitName_T = item.UnitName_T;
+            model.StInvetoryName = model.StInvetoryName;
+            model.SlsTax = item.SlsTax;
+            return model;
+        }
         #endregion
         #region Create Action
         public ActionResult CreateNewInventory()
         {
-            return View();
+            return PartialView("CreateInventoryPartialView");
         }
         public void CrateNewInventory(InventoryModel model)
         {
@@ -162,6 +189,7 @@ namespace HB8.CSMS.MVC.Controllers
             item.SalePrice_L = model.SalePrice_L;
             item.SalePrice_T = model.SalePrice_T;
             item.UnitRate = model.UnitRate;
+            item.Image = model.Image;
             inventoryService.CreateInventory(item);
         }
         #endregion
@@ -193,6 +221,13 @@ namespace HB8.CSMS.MVC.Controllers
             //staff.Count = count;
             //staff.PageSize = pageSize;
             return View("ListInventory", inventory);
+        }
+        #endregion
+        #region Detail Inventory
+        public ActionResult DetailInventory(string id)
+        {
+            var model =GetInventoryByID(id);
+            return View("DetailInventoryPartialView", model);
         }
         #endregion
 
