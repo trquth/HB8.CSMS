@@ -57,6 +57,12 @@ namespace HB8.CSMS.BLL.Abstract
         /// </summary>
         /// <returns></returns>
         List<Inventory> GetListInventory();
+        /// <summary>
+        /// Sua thong tin san pham
+        /// </summary>
+        /// <param name="inventory"></param>
+        /// <returns></returns>
+        int UpdateInventory(InventoryDomain inventory);
 
     }
 }

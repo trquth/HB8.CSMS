@@ -1014,7 +1014,7 @@ $(document).ready(function () {
                 var theDialog = $("#showLoading").dialog(opt);
                 theDialog.dialog("close");
                 //$("#btnloadstaff").hide();
-                //$("#buttonEditForStaff").show();
+                $("#buttonEditForInventory").show();
                 //$("#buttonDeleteForStaff").show();
                 $("#inventory-list").empty();
                 $("#inventory-list").append(data);
@@ -1030,3 +1030,26 @@ $(document).ready(function () {
 
     });
 });
+//Sua thong tin khi dang o trang xem chi tiet
+$("#buttonEditForInventory").click(function () {
+    var selectedId = $("#id").val();
+    $.ajax({
+        // Gọi 
+        url: "/InventoryManager/EditInventory",
+        data: { id: selectedId },
+        type: 'Get',
+        success: function (data) {
+            //var theDialog = $("#showLoading").dialog(opt);
+            //theDialog.dialog("close");
+            //$("#btnloadstaff").hide();
+            $("#inventory-list").empty().append(data);
+        },
+        beforeSend: function () {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("open");
+        },
+        error: function () {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+    });
+})

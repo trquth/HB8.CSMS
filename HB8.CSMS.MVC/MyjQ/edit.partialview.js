@@ -341,3 +341,114 @@ $(document).ready(function () {
         }
     });
 });
+//****************************************************************************************************//
+//PHAN CHO SAN PHAM
+//***************************************************************************************************//
+//Do du lieu vao dropdowlist nhom san pham
+$(document).ready(function () {
+    $.ajax({
+        url: "/InventoryManager/ListClass",
+        type: 'Get',
+        data: "{}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            $.each(data, function (key, value) {
+                $("#ddlClass").append($("<option></option>").val(value.ClassId).html(value.ClassName));
+            });
+        },
+        error: function (result) {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+    });
+})
+//Do du lieu vao dropdowlist don vi tinh THUNG
+$(document).ready(function () {
+    $.ajax({
+        url: "/InventoryManager/ListUnitT",
+        type: 'Get',
+        data: "{}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            $.each(data, function (key, value) {
+                $("#ddlUnitT").append($("<option></option>").val(value.UnitID_T).html(value.UnitName));
+            });
+        },
+        error: function (result) {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+    });
+})
+//Do du lieu vao dropdowlist don vi tinh LE
+$(document).ready(function () {
+    $.ajax({
+        url: "/InventoryManager/ListUnitL",
+        type: 'Get',
+        data: "{}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            $.each(data, function (key, value) {
+                $("#ddlUnitL").append($("<option></option>").val(value.UnitID_L).html(value.UnitName));
+            });
+        },
+        error: function (result) {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+    });
+})
+//Do du lieu vao dropdowlist nhom san pham
+$(document).ready(function () {
+    $.ajax({
+        url: "/InventoryManager/ListStatus",
+        type: 'Get',
+        data: "{}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            $.each(data, function (key, value) {
+                $("#ddlStatus").append($("<option></option>").val(value.StInventoryId).html(value.StInvetoryName));
+            });
+        },
+        error: function (result) {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+    });
+})
+//Do du lieu vao dropdowlist danh sach nhan vien
+$(document).ready(function () {
+    $.ajax({
+        url: "/InventoryManager/ListStaff",
+        type: 'Get',
+        data: "{}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            $.each(data, function (key, value) {
+                $("#ddlStaff").append($("<option></option>").val(value.StaffId).html(value.StaffName));
+            });
+        },
+        error: function (result) {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+    });
+})
+//Do du lieu vao dropdowlist danh sach kho hang
+$(document).ready(function () {
+    $.ajax({
+        url: "/InventoryManager/ListStock",
+        type: 'Get',
+        data: "{}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            $.each(data, function (key, value) {
+                $("#ddlStock").append($("<option></option>").val(value.StockID).html(value.StockName));
+            });
+        },
+        error: function (result) {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+    });
+})

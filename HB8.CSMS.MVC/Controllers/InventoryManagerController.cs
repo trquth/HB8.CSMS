@@ -230,6 +230,39 @@ namespace HB8.CSMS.MVC.Controllers
             return View("DetailInventoryPartialView", model);
         }
         #endregion
+        #region Edit Action
+        /// <summary>
+        /// Hien thi form EDIT san pham
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult EditInventory(string id)
+        {
+            var model = GetInventoryByID(id);
+            return PartialView("EditInventoryPartialView", model);
+        }
+        [HttpPost]
+        public void EditInventory(InventoryModel inventory)
+        {
+            var model = new InventoryDomain();
+            model.InvtID = inventory.InvtID;
+            model.InvtName = inventory.InvtName;
+            model.ClassId = inventory.ClassId;
+            model.UnitID_L = inventory.UnitID_L;
+            model.UnitID_T = inventory.UnitID_T;
+            model.QtyStock = inventory.QtyStock;
+            model.StInventoryId = inventory.StInventoryId;
+            model.Description = inventory.Description;
+            model.StaffId = inventory.StaffId;
+            model.StockID = inventory.StockID;
+            model.SalePrice_L = inventory.SalePrice_L;
+            model.SalePrice_T = inventory.SalePrice_T;
+            model.UnitRate = inventory.UnitRate;
+            model.Image = inventory.Image;
+            inventoryService.UpdateInventory(model);
+        }
+        #endregion
 
     }
 }

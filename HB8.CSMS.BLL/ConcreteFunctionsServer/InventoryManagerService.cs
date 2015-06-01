@@ -37,7 +37,7 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
 
             //Luu MANY TO MANY 
             unitDetailL.UnitID = inventory.UnitID_L;
-            unitDetailL.SalePrice = inventory.SalePrice_L;          
+            unitDetailL.SalePrice = inventory.SalePrice_L;
             unitDetailL.InvtID = inventory.InvtID;
             model.UnitDetails.Add(unitDetailL);
 
@@ -89,7 +89,7 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
         public InventoryDomain GetInventoryById(string id)
         {
             var model = context.Inventories.GetItemById(id);
-            if (model ==null)
+            if (model == null)
             {
                 return null;
             }
@@ -103,7 +103,7 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             inventory.StaffName = model.Staff.StaffName;
             inventory.Image = model.Image;
             inventory.StockName = model.Stock.StockName;
-            var unitDetailT = model.UnitDetails.Where(x => x.InvtID == id && x.UnitRate !=null).First();
+            var unitDetailT = model.UnitDetails.Where(x => x.InvtID == id && x.UnitRate != null).First();
             var unitDetailL = model.UnitDetails.Where(x => x.InvtID == id && x.UnitRate == null).First();
             inventory.UnitName_L = unitDetailL.Unit.UnitName;
             inventory.UnitName_T = unitDetailL.Unit.UnitName;
@@ -120,6 +120,47 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
         public List<Inventory> GetListInventory()
         {
             return context.Inventories.GetAllItem().ToList();
+        }
+
+
+        public int UpdateInventory(InventoryDomain inventory)
+        {
+            var model = context.Inventories.GetItemById(inventory.InvtID);
+            if (inventory.Image != null)//kiem tra mot tam hinh neu ma khong co thay doi
+            {
+                model.Image = inventory.Image;
+            }
+
+            var unitDetailL = new UnitDetail();
+            var unitDetailT = new UnitDetail();
+            model.UnitDetails.Clear();
+            model.InvtID = inventory.InvtID;
+            model.InvtName = inventory.InvtName;
+            model.QtyStock = inventory.QtyStock;
+            model.SlsTax = inventory.SlsTax;
+            model.Description = inventory.Description;
+            model.StaffId = inventory.StaffId;
+            model.StockID = inventory.StockID;
+            model.ClassId = inventory.ClassId;
+            model.StInventoryId = inventory.StInventoryId;
+            model.SlsTax = inventory.SlsTax;
+            model.Image = inventory.Image;
+
+            //Luu MANY TO MANY 
+            unitDetailL.UnitID = inventory.UnitID_L;
+            unitDetailL.SalePrice = inventory.SalePrice_L;
+            unitDetailL.InvtID = inventory.InvtID;
+            model.UnitDetails.Add(unitDetailL);
+
+            unitDetailT.InvtID = inventory.InvtID;
+            unitDetailT.UnitID = inventory.UnitID_T;
+            unitDetailT.SalePrice = inventory.SalePrice_T;
+            unitDetailT.UnitRate = inventory.UnitRate;
+            model.UnitDetails.Add(unitDetailT);
+
+            context.Inventories.Update(model);
+            context.Save();
+            return 0;
         }
     }
 }
