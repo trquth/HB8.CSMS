@@ -89,36 +89,13 @@ $(".buttonCreate").button().click(function () {
 });
 var selectedTrainer;
 //Goi form ra form sua nhan vien
-//$(".buttonEdit").button().click(function () {
-//    // Lấy về Id và gán cho biến selectedId 
-//    var selectedId = $(this).parents('tr:first').children('td:first').children('input:first').attr('value');
-//    $.ajax({
-//        // Gọi 
-//        url: "/StaffManager/EditStaffPV",
-//        data: { id: selectedId },
-//        type: 'Get',
-//        success: function (data) {
-//            var theDialog = $("#showLoading").dialog(opt);
-//            theDialog.dialog("close");
-//            $("#btnloadstaff").hide();
-//            $("#staff-list").empty().append(data);
-//        },
-//        beforeSend: function () {
-//            var theDialog = $("#showLoading").dialog(opt);
-//            theDialog.dialog("open");
-//        },
-//        error: function () {
-//            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
-//        }
-//    });
-//});
-
-//TIP
-function btnEdit_Click(id) {
+$(".buttonEdit").button().click(function () {
+    // Lấy về Id và gán cho biến selectedId 
+    var selectedId = $(this).parents('tr:first').children('td:first').children('input:first').attr('value');
     $.ajax({
         // Gọi 
         url: "/StaffManager/EditStaffPV",
-        data: { id: id },
+        data: { id: selectedId },
         type: 'Get',
         success: function (data) {
             var theDialog = $("#showLoading").dialog(opt);
@@ -134,7 +111,30 @@ function btnEdit_Click(id) {
             swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
         }
     });
-}
+});
+
+//TIP
+//function btnEdit_Click(id) {
+//    $.ajax({
+//        // Gọi 
+//        url: "/StaffManager/EditStaffPV",
+//        data: { id: id },
+//        type: 'Get',
+//        success: function (data) {
+//            var theDialog = $("#showLoading").dialog(opt);
+//            theDialog.dialog("close");
+//            $("#btnloadstaff").hide();
+//            $("#staff-list").empty().append(data);
+//        },
+//        beforeSend: function () {
+//            var theDialog = $("#showLoading").dialog(opt);
+//            theDialog.dialog("open");
+//        },
+//        error: function () {
+//            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+//        }
+//    });
+//}
 
 
 //Sua thong tin khi dang o trang xem chi tiet
@@ -331,32 +331,31 @@ $(document).ready(function () {
 });
 //Hien thi chi tiet thong tin nhan vien
 $(document).ready(function () {
-    a();
-    //$(".detailstaff").on("click", function () {
-    //    var id = $(this).attr('value');
-    //    $.ajax({
-    //        url: '/StaffManager/DetailStaff',
-    //        data: { "staffId": id },
-    //        type: "Get",
-    //        success: function (data) {
-    //            var theDialog = $("#showLoading").dialog(opt);
-    //            theDialog.dialog("close");
-    //            $("#btnloadstaff").hide();
-    //            $("#buttonEditForStaff").show();
-    //            $("#buttonDeleteForStaff").show();
-    //            $("#staff-list").empty();
-    //            $("#staff-list").append(data);
-    //        },
-    //        beforeSend: function () {
-    //            var theDialog = $("#showLoading").dialog(opt);
-    //            theDialog.dialog("open");
-    //        },
-    //        error: function () {
-    //            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
-    //        }
-    //    });
+    $(".detailstaff").on("click", function () {
+        var id = $(this).attr('value');
+        $.ajax({
+            url: '/StaffManager/DetailStaff',
+            data: { "staffId": id },
+            type: "Get",
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                $("#btnloadstaff").hide();
+                $("#buttonEditForStaff").show();
+                $("#buttonDeleteForStaff").show();
+                $("#staff-list").empty();
+                $("#staff-list").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
 
-    //});
+    });
 });
 function a() {
     $(".detailstaff").on("click", function () {
@@ -981,6 +980,10 @@ function btnListViewForCustomer_Click() {
 //**************************************************************************************//
 //PHAN DANH CHO INVENTORY
 //*************************************************************************************//
+//Cai dat
+$(document).ready(function () {
+    $("#buttonEditForInventory").hide();
+})
 //Goi trang them san pham moi
 $(".buttonCreateForInventory").button().click(function () {
     $.ajax({
@@ -1053,3 +1056,51 @@ $("#buttonEditForInventory").click(function () {
         }
     });
 })
+//Hien thi dang LARGE VIEW
+$(document).ready(function () {
+    $("#btnLargeViewForInventory").click(function () {
+        $.ajax({
+            url: '/InventoryManager/ListInventory',
+            data: {},
+            type: 'GET',
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                $("#inventory-list").empty();
+                //$("#btnloadstaff").show();
+                $("#inventory-list").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        })
+    });
+});
+$(document).ready(function () {
+    $("#btnListViewForInventory").click(function () {
+        $.ajax({
+            url: '/InventoryManager/ListInventoryView',
+            data: {},
+            type: 'GET',
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                $("#inventory-list").empty();
+                //$("#btnloadstaff").hide();
+                $("#inventory-list").append(data);
+
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        })
+    });
+});

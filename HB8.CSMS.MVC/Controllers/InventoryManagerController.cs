@@ -14,15 +14,48 @@ namespace HB8.CSMS.MVC.Controllers
     public class InventoryManagerController : Controller
     {
         #region Variables
+        public const int pageSize = 2;//So san pham duoc hien thi tren mot trang
         private IInventoryManagerService inventoryService;
         public InventoryManagerController(IInventoryManagerService inventoryService)
         {
             this.inventoryService = inventoryService;
         }
-        #endregion
-        public ActionResult ListInventory()
+        #endregion Show Large View
+        public ActionResult ListInventory(int? id)
         {
-            return View();
+            var inventory = new PagedData<InventoryModel>();
+            var page = id ?? 0;
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("LargeInventoryPartialView", GetPaginatedInventories(page));//Tra ve VIEW dang GRID 
+            }
+            var model = inventoryService.GetListInventory();
+            int count = model.Count();
+            var listOfStaff = (from item in model
+                               select new InventoryModel
+                               {
+                                   InvtID = item.InvtID,
+                                   InvtName = item.InvtName,
+                                   ClassName = item.Class.ClassName,
+                                   UnitRate = (int)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().UnitRate,
+                                   QtyStock = item.QtyStock,
+                                   Description = item.Description,
+                                   StaffName = item.Staff.StaffName,
+                                   StockName = item.Stock.StockName,
+                                   SalePrice_L = (decimal)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate == null).First().SalePrice,
+                                   SalePrice_T = (decimal)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().SalePrice,
+                                   Image = item.Image,
+                                   UnitName_L = item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate == null).First().Unit.UnitName,
+                                   UnitName_T = item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().Unit.UnitName,
+                                   StInvetoryName = item.StatusIventory.StInvetoryName,
+                                   SlsTax = item.SlsTax,
+                               }).ToList();
+            inventory.Data = listOfStaff.Take(pageSize);
+            inventory.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
+            inventory.CurrentPage = 1;
+            inventory.Count = count;
+            inventory.PageSize = pageSize;
+            return View("ListInventory", inventory);
         }
         #region Action For Dropdownlist
         /// <summary>
@@ -122,6 +155,25 @@ namespace HB8.CSMS.MVC.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
         #endregion
+        #region Show List View
+         /// <summary>
+        /// Hien thi danh sach nhan vien dang LIST VIEW
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ListInventoryView(int? page)
+        {
+            var pageNumber =0;
+            if (page==null)
+            {
+                 pageNumber = page ?? 0;
+            }
+            else
+            {
+                 pageNumber =(int)page - 1;
+            }
+            return View("ListInventoryPartialView", GetPaginatedInventories(pageNumber));
+        }
+        #endregion
         #region Method
         /// <summary>
         /// Kiem tra ma nv co ton tai hay khong 
@@ -163,9 +215,46 @@ namespace HB8.CSMS.MVC.Controllers
             model.Image = item.Image;
             model.UnitName_L = item.UnitName_L;
             model.UnitName_T = item.UnitName_T;
-            model.StInvetoryName = model.StInvetoryName;
+            model.StInvetoryName = item.StInvetoryName;
             model.SlsTax = item.SlsTax;
             return model;
+        }
+        /// <summary>
+        /// Nhan ve danh sach thong tin STAFF de hien thi
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        private PagedData<InventoryModel> GetPaginatedInventories(int page)
+        {
+            var staff = new PagedData<InventoryModel>();
+            var skipRecords = page * pageSize;
+            var model = inventoryService.GetListInventory();
+            int count = model.Count();
+            var listOfStaff = (from item in model
+                               select new InventoryModel
+                               {
+                                   InvtID = item.InvtID,
+                                   InvtName = item.InvtName,
+                                   ClassName = item.Class.ClassName,
+                                   UnitRate = (int)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().UnitRate,
+                                   QtyStock = item.QtyStock,
+                                   Description = item.Description,
+                                   StaffName = item.Staff.StaffName,
+                                   StockName = item.Stock.StockName,
+                                   SalePrice_L = (decimal)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate == null).First().SalePrice,
+                                   SalePrice_T =(decimal)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().SalePrice,
+                                   Image = item.Image,
+                                   UnitName_L = item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate == null).First().Unit.UnitName,
+                                   UnitName_T = item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().Unit.UnitName,
+                                   StInvetoryName = item.StatusIventory.StInvetoryName,
+                                   SlsTax = item.SlsTax,
+                               }).OrderBy(x => x.StaffName).Skip(skipRecords).Take(pageSize).ToList();
+            staff.Data = listOfStaff;
+            staff.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
+            staff.Count = count;
+            staff.PageSize = pageSize;
+            staff.CurrentPage = page + 1;
+            return staff;
         }
         #endregion
         #region Create Action
@@ -193,40 +282,40 @@ namespace HB8.CSMS.MVC.Controllers
             inventoryService.CreateInventory(item);
         }
         #endregion
-        #region Action Show Large View
+       
         [HttpGet]
-        public ActionResult ListInventory(int? id)
-        {
-            var inventory = new PagedData<InventoryModel>();
-            var page = id ?? 0;
-            //if (Request.IsAjaxRequest())
-            //{
-            //    return PartialView("LargeStaffPartialView", GetPaginatedStaffs(page));//Tra ve VIEW dang GRID 
-            //}
-            var model = inventoryService.GetListInventory();
-            int count = model.Count();
-            var listOfInventory = (from a in model
-                               select new InventoryModel
-                               {
-                                   InvtID = a.InvtID,
-                                   InvtName = a.InvtName,
-                                   UnitRate =(int) a.UnitDetails.Where(x => x.InvtID == a.InvtID && x.UnitRate != null).First().UnitRate,
-                                   QtyStock = a.QtyStock,
-                                   UnitName = a.UnitDetails.Where(x => x.InvtID == a.InvtID && x.UnitRate == null).First().Unit.UnitName,
-                                   SalePrice_L = (int)a.UnitDetails.Where(x => x.InvtID == a.InvtID && x.UnitRate == null).First().SalePrice,
-                               }).ToList();
-            inventory.Data = listOfInventory;
-            //staff.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
-            //staff.CurrentPage = 1;
-            //staff.Count = count;
-            //staff.PageSize = pageSize;
-            return View("ListInventory", inventory);
-        }
-        #endregion
+        //public ActionResult ListInventory(int? id)
+        //{
+        //    var inventory = new PagedData<InventoryModel>();
+        //    var page = id ?? 0;
+        //    //if (Request.IsAjaxRequest())
+        //    //{
+        //    //    return PartialView("LargeStaffPartialView", GetPaginatedStaffs(page));//Tra ve VIEW dang GRID 
+        //    //}
+        //    var model = inventoryService.GetListInventory();
+        //    int count = model.Count();
+        //    var listOfInventory = (from a in model
+        //                           select new InventoryModel
+        //                           {
+        //                               InvtID = a.InvtID,
+        //                               InvtName = a.InvtName,
+        //                               UnitRate = (int)a.UnitDetails.Where(x => x.InvtID == a.InvtID && x.UnitRate != null).First().UnitRate,
+        //                               QtyStock = a.QtyStock,
+        //                               UnitName = a.UnitDetails.Where(x => x.InvtID == a.InvtID && x.UnitRate == null).First().Unit.UnitName,
+        //                               SalePrice_L = (int)a.UnitDetails.Where(x => x.InvtID == a.InvtID && x.UnitRate == null).First().SalePrice,
+        //                           }).ToList();
+        //    inventory.Data = listOfInventory;
+        //    //staff.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
+        //    //staff.CurrentPage = 1;
+        //    //staff.Count = count;
+        //    //staff.PageSize = pageSize;
+        //    return View("ListInventory", inventory);
+        //}
+    
         #region Detail Inventory
         public ActionResult DetailInventory(string id)
         {
-            var model =GetInventoryByID(id);
+            var model = GetInventoryByID(id);
             return View("DetailInventoryPartialView", model);
         }
         #endregion
