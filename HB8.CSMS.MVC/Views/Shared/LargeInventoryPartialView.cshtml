@@ -1,31 +1,37 @@
 ﻿@model HB8.CSMS.MVC.Models.Paging.PagedData<HB8.CSMS.MVC.Models.Inventory.InventoryModel>
+
 @{
-    foreach (var item in Model.Data)
+    if (Model.Data != null)
     {
-        <div class="col-md-4 gridView">
-            <div class=" col-md-4 thumbnail">
-                @{
-        if (item.Image == null)
+
+
+        foreach (var item in Model.Data)
         {
-            <img src="~/Images/no_image.jpg" class="img-rounded" width="110" alt="" />
-        }
-        else
-        {
-            <img src="~/Images/InventoryImages/@item.Image" class="img-rounded" width="110" alt="" />
-        }
-}
-              
+            <div class="col-md-4 gridView">
+                <div class=" col-md-4 thumbnail">
+                    @{
+            if (item.Image == null)
+            {
+                <img src="~/Images/no_image.jpg" class="img-rounded" width="110" alt="" />
+            }
+            else
+            {
+                <img src="~/Images/InventoryImages/@item.Image" class="img-rounded" width="110" alt="" />
+            }
+                    }
+
+                </div>
+                <div class="caption col-md-8">
+                    <a class="detailinventory" href="javascript:;" value="@item.InvtID"><h4 id="">@item.InvtName</h4></a>
+                    <p id=""><strong>Gía:</strong> @item.SalePrice_L</p>
+                    <p id=""><strong>Đang có:</strong>  @(item.UnitRate * item.QtyStock) @item.UnitName</p>
+
+                    @*<input type="hidden" class="getnumberpages" value="@Model.NumberOfPages" />
+                        <input type="hidden" class="count" value="@Model.Count" />
+                        <input type="hidden" class="pagesize" value="@Model.PageSize" />*@
+                </div>
             </div>
-            <div class="caption col-md-8">
-                <a class="detailinventory" href="javascript:;" value="@item.InvtID"><h4 id="">@item.InvtName</h4></a>
-                <p id=""><strong>Gía:</strong> @item.SalePrice_L</p>
-                <p id=""><strong>Đang có:</strong>  @(item.UnitRate* item.QtyStock) @item.UnitName</p>
-                
-                @*<input type="hidden" class="getnumberpages" value="@Model.NumberOfPages" />
-                <input type="hidden" class="count" value="@Model.Count" />
-                <input type="hidden" class="pagesize" value="@Model.PageSize" />*@
-            </div>
-        </div>
+        }
     }
 }
 <script src="~/MyjQ/Index.js"></script>

@@ -14,7 +14,7 @@ namespace HB8.CSMS.MVC.Controllers
     public class InventoryManagerController : Controller
     {
         #region Variables
-        public const int pageSize = 2;//So san pham duoc hien thi tren mot trang
+        public const int pageSize = 1;//So san pham duoc hien thi tren mot trang
         private IInventoryManagerService inventoryService;
         public InventoryManagerController(IInventoryManagerService inventoryService)
         {
@@ -248,7 +248,7 @@ namespace HB8.CSMS.MVC.Controllers
                                    UnitName_T = item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().Unit.UnitName,
                                    StInvetoryName = item.StatusIventory.StInvetoryName,
                                    SlsTax = item.SlsTax,
-                               }).OrderBy(x => x.StaffName).Skip(skipRecords).Take(pageSize).ToList();
+                               }).Skip(skipRecords).Take(pageSize).ToList();
             staff.Data = listOfStaff;
             staff.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
             staff.Count = count;
@@ -282,36 +282,6 @@ namespace HB8.CSMS.MVC.Controllers
             inventoryService.CreateInventory(item);
         }
         #endregion
-       
-        [HttpGet]
-        //public ActionResult ListInventory(int? id)
-        //{
-        //    var inventory = new PagedData<InventoryModel>();
-        //    var page = id ?? 0;
-        //    //if (Request.IsAjaxRequest())
-        //    //{
-        //    //    return PartialView("LargeStaffPartialView", GetPaginatedStaffs(page));//Tra ve VIEW dang GRID 
-        //    //}
-        //    var model = inventoryService.GetListInventory();
-        //    int count = model.Count();
-        //    var listOfInventory = (from a in model
-        //                           select new InventoryModel
-        //                           {
-        //                               InvtID = a.InvtID,
-        //                               InvtName = a.InvtName,
-        //                               UnitRate = (int)a.UnitDetails.Where(x => x.InvtID == a.InvtID && x.UnitRate != null).First().UnitRate,
-        //                               QtyStock = a.QtyStock,
-        //                               UnitName = a.UnitDetails.Where(x => x.InvtID == a.InvtID && x.UnitRate == null).First().Unit.UnitName,
-        //                               SalePrice_L = (int)a.UnitDetails.Where(x => x.InvtID == a.InvtID && x.UnitRate == null).First().SalePrice,
-        //                           }).ToList();
-        //    inventory.Data = listOfInventory;
-        //    //staff.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
-        //    //staff.CurrentPage = 1;
-        //    //staff.Count = count;
-        //    //staff.PageSize = pageSize;
-        //    return View("ListInventory", inventory);
-        //}
-    
         #region Detail Inventory
         public ActionResult DetailInventory(string id)
         {

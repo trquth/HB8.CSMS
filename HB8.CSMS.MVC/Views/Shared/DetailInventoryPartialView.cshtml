@@ -1,122 +1,117 @@
 ﻿@model  HB8.CSMS.MVC.Models.Inventory.InventoryModel
-<div class="row">
-    <div class="col-lg-2  ">
-        <div id="imagePreview">
-            @{
-                if (Model.Image == null)
-                {
-                    <img class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" src="~/Images/no_image.jpg" />
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <div class="col-md-2 ">
+            <div id="imagePreview">
+                @{
+                    if (Model.Image == null)
+                    {
+                        <img class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" src="~/Images/no_image.jpg" />
+                    }
+                    else
+                    {
+                        <img class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" src="~/Images/InventoryImages/@Model.Image" />
+                    }
                 }
-                else
-                {
-                    <img class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" src="~/Images/InventoryImages/@Model.Image" />
-                }
-            }
 
+            </div>
+            <br />
         </div>
-        <br />
-    </div>
-    <div class="col-lg-10 ">
-        <div class="col-lg-12">
-            <input  type="hidden" id="id" value="@Model.InvtID"/> 
-            <h3 class="text-center">@Model.InvtName</h3>
+        <div class="col-md-10 ">
+            <div class="col-md-12">
+                <input type="hidden" id="id" value="@Model.InvtID" />
+                <h3 class="text-center">@Model.InvtName</h3>
+            </div>
+            <div class="col-lg-12">
+                <h4 class="text-center">@Model.ClassName</h4>
+            </div>
         </div>
-        <div class="col-lg-12">
-            <h4 class="text-center">@Model.ClassName</h4>
+        <div class="col-md-12">
+            <ul class="nav nav-tabs" data-tabs="tabs">
+                <li class="active"><a data-toggle="tab" href="#description"><h5>Thông tin</h5> </a></li>
+                <li class=""><a data-toggle="tab" href="#second"><h5>Hàng tồn kho</h5> </a></li>
+                <li class=""><a data-toggle="tab" href="#third"><h5>Thuế</h5> </a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="description">
+                    <div class="col-md-12">
+                        <br />
+                        <div class="col-md-2">Đơn vị tính:</div>
+                        <div class="col-md-10">
+                            <p>@Model.UnitName_T</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-2">Số lượng:</div>
+                        <div class="col-md-10">
+                            @Model.UnitRate
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-md-2">Gía bán sĩ</div>
+                            <div class="col-md-10">
+                                @Model.SalePrice_T
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-2">Đơn vị tính lẻ:</div>
+                        <div class="col-md-10">
+                            @Model.UnitName_L
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class=" col-md-2">Gía bán lẻ:</div>
+                        <div class="col-md-10">
+                            @Model.SalePrice_L
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="col-md-2">Mô tả sản phẩm:</div>
+                        @Model.Description
+                    </div>
+                </div>
+                <div class="tab-pane " id="second">
+                    <div class="col-lg-12 ">
+                        <h3>Tình trạng</h3>
+                        <div class="form-group">
+                            <br />
+                            <label class="control-label col-lg-2">Trạng thái:</label>
+                            <div class="col-lg-5">
+                                @Model.StInvetoryName
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">Quản lí sản phẩm:</label>
+                            <div class="col-lg-5">
+                                @Model.StaffName
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">Số lượng kiến nhập:</label>
+                            <div class="col-lg-5">
+                                @Model.QtyStock
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-pane " id="third">
+                    <div class="col-lg-12 ">
+                        <h3>Thuế</h3>
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">Mức thuế:</label>
+                            <div class="col-lg-10">
+                                @Model.SlsTax
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
+
     </div>
 </div>
-<div class="col-lg-12">
-    <ul class="nav nav-tabs" data-tabs="tabs">
-        <li class="active"><a data-toggle="tab" href="#description"><h5>Thông tin</h5> </a></li>
-        <li class=""><a data-toggle="tab" href="#second"><h5>Hàng tồn kho</h5> </a></li>
-        <li class=""><a data-toggle="tab" href="#third"><h5>Thuế</h5> </a></li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane active" id="description">
-            <div class="col-lg-12">
-                    <br />
-                <div class="col-lg-2"><h4>Đơn vị tính:</h4></div>                   
-                    <div class="col-lg-10">
-                        <p>@Model.UnitName_T</p>
-                    </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="form-group">
-                    <label class="control-label col-lg-2">Số lượng:</label>
-                    <div class="col-lg-10">
-                        @Model.UnitRate
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="form-group">
-                    <label class="control-label col-lg-2">Gía bán :</label>
-                    <div class="col-lg-10">
-                        @Model.SalePrice_T
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="form-group">
-                    <label class="control-label col-lg-2">Đơn vị tính lẻ:</label>
-                    <div class="col-lg-10">
-                        @Model.UnitName_L
 
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="form-group">
-                    <label class="control-label col-lg-2">Gía bán lẻ:</label>
-                    <div class="col-lg-10">
-                        @Model.SalePrice_L
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="form-group">
-                    <label class="control-label col-lg-2">Mô tả sản phẩm:</label>
-                    @Model.Description
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane " id="second">
-            <div class="col-lg-12 ">
-                <h3>Tình trạng</h3>
-                <div class="form-group">
-                    <br />
-                    <label class="control-label col-lg-2">Trạng thái:</label>
-                    <div class="col-lg-5">
-                        @Model.StInvetoryName
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-lg-2">Quản lí sản phẩm:</label>
-                    <div class="col-lg-5">
-                        @Model.StaffName
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-lg-2">Số lượng kiến nhập:</label>
-                    <div class="col-lg-5">
-                        @Model.QtyStock
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <div class="tab-pane " id="third">
-            <div class="col-lg-12 ">
-                <h3>Thuế</h3>
-                <div class="form-group">
-                    <label class="control-label col-lg-2">Mức thuế:</label>
-                    <div class="col-lg-10">
-                        @Model.SlsTax
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>

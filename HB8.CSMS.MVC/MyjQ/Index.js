@@ -112,31 +112,6 @@ $(".buttonEdit").button().click(function () {
         }
     });
 });
-
-//TIP
-//function btnEdit_Click(id) {
-//    $.ajax({
-//        // Gọi 
-//        url: "/StaffManager/EditStaffPV",
-//        data: { id: id },
-//        type: 'Get',
-//        success: function (data) {
-//            var theDialog = $("#showLoading").dialog(opt);
-//            theDialog.dialog("close");
-//            $("#btnloadstaff").hide();
-//            $("#staff-list").empty().append(data);
-//        },
-//        beforeSend: function () {
-//            var theDialog = $("#showLoading").dialog(opt);
-//            theDialog.dialog("open");
-//        },
-//        error: function () {
-//            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
-//        }
-//    });
-//}
-
-
 //Sua thong tin khi dang o trang xem chi tiet
 $("#buttonEditForStaff").click(function () {
     var selectedId = $("#getId").attr('value');
@@ -218,7 +193,7 @@ $(".okDelete").button().click(function () {
         }
     });
 });
-//Dung de hien thi thong tin dang GRID 
+//Dung trong phan trang
 $(document).ready(function () {
     var _inCallback = false;
     var page = 0;
@@ -248,9 +223,6 @@ $(document).ready(function () {
 });
 //Dung de hien thi thong tin dang LIST
 $(document).ready(function () {
-    $("#showLoading").dialog({
-        autoOpen: false,
-    });
     $("#btnListView").click(function () {
         $.ajax({
             url: '/StaffManager/ListStaffView',
@@ -276,9 +248,6 @@ $(document).ready(function () {
 });
 //Hien thi danh sach khach hang dang list tung trang
 $(document).ready(function () {
-    $("#showLoading").dialog({
-        autoOpen: false,
-    });
     $(".page-number").on('click', function () {
         var page = parseInt($(this).html());
         $.ajax({
@@ -357,33 +326,6 @@ $(document).ready(function () {
 
     });
 });
-function a() {
-    $(".detailstaff").on("click", function () {
-        var id = $(this).attr('value');
-        $.ajax({
-            url: '/StaffManager/DetailStaff',
-            data: { "staffId": id },
-            type: "Get",
-            success: function (data) {
-                var theDialog = $("#showLoading").dialog(opt);
-                theDialog.dialog("close");
-                $("#btnloadstaff").hide();
-                $("#buttonEditForStaff").show();
-                $("#buttonDeleteForStaff").show();
-                $("#staff-list").empty();
-                $("#staff-list").append(data);
-            },
-            beforeSend: function () {
-                var theDialog = $("#showLoading").dialog(opt);
-                theDialog.dialog("open");
-            },
-            error: function () {
-                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
-            }
-        });
-
-    });
-}
 //********************************************************************************************//
 //PHAN JS DANH CHO CUSTOMER
 //*******************************************************************************************//
@@ -1016,7 +958,7 @@ $(document).ready(function () {
             success: function (data) {
                 var theDialog = $("#showLoading").dialog(opt);
                 theDialog.dialog("close");
-                //$("#btnloadstaff").hide();
+                $("#btnloadinventory").hide();
                 $("#buttonEditForInventory").show();
                 //$("#buttonDeleteForStaff").show();
                 $("#inventory-list").empty();
