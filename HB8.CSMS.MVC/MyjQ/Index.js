@@ -394,7 +394,7 @@ function btnListViewForCustomer_Click() {
         data: {},
         type: 'GET',
         success: function (data) {
-         
+
             $("#btnloadcustomer").hide();
             $("#person-list").empty();
             $("#person-list").append(data);
@@ -1009,7 +1009,9 @@ $(document).ready(function () {
                 var theDialog = $("#showLoading").dialog(opt);
                 theDialog.dialog("close");
                 $("#inventory-list").empty();
-                //$("#btnloadstaff").show();
+                $("#btnloadinventory").show();
+                $("#btnloadinventory").text('Hiển thêm');
+                $("#btnLargeViewForInventory").prop('value', '1');
                 $("#inventory-list").append(data);
             },
             beforeSend: function () {
@@ -1044,5 +1046,41 @@ $(document).ready(function () {
                 swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
             }
         })
+    });
+});
+//Chuc nang load nhung san pham con lai
+$(document).ready(function () {
+    var page = 0;
+    var _inCallback = false;
+    var numberPage = parseInt($(".getnumberpages").val()) - 1;
+    var pageSize = $(".pagesize").val();
+    var count = $(".count").val() - pageSize;
+    $("#btnloadinventory").click(function () {
+        var flag = $("#btnLargeViewForInventory").val();
+        if (flag == "") {
+            if (page > -1 && !_inCallback) {
+                _inCallback = true;
+                page++;
+                var number = count - page * pageSize;
+                if (page < numberPage) {
+                    $("#btnloadinventory").text("Còn " + number + " sản phẩm");
+                } else {
+                    $("#btnloadinventory").hide();
+                }
+                $.get("/InventoryManager/ListInventory/" + page, function (data) {
+                    if (data != null) {
+                        $("#inventory-list").append(data);
+                    }
+                    else {
+                        page = -1;
+                    }
+                    _inCallback = false;
+                    $("#showLoading").dialog("open");
+                });
+            }
+        } else {
+            page = 0;// Khi ma da nhan nut LARGE VIEW thi tu dong page se dc tra ve la 0 va value cua btn se la rong
+            $("#btnLargeViewForInventory").prop('value','');
+        }
     });
 });
