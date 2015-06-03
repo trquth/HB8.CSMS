@@ -63,6 +63,13 @@ namespace HB8.CSMS.BLL.Abstract
         /// <param name="inventory"></param>
         /// <returns></returns>
         int UpdateInventory(InventoryDomain inventory);
+        /// <summary>
+        /// Tra ve so thu tu cua san pham  trong database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        int ReturnIndexInventory(string id);
+       
 
     }
 }

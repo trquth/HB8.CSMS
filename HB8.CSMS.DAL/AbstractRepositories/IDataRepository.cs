@@ -43,5 +43,7 @@ namespace HB8.CSMS.DAL.AbstractRepositories
         /// <param name="keys"></param>
         /// <returns></returns>
         T Find(params object[] keys);
+       
+       
     }
 }

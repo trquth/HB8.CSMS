@@ -927,6 +927,7 @@ $(document).ready(function () {
     $("#buttonEditForInventory").hide();
     $("#buttonpreviousForInventory").hide();
     $("#buttonnextForInventory").hide();
+    $("#countInvnetory").hide();
 })
 //Goi trang them san pham moi
 $(".buttonCreateForInventory").button().click(function () {
@@ -1015,6 +1016,8 @@ $(document).ready(function () {
                 $("#inventory-list").empty();
                 $("#btnloadinventory").show();
                 $("#buttonEditForInventory").hide();
+                $("#buttonpreviousForInventory").hide();
+                $("#buttonnextForInventory").hide();
                 $("#btnloadinventory").text('Hiển thêm');
                 $("#btnLargeViewForInventory").prop('value', '1');
                 $("#inventory-list").append(data);
@@ -1087,7 +1090,7 @@ $(document).ready(function () {
             }
         } else {
             page = 0;// Khi ma da nhan nut LARGE VIEW thi tu dong page se dc tra ve la 0 va value cua btn se la rong
-            $("#btnLargeViewForInventory").prop('value','');
+            $("#btnLargeViewForInventory").prop('value', '');
         }
     });
 });
@@ -1102,7 +1105,7 @@ $(document).ready(function () {
             success: function (data) {
                 $("#btnloadinventory").hide();
                 var theDialog = $("#showLoading").dialog(opt);
-                theDialog.dialog("close");             
+                theDialog.dialog("close");
                 $("#inventory-list").empty();
                 $("#inventory-list").append(data);
             },
@@ -1130,6 +1133,8 @@ $(document).ready(function () {
                 theDialog.dialog("close");
                 $("#btnloadinventory").hide();
                 $("#buttonEditForInventory").show();
+                $("#buttonpreviousForInventory").show();
+                $("#buttonnextForInventory").show();
                 $("#inventory-list").empty();
                 $("#inventory-list").append(data);
             },
@@ -1182,6 +1187,13 @@ $(document).ready(function () {
             beforeSend: function () {
                 var theDialog = $("#showLoading").dialog(opt);
                 theDialog.dialog("open");
+                $.ajax({
+                    url: '/InventoryManager/IndexOfInventory',
+                    data: { id: id },
+                    success: function (data) {
+                        $(".countInvnetory").append('<a href="#">' + data.Index / data.Count + '</a>');
+                    }
+                });
             },
             error: function () {
                 swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });

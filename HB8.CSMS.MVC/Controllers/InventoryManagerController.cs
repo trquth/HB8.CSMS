@@ -128,6 +128,15 @@ namespace HB8.CSMS.MVC.Controllers
                         }).OrderBy(x => x.StockName);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult IndexOfInventory(string id)
+        {
+            int index = inventoryService.ReturnIndexInventory(id);
+            int count = inventoryService.GetListInventory().Count();
+            var model = new PagedData<InventoryModel>();
+            model.Count = count;
+            model.Index = index;
+            return Json(model,JsonRequestBehavior.AllowGet);
+        }
         #endregion
         #region Show List View
         /// <summary>
@@ -387,6 +396,5 @@ namespace HB8.CSMS.MVC.Controllers
             return PartialView("DetailInventoryPartialView", model);
         }
         #endregion
-
     }
 }

@@ -162,5 +162,18 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             context.Save();
             return 0;
         }
+        public int ReturnIndexInventory(string id)
+        {
+            var model = context.Inventories.GetAllItem();
+            int count = 0;
+            foreach (var item in model)
+            {
+                if (item.InvtID.Equals(id))
+                    break;
+                count++;
+	
+            }
+            return count;
+        }
     }
 }
