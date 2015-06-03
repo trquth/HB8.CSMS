@@ -202,6 +202,8 @@
     <Content Include="css\bootstrap-theme.min.css" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\jquery-ui.css" />
+    <Content Include="css\jquery-ui.min.css" />
     <Content Include="css\jquery.fileupload.css" />
     <Content Include="css\plugins\morris.css" />
     <Content Include="css\sb-admin-rtl.css" />

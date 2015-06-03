@@ -1024,6 +1024,7 @@ $(document).ready(function () {
         })
     });
 });
+//Hien thi dang LIST VIEW
 $(document).ready(function () {
     $("#btnListViewForInventory").click(function () {
         $.ajax({
@@ -1033,8 +1034,8 @@ $(document).ready(function () {
             success: function (data) {
                 var theDialog = $("#showLoading").dialog(opt);
                 theDialog.dialog("close");
+                $("#btnloadinventory").hide();
                 $("#inventory-list").empty();
-                //$("#btnloadstaff").hide();
                 $("#inventory-list").append(data);
 
             },
@@ -1084,3 +1085,55 @@ $(document).ready(function () {
         }
     });
 });
+//Hien thi danh sach san pham hdang list tung trang
+$(document).ready(function () {
+    $(".page-numberForInventory").on('click', function () {
+        var page = parseInt($(this).html());
+        $.ajax({
+            url: '/InventoryManager/ListInventoryView',
+            data: { "page": page },
+            type: 'GET',
+            success: function (data) {
+                $("#btnloadinventory").hide();
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");             
+                $("#inventory-list").empty();
+                $("#inventory-list").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
+
+    });
+});
+//Chon 1 dong se hien ra thong tin chi tiet cua san pham
+$(document).ready(function () {
+    $('#tableInventory').find('tr').click(function () {
+        var id = $(this).find('input').attr('value');
+        $.ajax({
+            url: '/InventoryManager/DetailInventory',
+            data: { "id": id },
+            type: "Get",
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                $("#btnloadinventory").hide();
+                $("#buttonEditForInventory").show();
+                $("#inventory-list").empty();
+                $("#inventory-list").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
+    });
+})

@@ -14,7 +14,7 @@ namespace HB8.CSMS.MVC.Controllers
     public class InventoryManagerController : Controller
     {
         #region Variables
-        public const int pageSize = 1;//So san pham duoc hien thi tren mot trang
+        public const int pageSize = 2;//So san pham duoc hien thi tren mot trang
         private IInventoryManagerService inventoryService;
         public InventoryManagerController(IInventoryManagerService inventoryService)
         {
@@ -145,7 +145,7 @@ namespace HB8.CSMS.MVC.Controllers
             {
                 pageNumber = (int)page - 1;
             }
-            return View("ListInventoryPartialView", GetPaginatedInventories(pageNumber));
+            return PartialView("ListInventoryPartialView", GetPaginatedInventories(pageNumber));
         }
         #endregion
         #region Method
@@ -295,7 +295,7 @@ namespace HB8.CSMS.MVC.Controllers
         public ActionResult DetailInventory(string id)
         {
             var model = GetInventoryByID(id);
-            return View("DetailInventoryPartialView", model);
+            return PartialView("DetailInventoryPartialView", model);
         }
         #endregion
         #region Edit Action

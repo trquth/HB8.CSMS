@@ -5,8 +5,8 @@
     {
         foreach (var item in Model.Data)
         {
-            <div class="col-md-4 gridView">
-                <div class=" col-md-4 thumbnail">
+            <div class="col-lg-4 gridView">
+                <div class=" col-lg-4 thumbnail">
                     @{
             if (item.Image == null)
             {
@@ -19,7 +19,7 @@
                     }
 
                 </div>
-                <div class="caption col-md-8">
+                <div class="caption col-lg-8">
                     <a class="detailinventory" href="javascript:;" value="@item.InvtID"><h4 id="">@item.InvtName</h4></a>
                     <p id=""><strong>Gía:</strong> @item.SalePrice_L</p>
                     <p id=""><strong>Đang có:</strong>  @(item.UnitRate * item.QtyStock) @item.UnitName</p>
