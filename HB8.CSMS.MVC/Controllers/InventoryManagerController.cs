@@ -331,6 +331,62 @@ namespace HB8.CSMS.MVC.Controllers
             inventoryService.UpdateInventory(model);
         }
         #endregion
+        #region Code xu li Next va Privous
+        /// <summary>
+        /// Lay ma san pham tiep theo tiep theo
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public string FindNextID(string id)
+        {
+            string lastId = inventoryService.GetListInventory().LastOrDefault().InvtID.ToString(); 
+            //Kiem tra xem MSP vua nhan co phai la MSP cuoi cung k
+            if (lastId == id)
+            {
+                return id;
+            }
+            else
+            {
+                string nextId = inventoryService.GetListInventory().SkipWhile(x => x.InvtID != id).Skip(1).FirstOrDefault().InvtID.ToString();
+                return nextId;
+            }
+        }
+        /// <summary>
+        /// Lay ma khach hang truoc do
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public string FindPreviousID(string id)
+        {
+            var startId = inventoryService.GetListInventory().FirstOrDefault().InvtID.ToString();
+            if (startId == id)
+            {
+                return startId;
+            }
+            else
+            {
+                string previousId = inventoryService.GetListInventory().TakeWhile(x => x.InvtID != id).LastOrDefault().InvtID.ToString(); 
+                return previousId;
+            }
+        }
+        /// <summary>
+        /// Hien thi khach hang tiep theo
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult NextInventory(string id)
+        {
+            string nextId = FindNextID(id);
+            var model = GetInventoryByID(nextId);
+            return PartialView("DetailInventoryPartialView", model);
+        }
+        public ActionResult PreviousInventory(string id)
+        {
+            string previousId = FindPreviousID(id);
+            var model = GetInventoryByID(previousId);
+            return PartialView("DetailInventoryPartialView", model);
+        }
+        #endregion
 
     }
 }

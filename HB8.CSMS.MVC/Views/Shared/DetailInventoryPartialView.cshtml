@@ -7,11 +7,11 @@
         @{
             if (Model.Image == null)
             {
-                <img class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" src="~/Images/no_image.jpg" />
+                <img class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="120" width="120" src="~/Images/no_image.jpg" />
             }
             else
             {
-                <img class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" src="~/Images/InventoryImages/@Model.Image" />
+                <img class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="120" width="120" src="~/Images/InventoryImages/@Model.Image" />
             }
         }
 
@@ -37,6 +37,7 @@
         <div class="tab-pane active" id="description">
             <div class="col-lg-12">
                 <br />
+                <h3>Thông tin chung</h3>
                 <div class="col-lg-2">Đơn vị tính:</div>
                 <div class="col-lg-10">
                     <p>@Model.UnitName_T</p>
@@ -78,20 +79,20 @@
                 <h3>Tình trạng</h3>
                 <div class="form-group">
                     <br />
-                    <label class="control-label col-lg-2">Trạng thái:</label>
-                    <div class="col-lg-5">
+                    <div class=" col-lg-2">Trạng thái:</div>
+                    <div class="col-lg-10">
                         @Model.StInvetoryName
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-lg-2">Quản lí sản phẩm:</label>
-                    <div class="col-lg-5">
+                    <div class=" col-lg-2">Quản lí sản phẩm:</div>
+                    <div class="col-lg-10">
                         @Model.StaffName
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-lg-2">Số lượng kiến nhập:</label>
-                    <div class="col-lg-5">
+                    <div class=" col-lg-2">Số lượng kiến nhập:</div>
+                    <div class="col-lg-10">
                         @Model.QtyStock
                     </div>
                 </div>
@@ -102,7 +103,7 @@
             <div class="col-lg-12 ">
                 <h3>Thuế</h3>
                 <div class="form-group">
-                    <label class="control-label col-lg-2">Mức thuế:</label>
+                    <div class=" col-lg-2">Mức thuế:</div>
                     <div class="col-lg-10">
                         @Model.SlsTax
                     </div>

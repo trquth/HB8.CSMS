@@ -925,6 +925,8 @@ function btnListViewForCustomer_Click() {
 //Cai dat
 $(document).ready(function () {
     $("#buttonEditForInventory").hide();
+    $("#buttonpreviousForInventory").hide();
+    $("#buttonnextForInventory").hide();
 })
 //Goi trang them san pham moi
 $(".buttonCreateForInventory").button().click(function () {
@@ -935,6 +937,7 @@ $(".buttonCreateForInventory").button().click(function () {
         success: function (data) {
             var theDialog = $("#showLoading").dialog(opt);
             theDialog.dialog("close");
+            $("#buttonEditForInventory").hide();
             $("#btnloadstaff").hide();
             $("#inventory-list").empty().append(data);
         },
@@ -960,7 +963,8 @@ $(document).ready(function () {
                 theDialog.dialog("close");
                 $("#btnloadinventory").hide();
                 $("#buttonEditForInventory").show();
-                //$("#buttonDeleteForStaff").show();
+                $("#buttonpreviousForInventory").show();
+                $("#buttonnextForInventory").show();
                 $("#inventory-list").empty();
                 $("#inventory-list").append(data);
             },
@@ -1010,6 +1014,7 @@ $(document).ready(function () {
                 theDialog.dialog("close");
                 $("#inventory-list").empty();
                 $("#btnloadinventory").show();
+                $("#buttonEditForInventory").hide();
                 $("#btnloadinventory").text('Hiển thêm');
                 $("#btnLargeViewForInventory").prop('value', '1');
                 $("#inventory-list").append(data);
@@ -1035,6 +1040,7 @@ $(document).ready(function () {
                 var theDialog = $("#showLoading").dialog(opt);
                 theDialog.dialog("close");
                 $("#btnloadinventory").hide();
+                $("#buttonEditForInventory").hide();
                 $("#inventory-list").empty();
                 $("#inventory-list").append(data);
 
@@ -1137,3 +1143,49 @@ $(document).ready(function () {
         });
     });
 })
+//Hien thi thong tin san pham tiep theo
+$(document).ready(function () {
+    $("#buttonnextForInventory").click(function () {
+        var id = $("#id").val();
+        $.ajax({
+            url: '/InventoryManager/NextInventory',
+            data: { id: id },
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                $("#inventory-list").empty();
+                $("#inventory-list").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
+    });
+});
+//Hien thi thong tin san pham truoc
+$(document).ready(function () {
+    $("#buttonpreviousForInventory").click(function () {
+        var id = $("#id").val();
+        $.ajax({
+            url: '/InventoryManager/PreviousInventory',
+            data: { id: id },
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                $("#inventory-list").empty();
+                $("#inventory-list").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
+    });
+});
