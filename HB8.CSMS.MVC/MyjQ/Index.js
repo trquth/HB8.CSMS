@@ -972,6 +972,14 @@ $(document).ready(function () {
             beforeSend: function () {
                 var theDialog = $("#showLoading").dialog(opt);
                 theDialog.dialog("open");
+                $.ajax({
+                    url: '/InventoryManager/IndexOfInventory',
+                    data: { id: id },
+                    success: function (data) {
+                        $(".countInvnetory").empty();
+                        $(".countInvnetory").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
+                    }
+                });
             },
             error: function () {
                 swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
@@ -1141,6 +1149,14 @@ $(document).ready(function () {
             beforeSend: function () {
                 var theDialog = $("#showLoading").dialog(opt);
                 theDialog.dialog("open");
+                $.ajax({
+                    url: '/InventoryManager/IndexOfInventory',
+                    data: { id: id },
+                    success: function (data) {
+                        $(".countInvnetory").empty();
+                        $(".countInvnetory").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
+                    }
+                });
             },
             error: function () {
                 swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
@@ -1164,6 +1180,19 @@ $(document).ready(function () {
             beforeSend: function () {
                 var theDialog = $("#showLoading").dialog(opt);
                 theDialog.dialog("open");
+                $.ajax({
+                    url: '/InventoryManager/IndexOfInventory',
+                    data: { id: id },
+                    success: function (data) {
+                        if (data.Index == data.Count) {
+                            $(".countInvnetory").empty();
+                            $(".countInvnetory").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
+                        } else {
+                            $(".countInvnetory").empty();
+                            $(".countInvnetory").append('<a href="#">' + (data.Index + 1) + '/' + data.Count + '</a>');
+                        }
+                    }
+                });
             },
             error: function () {
                 swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
@@ -1191,7 +1220,14 @@ $(document).ready(function () {
                     url: '/InventoryManager/IndexOfInventory',
                     data: { id: id },
                     success: function (data) {
-                        $(".countInvnetory").append('<a href="#">' + data.Index / data.Count + '</a>');
+                        if (data.Index ==1) {
+                            $(".countInvnetory").empty();
+                            $(".countInvnetory").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
+                        } else {
+                            $(".countInvnetory").empty();
+                            $(".countInvnetory").append('<a href="#">' + (data.Index - 1) + '/' + data.Count + '</a>');
+                        }
+                     
                     }
                 });
             },

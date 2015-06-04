@@ -165,7 +165,7 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
         public int ReturnIndexInventory(string id)
         {
             var model = context.Inventories.GetAllItem();
-            int count = 0;
+            int count = 1;
             foreach (var item in model)
             {
                 if (item.InvtID.Equals(id))
