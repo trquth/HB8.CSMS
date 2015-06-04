@@ -1,105 +1,74 @@
 ﻿@model HB8.CSMS.MVC.Models.Customer.CustomerModel
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#buttonnext").click(function () {
-            var id = $("#getId").val();
-            $.ajax({
-                url: '/CustomerManager/NextCustomer',
-                data: { id: id },
-                success: function (data) {
-                    $("#person-list").html(data);
-                }
-            });
-        });
-    });
-</script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#buttonprevious").click(function () {
-            var id = $("#getId").val();
-            $.ajax({
-                url: '/CustomerManager/PreviousCustomer',
-                data: { id: id },
-                success: function (data) {
-                    $("#person-list").html(data);
-                }
-            });
-        });
-    });
-</script>
-<div class="row">
-    <div class="col-lg-2  ">
-        <div id="imagePreview">
-            <img class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" src="~/Images/no_image.jpg" />
-            <br />
-            <br />
+
+<div class="col-lg-2  ">
+    <div id="imagePreview">
+        <img class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" src="~/Images/no_image.jpg" />
+        <br />
+        <br />
+    </div>
+</div>
+<div class="col-lg-10 ">
+    <h3 class="text-center">@Model.CustName</h3>
+</div>
+
+<div class="col-lg-12">
+    <div class="col-lg-6">
+        <div class=" col-lg-3">Địa chỉ:</div>
+        <div class="col-lg-9">
+            @Model.Address
         </div>
     </div>
-    <div class="col-lg-10 ">
-        <h3 class="text-center">@Model.CustName</h3>
-    </div>
-   
-    <div class="col-lg-12">
-        <div class="col-lg-6">
-            <label class="control-label col-lg-2">Địa chỉ:</label>
-            <div class="col-lg-10">
-                @Model.Address
-            </div>
+    <div class="col-lg-6">
+        <div class=" col-lg-4">Số điện thoại:</div>
+        <div class="col-lg-8">
+            @Model.Phone
         </div>
-        <div class="col-lg-6">
-
-            <label class="control-label col-lg-2">Số điện thoại:</label>
-            <div class="col-lg-5">
-                @Model.Phone
-            </div>
-
-
-            <label class="control-label col-lg-2">Fax:</label>
-            <div class="col-lg-5">
-                @Model.Fax
-            </div>
-            <label class="control-label col-lg-2">Email:</label>
-            <div class="col-lg-10">
-                @Model.Email
-            </div>
+        <div class=" col-lg-4">Fax:</div>
+        <div class="col-lg-8">
+            @Model.Fax
         </div>
+        <div class=" col-lg-4">Email:</div>
+        <div class="col-lg-8">
+            @Model.Email
+        </div>      
     </div>
-    <div class="col-lg-12">
-        <ul class="nav nav-tabs" data-tabs="tabs">
-            <li class="active"><a data-toggle="tab" href="#description"><h5>Lưu ý nội bộ</h5> </a></li>
-            <li class=""><a data-toggle="tab" href="#second"><h5>Mua hàng và bán hàng</h5> </a></li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane active" id="description">
-                <div class="col-lg-12">
-                    <br />
-                    <div class="col-lg-10">
-                        @Model.Description
-                    </div>
+</div>
+<div class="col-lg-12">
+    <ul class="nav nav-tabs" data-tabs="tabs">
+        <li class="active"><a data-toggle="tab" href="#description"><h5>Lưu ý nội bộ</h5> </a></li>
+        <li class=""><a data-toggle="tab" href="#second"><h5>Mua hàng và bán hàng</h5> </a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="description">
+            <div class="col-lg-12">
+                <br />
+                <div class="col-lg-10">
+                    @Model.Description
                 </div>
             </div>
-            <div class="tab-pane " id="second">
-                <br />
-                <div class="col-lg-12 ">
-                    <div class="col-lg-6">
+        </div>
+        <div class="tab-pane " id="second">
+            <br />
+            <div class="col-lg-12 ">
+                <div class="col-lg-6">
 
-                        <label class="control-label col-lg-4  ">Nhân viên phụ trách:</label>
-                        <div class="col-lg-8">                                                                          </div>
+                    <label class="control-label col-lg-4  ">Nhân viên phụ trách:</label>
+                    <div class="col-lg-8">                                                                          </div>
 
-                        <label class="control-label col-lg-4">Ngày tạo:</label>
-                        <div class="col-lg-4">
-                            @Model.CreateDate
-                        </div>
-
+                    <label class="control-label col-lg-4">Ngày tạo:</label>
+                    <div class="col-lg-4">
+                        @Model.CreateDate
                     </div>
-                    <div class="col-lg-6">
-                        <label class="control-label col-lg-4">Trạng thái:</label>
-                        <div class="col-lg-8">
-                            @Model.StatusName
-                        </div>
+
+                </div>
+                <div class="col-lg-6">
+                    <label class="control-label col-lg-4">Trạng thái:</label>
+                    <div class="col-lg-8">
+                        @Model.StatusName
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+

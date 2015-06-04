@@ -20,9 +20,10 @@ namespace HB8.CSMS.MVC.Controllers
         {
             this.inventoryService = inventoryService;
         }
-        #endregion Show Large View
+        #endregion 
+        #region Show Large View
         public ActionResult ListInventory(int? id)
-        {          
+        {
             var page = id ?? 0;
             if (Request.IsAjaxRequest())
             {
@@ -31,6 +32,7 @@ namespace HB8.CSMS.MVC.Controllers
             var inventory = GetInventoryForListPage();
             return View("ListInventory", inventory);
         }
+        #endregion    
         #region Action For Dropdownlist
         /// <summary>
         /// Lay  danh sach cac nhom san pham

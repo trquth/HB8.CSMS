@@ -375,37 +375,111 @@ $(".detailcustomer").on("click", function () {
 
     })
 });
-////TIP: SƠN HUONG DAN ONCLICK TRUC TIEP
-//function btnListViewForCustomer_Click(id) {
-//    //ToDo: Something
-//    alert('ID');
-//}
-//$('[id*=]').
-//var theDialog = $("#showLoading").dialog(opt);
-//theDialog.dialog("close");
-/*,
-        beforeSend: function () {
-            var theDialog = $("#showLoading").dialog(opt);
-            theDialog.dialog("open");
-        },*/
-function btnListViewForCustomer_Click() {
-    $.ajax({
-        url: '/CustomerManager/ListCustomerView',
-        data: {},
-        type: 'GET',
-        success: function (data) {
 
-            $("#btnloadcustomer").hide();
-            $("#person-list").empty();
-            $("#person-list").append(data);
-        },
-        error: function () {
-            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+
+
+//Chuc nang load nhung khach hang con lai
+$(document).ready(function () {
+    var page = 0;
+    var _inCallback = false;
+    var numberPage = parseInt($(".getnumberpages").val()) - 1;
+    var pageSize = $(".pagesize").val();
+    var count = $(".count").val() - pageSize;
+    $("#btnloadcustomer").click(function () {
+        var flag = $("#btnLargeViewForCustomer").val();
+        if (flag == "") {
+            if (page > -1 && !_inCallback) {
+                _inCallback = true;
+                page++;
+                var number = count - page * pageSize;
+                if (page < numberPage) {
+                    $("#btnloadcustomer").text("Còn " + number + " sản phẩm");
+                } else {
+                    $("#btnloadcustomer").hide();
+                }
+                $.get("/CustomerManager/ListCustomer/" + page, function (data) {
+                    if (data != null) {
+                        $("#customer-list").append(data);
+                    }
+                    else {
+                        page = -1;
+                    }
+                    _inCallback = false;
+                    $("#showLoading").dialog("open");
+                });
+            }
+        } else {
+            page = 0;// Khi ma da nhan nut LARGE VIEW thi tu dong page se dc tra ve la 0 va value cua btn se la rong
+            $("#btnLargeViewForCustomer").prop('value', '');
         }
+    });
+});
+//Hien thi thong tin chi tiet khach hang
+$(document).ready(function () {
+    $(".detailcustomer").on("click", function () {
+        var id = $(this).attr('value');
+        $.ajax({
+            url: '/CustomerManager/DetailCustomer',
+            data: { "custId": id },
+            type: "Get",
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                $("#btnloadcustomer").hide();
+                //$("#buttonEditForInventory").show();
+                //$("#buttonpreviousForInventory").show();
+                //$("#buttonnextForInventory").show();
+                $("#customer-list").empty();
+                $("#customer-list").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+                //$.ajax({
+                //    url: '/InventoryManager/IndexOfInventory',
+                //    data: { id: id },
+                //    success: function (data) {
+                //        $(".countInvnetory").empty();
+                //        $(".countInvnetory").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
+                //    }
+                //});
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
 
-    })
-}
-
+    });
+});
+//Hien thi dang LARGE VIEW
+$(document).ready(function () {
+    $("#btnLargeViewForInventory").click(function () {
+        $.ajax({
+            url: '/InventoryManager/ListInventory',
+            data: {},
+            type: 'GET',
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                $("#inventory-list").empty();
+                $("#btnloadinventory").show();
+                $("#buttonEditForInventory").hide();
+                $("#buttonpreviousForInventory").hide();
+                $("#buttonnextForInventory").hide();
+                $("#btnloadinventory").text('Hiển thêm');
+                $("#btnLargeViewForInventory").prop('value', '1');
+                $("#inventory-list").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        })
+    });
+});
 
 //$(document).ready(function () {
 //    $("#listView").hide();

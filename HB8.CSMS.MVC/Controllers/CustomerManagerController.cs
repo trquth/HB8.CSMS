@@ -21,58 +21,7 @@ namespace HB8.CSMS.MVC.Controllers
             this.customerService = customerService;
         }
         #endregion
-        #region Ghi chu 2
-        /// <summary>
-        /// Trả về một danh sách các chức vụ dang JSON
-        /// </summary>
-        /// <returns>JSON</returns>
-
-
-        /// <summary>
-        /// Kiem tra ma nv co ton tai hay khong 
-        /// </summary>
-        /// <param name="staffId"></param>
-        /// <returns>Tra ve mot json mang gia tri true khi ma nv ton tai, nguoc lai false </returns>
-        //[HttpGet]
-        //public JsonResult HaveStaffId(string staffId)
-        //{
-        //    var model = staffService.GetStaffById(staffId);
-        //    bool data = false;
-        //    if (model != null)
-        //    {
-        //        data = true;
-        //    }
-        //    return Json(data, JsonRequestBehavior.AllowGet);
-
-        //}
-        ///// <summary>
-        ///// Gan danh sach chuc vu cua nhan vien lay tu DATABASE vao MODEL
-        ///// </summary>
-        ///// <returns></returns>
-        //public IEnumerable<StaffModel> GetListPosition()
-        //{
-        //    var model = staffService.GetListPosition();
-        //    var data = (from a in model
-        //                select new StaffModel
-        //                {
-        //                    UserId = a.UserID,
-        //                    UserName = a.UserName,
-        //                }).OrderBy(x => x.UserName);
-        //    return data;
-        //}
-        //[HttpGet]
-        //public ViewResult CreateNewStaff()
-        //{
-        //    ViewBag.Position = GetListPosition();
-        //    return View();
-        //}
-        //[HttpPost]
-        //public ViewResult CreateNewStaff(StaffModel staff)
-        //{           
-        //    return View();
-        //}
-        #endregion
-        #region Code xu li trang LIST CUSTOMER
+        #region Hien thi LARGE VIEW CUSTOMER
         /// <summary>
         /// Danh sach khach hang
         /// </summary>
@@ -80,29 +29,17 @@ namespace HB8.CSMS.MVC.Controllers
         /// <returns></returns>
         public ActionResult ListCustomer(int? id)
         {
-            var customer = new PagedData<CustomerModel>();
             var page = id ?? 0;
             if (Request.IsAjaxRequest())
             {
                 return PartialView("LargeCustomerPartialView", GetPaginatedProducts(page));//Tra ve VIEW dang GRID 
             }
-            var model = customerService.GetListCustomers();
-            int count = model.Count();
-            var listOfCustomer = (from a in model
-                                  select new CustomerModel
-                                  {
-                                      CustID = a.CustID,
-                                      CustName = a.CustName,
-                                      Address = a.Address,
-                                      Phone = a.Phone
-                                  }).ToList();
-            customer.Data = listOfCustomer.Take(pageSize);
-            customer.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
-            customer.CurrentPage = 1;
-            customer.Count = count;
-            customer.PageSize = pageSize;
+            var customer = GetCustomerForListPage();
             return View("ListCustomer", customer);
         }
+        #endregion
+        #region Code xu li trang LIST CUSTOMER
+
         public ActionResult ListCustomerView(int?page)
         {
             var pageNumber = 0;
@@ -167,33 +104,10 @@ namespace HB8.CSMS.MVC.Controllers
             customer.Count = count;
             customer.PageSize = pageSize;
             return customer;
-        }
-
-     
+        } 
         #endregion
         #region Code xu li hien thi thong tin chi tiet cua CUSTOMER
-        /// <summary>
-        /// Lay thong tin chi tiet cua khach hang dua vao Id
-        /// </summary>
-        /// <param name="custId"></param>
-        /// <returns></returns>
-        private CustomerModel GetCustomerDetail(string custId)
-        {
-            var customer = new CustomerModel();
-            var model = customerService.GetCustomerById(custId);
-            customer.CustID = model.CustID;
-            customer.Image = model.Image;
-            customer.CustName = model.CustName;
-            customer.Address = model.Address;
-            customer.Phone = model.Phone;
-            customer.Fax = model.Fax;
-            customer.Email = model.Email;
-            customer.StatusID = model.StatusID;
-            customer.Description = model.Description;
-            customer.BirthDate = (DateTime)model.BirthDate;
-            customer.CreateDate = model.CreateDate;
-            return customer;
-        }
+      
         /// <summary>
         /// Hien thi thong tin chi tiet cua CUSTOMER
         /// </summary>
@@ -210,7 +124,18 @@ namespace HB8.CSMS.MVC.Controllers
         /// <param name="custId"></param>
         /// <returns></returns>
         #endregion
-        #region Code phan EDIT CUSTOMER
+      
+        #region Create Action
+        /// <summary>
+        /// Goi form  them khach hang
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult CreateCustomerPV()
+        {
+            return PartialView("CreateCustomerPartialView");
+        }
+        #endregion
+        #region Method
         /// <summary>
         /// Lay tu ve danh sach status trong database
         /// </summary>
@@ -250,20 +175,7 @@ namespace HB8.CSMS.MVC.Controllers
                          });
             return model;
         }
-        public ViewResult EditCustomer(string custId)
-        {
-            var model = GetCustomerByCustomerId(custId);
-            //ViewBag.Position = GetListPosition();
-            return View(model);
-        }
-        [HttpPost]
-        public void EditCustomer(CustomerModel customer)
-        {
-            var dateCreate = DateTime.Now;
-            var model = new CustomerDomain(customer.CustID, customer.CustName, customer.Address,
-                customer.Phone, customer.Fax, customer.Email, customer.StatusID, customer.Description, customer.BirthDate, dateCreate, customer.Image);
-            customerService.UpdateCustomer(model);
-        }
+
         /// <summary>
         /// Gan nhan vien co manv duoc chon tu DATABASE vao MODEL
         /// </summary>
@@ -286,29 +198,6 @@ namespace HB8.CSMS.MVC.Controllers
             model.Image = item.Image;
             return model;
         }
-        /// <summary>
-        /// Goi form sua thong tin nhan vien
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public ActionResult EditCustomerPV(string id)
-        {
-            var model = GetCustomerByCustomerId(id);
-            return PartialView("EditCustomerPartialView", model);
-        }
-        /// <summary>
-        /// Goi lai PartialView sau khi edit CUSTOMER de show lai
-        /// </summary>
-        /// <param name="page"></param>
-        /// <returns></returns>
-        public ActionResult CallBackCustomerPartialView(int page)
-        {
-            return PartialView("CustomerPartialView", GetCustomerAfterEdit(page));
-        }
-        #region * Y tuong
-        //Luc dau dinh lam la se dung JQUERY thay doi gia tri trong cac cot cua LIST thoi
-        #endregion
         /// <summary>
         /// Tra ve doi tuong sau khi da sua
         /// </summary>
@@ -335,59 +224,90 @@ namespace HB8.CSMS.MVC.Controllers
             customer.CurrentPage = page;//chi trang hien tai dang sua
             return customer;
         }
-        #endregion
         /// <summary>
-        /// Goi form  them khach hang
+        /// Lay thong tin chi tiet cua khach hang dua vao Id
+        /// </summary>
+        /// <param name="custId"></param>
+        /// <returns></returns>
+        private CustomerModel GetCustomerDetail(string custId)
+        {
+            var customer = new CustomerModel();
+            var model = customerService.GetCustomerById(custId);
+            customer.CustID = model.CustID;
+            customer.Image = model.Image;
+            customer.CustName = model.CustName;
+            customer.Address = model.Address;
+            customer.Phone = model.Phone;
+            customer.Fax = model.Fax;
+            customer.Email = model.Email;
+            customer.StatusID = model.StatusID;
+            customer.Description = model.Description;
+            customer.BirthDate = (DateTime)model.BirthDate;
+            customer.CreateDate = model.CreateDate;
+            return customer;
+        }
+        /// <summary>
+        /// Nhan ve du lieu cho trang LARGE khong can truyen tham so
         /// </summary>
         /// <returns></returns>
-        public ActionResult CreateCustomerPV()
-        {
-            return PartialView("CreateCustomerPartialView");
+        public PagedData<CustomerModel> GetCustomerForListPage()
+        {      
+            var customer = new PagedData<CustomerModel>();
+            var model = customerService.GetListCustomers(); 
+            int count = model.Count();
+            var listOfCustomer = (from item in model
+                                   select new CustomerModel
+                                   {
+                                       CustID = item.CustID,
+                                       CustName = item.CustName,
+                                       Address = item.Address,
+                                       Phone = item.Phone
+                                   }).ToList();
+            customer.Data = listOfCustomer.Take(pageSize);
+            customer.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
+            customer.CurrentPage = 1;
+            customer.Count = count;
+            customer.PageSize = pageSize;
+            return customer;
         }
-        #region  Ghi chu
-
-
-        ///// <summary>
-        ///// Luu thong tin nhan vien
-        ///// </summary>
-        ///// <param name="staff"></param>
-        //public void CreateStaff(StaffModel staff)
-        //{
-        //    var model = new StaffDomain(staff.ID, staff.UserId, staff.StaffName, staff.Image, staff.Address, staff.NumberPhone, staff.Email);
-        //    staffService.CreateStaff(model);
-        //}
-        //public void DeleteStaff(string id)
-        //{
-        //    staffService.DeleteStaff(id);
-        //}
-        //public ActionResult GetTopCustomersFormNextSection(string lastRowId, bool isHistoryBack)
-        //{
-        //    var sectionCustomer = customerService.GetNextCustomerTopList(lastRowId, isHistoryBack);
-        //    return Json(sectionCustomer, JsonRequestBehavior.AllowGet);
-        //}
-
-        //public ActionResult Index2()
-        //{
-
-        //    var customer = new PagedData<CustomerModel>();
-
-        //    var model = customerService.GetListCustomers();
-        //    int count = model.Count();
-        //    var listOfCustomer = (from a in model
-        //                          select new CustomerModel
-        //                          {
-        //                              CustID = a.CustID,
-        //                              CustName = a.CustName,
-        //                              Address = a.Address,
-        //                              Phone = a.Phone
-        //                          }).ToList();
-        //    customer.Data = listOfCustomer;
-        //    customer.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
-        //    customer.CurrentPage = 1;
-        //    return View(customer);
-        //}
         #endregion
+        #region Edit Action
+        /// <summary>
+        /// Goi form sua thong tin nhan vien
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult EditCustomerPV(string id)
+        {
+            var model = GetCustomerByCustomerId(id);
+            return PartialView("EditCustomerPartialView", model);
+        }
+        //public ViewResult EditCustomer(string custId)
+        //{
+        //    var model = GetCustomerByCustomerId(custId);
+        //    return View(model);
+        //}
+        [HttpPost]
+        public void EditCustomer(CustomerModel customer)
+        {
+            var dateCreate = DateTime.Now;
+            var model = new CustomerDomain(customer.CustID, customer.CustName, customer.Address,
+                customer.Phone, customer.Fax, customer.Email, customer.StatusID, customer.Description, customer.BirthDate, dateCreate, customer.Image);
+            customerService.UpdateCustomer(model);
+        }
+        /// <summary>
+        /// Goi lai PartialView sau khi edit CUSTOMER de show lai
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        public ActionResult CallBackCustomerPartialView(int page)
+        {
+            return PartialView("CustomerPartialView", GetCustomerAfterEdit(page));
+        }
        
+        #endregion
+     
         #region Code xu li Next va Privous
         /// <summary>
         /// Lay Ma khach hang tiep theo

@@ -136,13 +136,12 @@
                             </ul>
                         </div>
                     </div>
-
                     <div class="col-md-2 text-center ">
                         <br />
-                        <button type="button" class="btn btn-default  right" aria-label="Left Align" onclick="btnListViewForCustomer_Click()" id="btnListViewForCustomer">
+                        <button type="button" class="btn btn-default  right" aria-label="Left Align"  id="btnListViewForCustomer">
                             <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                         </button>
-                        <button type="button" class="btn btn-default right" aria-label="Left Align" id="btnGirdViewForCustomer" value="">
+                        <button type="button" class="btn btn-default right" aria-label="Left Align" id="btnLargeViewForCustomer" value="">
                             <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
                         </button>
                         <br />
@@ -157,7 +156,7 @@
     <div class="col-md-12">
         <div class="panel panel-heading">
             <div class="panel panel-body">
-                <div id="person-list">
+                <div id="customer-list">
                     @Html.Partial("LargeCustomerPartialView")
                 </div>
             </div>
@@ -165,8 +164,6 @@
                 <button class="btn btn-default " id="btnloadcustomer" value="">Hiện thêm</button>
             </div>
             <div id="showspinner"></div>
-            <div id="createForm"></div>
-            <div id="editFormCustomer"></div>
             <div id="deleteFormCustomer" style="display:none">
                 <div class="panel panel-warning">
                     <div class="panel-heading"> <span><i class="fa fa-exclamation-triangle fa-2x"></i>  <b>Xóa thông tin nhân viên</b> </span> </div>
