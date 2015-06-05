@@ -39,12 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IBillSaleOrderManagerService.cs" />
     <Compile Include="Abstract\ICustomerManagerService.cs" />
     <Compile Include="Abstract\IInventoryManagerService.cs" />
     <Compile Include="Abstract\IStaffManagerService.cs" />
+    <Compile Include="ConcreteFunctionsServer\BillSaleOrderManagerService.cs" />
     <Compile Include="ConcreteFunctionsServer\CustomerManagerService.cs" />
     <Compile Include="ConcreteFunctionsServer\InventoryManagerService.cs" />
     <Compile Include="ConcreteFunctionsServer\StaffManagerService.cs" />
+    <Compile Include="DomainModels\BillSaleOrderDomain.cs" />
     <Compile Include="DomainModels\CustomerDomain.cs" />
     <Compile Include="DomainModels\InventoryDomain.cs" />
     <Compile Include="DomainModels\StaffDomain.cs" />

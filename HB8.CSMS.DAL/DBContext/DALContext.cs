@@ -22,6 +22,8 @@ namespace HB8.CSMS.DAL.DBContext
         private IStatusInventroyRepository statusInventories;
         private IUnitDetailRepository uDetails;
         private IStockRepository stocks;
+        private IBillSaleOrderRepository orders;
+        private IBillSlsOrderDetailRepository orderDetails;
         public DALContext()
         {
             dbContext = new CSMSContext();
@@ -123,7 +125,7 @@ namespace HB8.CSMS.DAL.DBContext
 
         public IStatusInventroyRepository StatusInvetories
         {
-            get 
+            get
             {
                 if (statusInventories == null)
                 {
@@ -136,7 +138,7 @@ namespace HB8.CSMS.DAL.DBContext
 
         public IUnitDetailRepository UnitDetails
         {
-            get 
+            get
             {
                 if (uDetails == null)
                 {
@@ -149,13 +151,37 @@ namespace HB8.CSMS.DAL.DBContext
 
         public IStockRepository Stocks
         {
-            get 
+            get
             {
                 if (stocks == null)
                 {
                     stocks = new StockRepository(dbContext);
                 }
                 return stocks;
+            }
+        }
+
+
+        public IBillSaleOrderRepository Orders
+        {
+            get
+            {
+                if (orders == null)
+                {
+                    orders = new BillSaleOrderRepository(dbContext);
+                }
+                return orders;
+            }
+        }
+
+        public IBillSlsOrderDetailRepository OrderDetails
+        {
+            get {
+                if (orderDetails == null)
+                {
+                    orderDetails = new BillSlsOrderDetailRepository(dbContext);
+                }
+                return orderDetails;
             }
         }
     }

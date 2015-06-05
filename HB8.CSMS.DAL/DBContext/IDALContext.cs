@@ -20,5 +20,7 @@ namespace HB8.CSMS.DAL.DBContext
         IStatusInventroyRepository StatusInvetories { get; }
         IUnitDetailRepository UnitDetails { get; }
         IStockRepository Stocks { get; }
+        IBillSaleOrderRepository Orders { get; }
+        IBillSlsOrderDetailRepository OrderDetails { get; }
     }
 }

@@ -1,0 +1,130 @@
+﻿<div class="panel panel-primary">
+    <div class="panel-heading"><h5>Hóa đơn nháp</h5></div>
+    <div class="panel-body">
+        @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", @id = "inventoryform" }))
+        {
+            @Html.ValidationSummary(true);
+            <fieldset>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label col-lg-3">Khách hàng:</label>
+                                <div class="col-lg-9">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-3">Mô tả:</label>
+                                <div class="col-lg-9">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label col-lg-3">Ngày tạo:</label>
+                                <div class="col-lg-9">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-3">Kho:</label>
+                                <div class="col-lg-9">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <ul class="nav nav-tabs" data-tabs="tabs">
+                            <li class="active"><a data-toggle="tab" href="#description"><h5>Chi tiết hóa đơn</h5> </a></li>
+                            <li class=""><a data-toggle="tab" href="#second"><h5>Thông tin khác</h5> </a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="description">
+                                <br />
+                                <div class="col-lg-12">
+                                    <table class="table table-striped ">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">
+                                                    <h5>Tên sản phẩm</h5>
+                                                </th>
+                                                <th class="text-center">
+                                                    <h5>Số lượng</h5>
+                                                </th>
+                                                <th class="text-center">
+                                                    <h5>Đơn vị tính</h5>
+                                                </th>
+                                                <th class="text-center">
+                                                    <h5>Đơn giá</h5>
+                                                </th>
+                                                <th class="text-center">
+                                                    <h5>Thuế</h5>
+                                                </th>
+                                                <th class="text-center">
+                                                    <h5>Số tiền</h5>
+                                                </th>
+                                                <th class="text-center">
+
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-center" id="tableInventory">                                          
+                                        </tbody>                                      
+                                    </table>
+
+                                </div>
+                                <div class="col-lg-12">
+                                    <a href="#">Thêm một mục</a>
+                                    <hr />
+                                    <hr />
+                                    <hr />
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-10 text-right">Số tiền:</div>
+                                        <div class="col-lg-2">0đ</div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-10 text-right">Thuế:</div>
+                                        <div class="col-lg-2">0đ</div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-8"></div>
+                                        <div class="col-lg-4"><hr /></div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-10 text-right"><strong>Tổng cộng:</strong></div>
+                                        <div class="col-lg-2">0đ</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane " id="second">
+                                <div class="col-lg-12 ">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-3">Người bán hàng:</label>
+                                            <div class="col-lg-9">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-3">Ngày đến hạn:</label>
+                                            <div class="col-lg-9">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">                                      
+                                    </div>
+                                </div>
+
+                            </div>                         
+                        </div>
+                    </div>
+
+                </div>
+                <div class=" col-lg-12 text-center">
+                    <input type="button" class="btn btn-primary submit" value="Cập nhật" id="createInventory-button">
+                    <input type="button" class="btn btn-primary " id="buttonExitCreate" value="Thoát">
+                </div>
+            </fieldset>
+        }
+    </div>
+</div>

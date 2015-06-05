@@ -382,7 +382,7 @@ $(document).ready(function () {
     $("#buttonEditForCustomer").hide();
     $("#buttonpreviousForCustomer").hide();
     $("#buttonnextForCustomer").hide();
-    //$("#countInvnetory").hide();
+    $("#countInvnetory").hide();
 })
 //Chuc nang load nhung khach hang con lai
 $(document).ready(function () {
@@ -432,23 +432,23 @@ $(document).ready(function () {
                 var theDialog = $("#showLoading").dialog(opt);
                 theDialog.dialog("close");
                 $("#btnloadcustomer").hide();
-                //$("#buttonEditForInventory").show();
-                //$("#buttonpreviousForInventory").show();
-                //$("#buttonnextForInventory").show();
+                $("#buttonEditForCustomer").show();
+                $("#buttonpreviousForCustomer").show();
+                $("#buttonnextForCustomer").show();
                 $("#customer-list").empty();
                 $("#customer-list").append(data);
             },
             beforeSend: function () {
                 var theDialog = $("#showLoading").dialog(opt);
                 theDialog.dialog("open");
-                //$.ajax({
-                //    url: '/InventoryManager/IndexOfInventory',
-                //    data: { id: id },
-                //    success: function (data) {
-                //        $(".countInvnetory").empty();
-                //        $(".countInvnetory").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
-                //    }
-                //});
+                $.ajax({
+                    url: '/InventoryManager/IndexOfInventory',
+                    data: { id: id },
+                    success: function (data) {
+                        $(".countCustomer").empty();
+                        $(".countCustomer").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
+                    }
+                });
             },
             error: function () {
                 swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });

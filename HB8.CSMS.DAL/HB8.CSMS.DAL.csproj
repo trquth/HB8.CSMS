@@ -48,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractRepositories\IBillSaleOrderRepository.cs" />
+    <Compile Include="AbstractRepositories\IBillSlsOrderDetailRepository.cs" />
     <Compile Include="AbstractRepositories\IClassRepository.cs" />
     <Compile Include="AbstractRepositories\ICustomerRepository.cs" />
     <Compile Include="AbstractRepositories\IInventoryRepository.cs" />
@@ -56,6 +58,8 @@
     <Compile Include="AbstractRepositories\IStockRepository.cs" />
     <Compile Include="AbstractRepositories\IUnitDetailRepository.cs" />
     <Compile Include="AbstractRepositories\IUnitRepository.cs" />
+    <Compile Include="ConcreteFunctions\BillSaleOrderRepository.cs" />
+    <Compile Include="ConcreteFunctions\BillSlsOrderDetailRepository.cs" />
     <Compile Include="ConcreteFunctions\ClassRepository.cs" />
     <Compile Include="ConcreteFunctions\CustomerRepository.cs" />
     <Compile Include="ConcreteFunctions\InventoryRepository.cs" />
