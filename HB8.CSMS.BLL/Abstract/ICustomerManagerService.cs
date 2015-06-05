@@ -44,7 +44,12 @@ namespace HB8.CSMS.BLL.Abstract
         /// </summary>
         /// <returns></returns>
         List<Status> GetListStatus();
-        //CustomerDomain GetNextCustomerTopList(string id, bool isHistoryBack);
+        /// <summary>
+        /// Tra ve so thu tu cua san pham  trong database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        int ReturnIndexCustomer(string id);
 
     }
 }

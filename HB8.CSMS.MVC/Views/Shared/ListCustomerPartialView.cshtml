@@ -1,184 +1,118 @@
 ﻿@model  HB8.CSMS.MVC.Models.Paging.PagedData<HB8.CSMS.MVC.Models.Customer.CustomerModel>
-<script src="~/MyjQ/edit.partialview.js" type="text/javascript"></script>
-<script src="~/MyjQ/Index.js" type="text/javascript"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(".page-number").on('click', function () {
-            var page = parseInt($(this).html());
-            $.ajax({
-                url: '/CustomerManager/CustomerList',
-                data: { "page": page },
-                success: function (data) {
-                    $("#person-list").html(data);
-                    $(".gridView").hide();
-                    $("#listView").show();
-                },
-                beforeSend: function () {
-                    $("#showLoading").dialog("open");
-                },
-            });
-            return false;
-        });
-    });
-</script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(".detailcustomer").on("click", function () {
-            var id = $(this).attr('value');
-            $.ajax({
-                url: '/CustomerManager/DetailCustomer',
-                data: { "custId": id },
-                success: function (data) {
-                    $("#btnload").hide();
-                    $("#buttonnext").show();
-                    $("#buttonprevious").show();
-                    $("#addbutton").append("<input type='button' value='Sửa' class='buttonEdit btn btn-default' />");
-                    $("#person-list").empty();
-                    $("#person-list").append(data);
-                },
-            });
+<div class="col-lg-12">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-center">
 
-        });
-    });
-</script>
-<div class="panel panel-heading">
-    <div class="panel panel-body">
-        <table class="table table-striped" id="listView" style="display:none">
-            <thead>
-                <tr>
-                    <th class="text-center">
+                    <h5>Hình ảnh</h5>
 
-                        <h5>Hình ảnh</h5>
+                </th>
+                <th class="text-center">
 
-                    </th>
-                    <th class="text-center">
+                    <h5>Tên Khách hàng</h5>
 
-                        <h5>Tên Khách hàng</h5>
+                </th>
+                <th class="text-center">
 
-                    </th>
-                    <th class="text-center">
+                    <h5>Ngày sinh</h5>
 
-                        <h5>Ngày sinh</h5>
+                </th>
+                <th class="text-center">
 
-                    </th>
-                    <th class="text-center">
+                    <h5>Địa chỉ</h5>
 
-                        <h5>Địa chỉ</h5>
+                </th>
+                <th class="text-center">
 
-                    </th>
-                    <th class="text-center">
+                    <h5>Số điện thoại</h5>
 
-                        <h5>Số điện thoại</h5>
+                </th>
+                <th class="text-center">
 
-                    </th>
-                    <th class="text-center">
+                    <h5>Fax</h5>
 
-                        <h5>Fax</h5>
-
-                    </th>
-                    <th class="text-center">
-
-                        <h5>Email</h5>
-
-                    </th>
-                    <th>
-
-                        <h5></h5>
-
-                    </th>
-                    <th>
-
-                        <h5></h5>
-
-                    </th>
-
-                </tr>
-            </thead>
-            <tbody class="text-center">
-                @{
-                    foreach (var item in Model.Data)
-                    {
-                        <tr>
-                            <td class="text-center itemIdClass">
-                                <input id="ID" type="hidden" value="@item.CustID" name="item.ID">
-                            </td>
-                            <td class="text-center">
-                                @if (item.Image == null)
-                                {
-                                    <img src="~/Images/no_image.jpg" class="img-rounded" width="80" />
-                                }
-                                else
-                                {
-                                    <h5><img src="~/Images/StaffImages/@item.Image" alt="" class="img-rounded" width="80"></h5>
-                                }
-
-                            </td>
-                            <td class="text-center ">
-                                @*<input id="ID" type="hidden" value="@item.CustID" name="item.ID">*@
-                                <h5>@item.CustName</h5>
-
-                            </td>
-                            <td class="text-center">
-
-                                <small>@item.BirthDate</small>
-
-                            </td>
-                            <td class="text-center">
-
-                                <h5>@item.Address</h5>
-
-                            </td>
-                            <td class="text-center">
-
-                                <h5>@item.Phone</h5>
-
-                            </td>
-                            <td class="text-center">
-
-                                <h5>@item.Fax</h5>
-
-                            </td>
-                            <td class="text-center">
-
-                                <h5>@item.Email</h5>
-
-                            </td>
-                            <td class="text-center">
-
-                                <input type="button" value="Sửa" class="buttonEditForCustomer btn btn-default" />
-
-                            </td>
-                            <td class="text-center">
-                                <input type="button" value="Xóa" class="buttonDelete btn btn-default" />
-                            </td>
-                        </tr>
-                        <tr></tr>
-
-                    }
-                }
-
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="3">
-                        <ul class="pagination">
-                            @for (int i = 1; i <= Model.NumberOfPages; i++)
+                </th>
+                <th class="text-center">
+                    <h5>Email</h5>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="text-center" id="tableCustomer">
+            @{
+                foreach (var item in Model.Data)
+                {
+                    <tr>
+                        <td class="text-center itemIdClass">
+                            <input id="ID" type="hidden" value="@item.CustID" name="item.ID">
+                        </td>
+                        <td class="text-center">
+                            @if (item.Image == null)
                             {
-                                if (i == Model.CurrentPage)
-                                {
-                                    <li class="active"><a class="currentpage" href="#" onclick="return false;" value="@i">@i<span class="sr-only"></span></a></li>
-
-                                }
-                                else
-                                {
-                                    <li class=""><a class="page-number" href="javascript:;">@i<span class="sr-only"></span></a></li>
-                                }
+                                <img src="~/Images/no_image.jpg" class="img-rounded" width="80" />
                             }
-                        </ul>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
+                            else
+                            {
+                                <h5><img src="~/Images/StaffImages/@item.Image" alt="" class="img-rounded" width="80"></h5>
+                            }
+
+                        </td>
+                        <td class="text-center ">
+                            <h5>@item.CustName</h5>
+
+                        </td>
+                        <td class="text-center">
+
+                            <small>@item.BirthDate</small>
+
+                        </td>
+                        <td class="text-center">
+
+                            <h5>@item.Address</h5>
+
+                        </td>
+                        <td class="text-center">
+
+                            <h5>@item.Phone</h5>
+
+                        </td>
+                        <td class="text-center">
+
+                            <h5>@item.Fax</h5>
+
+                        </td>
+                        <td class="text-center">
+
+                            <h5>@item.Email</h5>
+
+                        </td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5">
+                    <ul class="pagination">
+                        @for (int i = 1; i <= Model.NumberOfPages; i++)
+                        {
+                            if (i == Model.CurrentPage)
+                            {
+                                <li class="active"><a class="currentpage" href="#" onclick="return false;" value="@i">@i<span class="sr-only"></span></a></li>
+
+                            }
+                            else
+                            {
+
+                                <li class=""><a class="page-numberForCustomer" href="javascript:;">@i<span class="sr-only"></span></a></li>
+                            }
+                        }
+                    </ul>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
 </div>
+<script src="~/MyjQ/Index.js"></script>
 

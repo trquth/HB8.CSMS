@@ -119,5 +119,18 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             customer.CreateDate = model.CreateDate;
             return customer;
         }
+        public int ReturnIndexCustomer(string id)
+        {
+            var model = context.Customers.GetAllItem();
+            int count = 1;
+            foreach (var item in model)
+            {
+                if (item.CustID.Equals(id))
+                    break;
+                count++;
+
+            }
+            return count;
+        }
     }
 }

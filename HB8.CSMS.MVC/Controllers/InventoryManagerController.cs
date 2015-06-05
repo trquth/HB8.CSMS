@@ -130,6 +130,11 @@ namespace HB8.CSMS.MVC.Controllers
                         }).OrderBy(x => x.StockName);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// Tra ve so thu tu 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public JsonResult IndexOfInventory(string id)
         {
             int index = inventoryService.ReturnIndexInventory(id);

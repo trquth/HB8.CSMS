@@ -32,7 +32,7 @@ namespace HB8.CSMS.MVC.Controllers
             var page = id ?? 0;
             if (Request.IsAjaxRequest())
             {
-                return PartialView("LargeCustomerPartialView", GetPaginatedProducts(page));//Tra ve VIEW dang GRID 
+                return PartialView("LargeCustomerPartialView", GetPaginatedCustomer(page));//Tra ve VIEW dang GRID 
             }
             var customer = GetCustomerForListPage();
             return View("ListCustomer", customer);
@@ -51,7 +51,7 @@ namespace HB8.CSMS.MVC.Controllers
             {
                 pageNumber = (int)page - 1;
             }
-            return View("ListCustomerPartialView", GetPaginatedProducts(pageNumber));
+            return PartialView("ListCustomerPartialView", GetPaginatedCustomer(pageNumber));
         }
         #endregion
         #region Code xu li phan phan trang
@@ -85,7 +85,7 @@ namespace HB8.CSMS.MVC.Controllers
         /// </summary>
         /// <param name="page"></param>
         /// <returns></returns>
-        private PagedData<CustomerModel> GetPaginatedProducts(int page)
+        private PagedData<CustomerModel> GetPaginatedCustomer(int page)
         {
             var customer = new PagedData<CustomerModel>();
             var skipRecords = page * pageSize;
@@ -103,6 +103,7 @@ namespace HB8.CSMS.MVC.Controllers
             customer.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
             customer.Count = count;
             customer.PageSize = pageSize;
+            customer.CurrentPage = page + 1;
             return customer;
         } 
         #endregion
@@ -269,6 +270,20 @@ namespace HB8.CSMS.MVC.Controllers
             customer.Count = count;
             customer.PageSize = pageSize;
             return customer;
+        }
+        /// <summary>
+        /// Tra ve so thu tu 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public JsonResult IndexOfCustomer(string id)
+        {
+            int index = customerService.ReturnIndexCustomer(id);
+            int count =  customerService.GetListCustomers().Count();
+            var model = new PagedData<CustomerModel>();
+            model.Count = count;
+            model.Index = index;
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
         #endregion
         #region Edit Action
