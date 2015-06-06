@@ -16,6 +16,7 @@ namespace HB8.CSMS.MVC.StructureMap
             For<ICustomerManagerService>().Use<CustomerManagerService>();
             For<IStaffManagerService>().Use<StaffManagerService>();
             For<IInventoryManagerService>().Use<InventoryManagerService>();
+            For<IBillSaleOrderManagerService>().Use<BillSaleOrderManagerService>();
             For<IDALContext>().Use<DALContext>();
             For(typeof(IDataRepository<>)).Use(typeof(DataRepository<>));
         }

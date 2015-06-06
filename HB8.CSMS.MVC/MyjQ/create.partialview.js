@@ -331,3 +331,37 @@ $(document).ready(function () {
         }
     });
 });
+//******************************************************************************//
+//PHAN CHO BILL SALE ORDER
+//*****************************************************************************//
+//Kiem tra thong tin nhap vao dung hay sai
+$(document).ready(function () {
+    $('#billsaleorderform').validate({
+    });
+});
+//Do du lieu vao dropdowlist khach hang
+$(document).ready(function () {
+    $.ajax({
+        url: "/BillSaleOrderManager/ListCustomer",
+        type: 'Get',
+        data: "{}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            $.each(data, function (key, value) {
+                $("#ddlCustomer").append($("<option></option>").val(value.CustID).html(value.CustName));
+            });
+        },
+        error: function (result) {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+    });
+})
+//Hien thi lich 
+$(document).ready(function () {
+    $("#createdatepicker").datepicker();//Hien lich cho nguoi dung chon ngay thang nam
+})
+//Hien thi dong du lieu
+$(document).ready(function () {
+
+})
