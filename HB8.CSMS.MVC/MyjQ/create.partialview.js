@@ -363,5 +363,26 @@ $(document).ready(function () {
 })
 //Hien thi dong du lieu
 $(document).ready(function () {
+    $("#showrow").click(function () {
+        $.ajax({
+            url: "/BillSaleOrderManager/ShowRow",
+            type: 'Get',
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                $("#tableInventory").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
 
+            },
+            error: function (result) {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
+
+    });
 })

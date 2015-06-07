@@ -26,5 +26,24 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
         {
             return context.Stocks.GetAllItem().ToList();
         }
+
+
+        public List<DAL.Models.Inventory> GetListInventory()
+        {
+            return context.Inventories.GetAllItem().ToList();
+        }
+
+        public List<DAL.Models.UnitDetail> GetUnitDetail()
+        {
+            return context.UnitDetails.GetAllItem().ToList();
+        }
+
+
+        public List<DAL.Models.UnitDetail> GetUnitDetailByID(string id)
+        {
+            return context.UnitDetails.GetAllItem().Where(x=>x.InvtID==id).ToList();
+        }
+
+       
     }
 }

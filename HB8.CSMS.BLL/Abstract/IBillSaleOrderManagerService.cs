@@ -1,4 +1,5 @@
-﻿using HB8.CSMS.DAL.Models;
+﻿using HB8.CSMS.BLL.DomainModels;
+using HB8.CSMS.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +20,18 @@ namespace HB8.CSMS.BLL.Abstract
         /// </summary>
         /// <returns></returns>
         IEnumerable<Stock> GetListStock();
+        /// <summary>
+        /// Tra ve danh sach san pham
+        /// </summary>
+        /// <returns></returns>
+        List<Inventory> GetListInventory();
+        /// <summary>
+        /// Tra ve danh sach don vi tinh
+        /// </summary>
+        /// <returns></returns>
+        List<UnitDetail> GetUnitDetailByID(string id);
+      
+        
+        
     }
 }

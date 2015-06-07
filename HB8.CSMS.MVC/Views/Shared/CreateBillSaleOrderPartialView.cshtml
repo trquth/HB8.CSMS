@@ -1,5 +1,5 @@
 ﻿@model HB8.CSMS.MVC.Models.BillSaleOrder.BillSaleOrderModel
-<script src="~/MyjQ/create.partialview.js"></script>
+<script src="~/MyjQ/create.partialview.js" type="text/javascript"></script>
 <div class="panel panel-primary">
     <div class="panel-heading"><h5>Hóa đơn nháp</h5></div>
     <div class="panel-body">
@@ -69,15 +69,17 @@
                                                 <th class="text-center">
 
                                                 </th>
+                                                <th class="text-center">
+
+                                                </th>
                                             </tr>
                                         </thead>
-                                        <tbody class="text-center" id="tableInventory">                                          
-                                        </tbody>                                      
+                                        <tbody class="text-center" id="tableInventory"></tbody>
                                     </table>
 
                                 </div>
                                 <div class="col-lg-12">
-                                    <a href="#">Thêm một mục</a>
+                                    <a href="javascript:;" id="showrow">Thêm một mục</a>
                                     <hr />
                                     <hr />
                                     <hr />
@@ -115,11 +117,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">                                      
+                                    <div class="col-lg-6">
                                     </div>
                                 </div>
 
-                            </div>                         
+                            </div>                                                 
                         </div>
                     </div>
 

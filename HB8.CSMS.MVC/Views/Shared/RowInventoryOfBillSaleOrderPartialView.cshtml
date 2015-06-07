@@ -1,36 +1,55 @@
-﻿<tr>
+﻿@model IEnumerable<HB8.CSMS.MVC.Models.BillSaleOrder.BillSaleOrderModel>
+
+<tr class="rowForBillSaleOrder">
     <td class="text-center itemIdClass">
         <input class="ID" type="hidden" value="" name="">
     </td>
     <td class="text-center">
 
-        <p></p>
-
+        <select class="form-control ddlInventoryForBill" data-rule-required="true" data-msg-required="Tên khách hàng không được rỗng">
+            <option selected="selected" value="">--Chọn sản phẩm--</option>
+            @foreach (var item in Model)
+            {
+                <option value="@item.InvtID">@item.InvtName</option>
+            }
+        </select>
+    </td>
+    <td class="text-center">
+        <input class="form-control quantity" type="text" data-rule-required="true" data-msg-required="Số lượng không được rỗng" data-val-number="Số lượng là một số" value="1" placeholder="1" />
+    </td>
+    <td class="text-center columnUnitForBillSaleOrder" id="">
+        <select class="form-control ddlUnitForBill" data-rule-required="true" data-msg-required="Đơn vị tính không được rỗng">
+            <option selected="selected" value="">--Chọn đơn vị tính--</option>   
+        </select>
+    </td>
+    <td class="text-center columnPriceForBillSaleOrder">
+        <p>0</p>
     </td>
     <td class="text-center">
 
-        <p></p>
+        <p>
+            <select class="form-control ddlTaxForBill" data-rule-required="true" data-msg-required="Đơn vị tính không được rỗng">
+                <option selected="selected" value="0">--Chọn mức thuế--</option>
+                <option  value="5">Thuế GTGT phải nộp 5%</option>
+                <option  value="10">Thuế GTGT phải nộp 10%</option>
+                <option  value="15">Thuế GTGT phải nộp 15%</option>
+            </select>
+        </p>
 
     </td>
     <td class="text-center">
-
-        <p></p>
-
+        <p>0</p>
     </td>
-    <td class="text-center">
-
-        <p></p>
-
-    </td>
-    <td class="text-center">
-
-        <p></p>
-
-    </td>
-    <td class="text-center"></td>
     <td>
         <button type="button" class="btn btn-default" aria-label="Left Align">
-            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
         </button>
     </td>
+    <td>
+        <button type="button" class="btn btn-default" aria-label="Left Align">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
+    </td>
+   
 </tr>
+<script src="~/MyjQ/bill.partialview.js"></script>

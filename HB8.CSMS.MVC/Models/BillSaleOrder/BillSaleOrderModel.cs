@@ -26,5 +26,13 @@ namespace HB8.CSMS.MVC.Models.BillSaleOrder
         public decimal SalesPrice { get; set; }
         public decimal Discount { get; set; }
         public decimal Amount { get; set; }
+        public string InvtName { get; set; }
+        public decimal SalePrice_T { get; set; }
+        public decimal SalePrice_L { get; set; }
+        public string UnitName_T { get; set; }
+        public string UnitName_L { get; set; }
+        public int UnitRate { get; set; }
+        public int UnitID_T { get; set; }
+        public int UnitID_L { get; set; }
     }
 }
