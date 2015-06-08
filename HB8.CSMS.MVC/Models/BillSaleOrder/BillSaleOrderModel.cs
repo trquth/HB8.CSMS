@@ -7,7 +7,7 @@ namespace HB8.CSMS.MVC.Models.BillSaleOrder
 {
     public class BillSaleOrderModel
     {
-        public string SOrderNo { get; set; }
+        public int SOrderNo { get; set; }
         public Nullable<System.DateTime> OrderDate { get; set; }
         public string InvoiceType { get; set; }
         public string CustID { get; set; }
@@ -34,5 +34,6 @@ namespace HB8.CSMS.MVC.Models.BillSaleOrder
         public int UnitRate { get; set; }
         public int UnitID_T { get; set; }
         public int UnitID_L { get; set; }
+        public string StaffName { get; set; }
     }
 }

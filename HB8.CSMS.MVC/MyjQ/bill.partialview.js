@@ -46,17 +46,18 @@ $(document).ready(function () {
         $.ajax({
             url: "/BillSaleOrderManager/TotalPrice",
             type: 'Get',
-            data: { quantity: quantity, price: price, tax:tax},
+            data: { quantity: quantity, price: price, tax: tax },
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 $("#tableInventory > tr:last >td:nth-child(7)").empty();
                 $("#tableInventory > tr:last >td:nth-child(7)").append(data);
+
             },
             error: function (result) {
                 swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
             }
         });
-        
+
     });
 })
 //Cap nhat lai gia tien neu thue thay doi
@@ -80,4 +81,35 @@ $(document).ready(function () {
         });
 
     });
+})
+//Xac nhan san pham duoc chon
+$(document).ready(function () {
+    $('.btnOkForBillSaleOrder').click(function () {
+        var request, timeout;
+        var id = $(this).parents('tr:first').find('td:eq(0)').find('p').html();;
+        var invtId = $(this).parents('tr:first').find('td:eq(1)').find('select.ddlInventoryForBill ').val();
+        var quantity = $(this).parents('tr:first').find('td:eq(2)').find('input').val();
+        var price = $(this).parents('tr:first').find('td:eq(4)').find('p').html();
+        var tax = $(this).parents('tr:first').find('td:eq(5)').find('select.ddlTaxForBill').val();
+        var amount = $(this).parents('tr:first').find('td:eq(6)').find('p').html();
+        $.ajax({
+            url: "/BillSaleOrderManager/Update",
+            data: { id: id, invtId: invtId, quantity: quantity, salePrice: price, tax: tax, amount: amount },
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {             
+                setTimeout(function () {
+                    $("#tableInventory > tr:last >td:nth-child(8)>button>span").empty();
+                    $("#tableInventory > tr:last >td:nth-child(8)>button>span").attr('class', 'glyphicon glyphicon-edit');
+                }, 150)
+            },
+            beforeSend: function () {
+                $("#tableInventory > tr:last >td:nth-child(8)>button>span").empty();
+                $("#tableInventory > tr:last >td:nth-child(8)>button>span").attr('class', 'fa fa-refresh fa-spin');
+            },
+            error: function (result) {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
+    })
+
 })

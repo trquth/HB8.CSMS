@@ -8,7 +8,7 @@ namespace HB8.CSMS.BLL.DomainModels
 {
     public class BillSaleOrderDomain
     {
-        public string SOrderNo { get; set; }
+        public int SOrderNo { get; set; }
         public Nullable<System.DateTime> OrderDate { get; set; }
         public string InvoiceType { get; set; }
         public string CustID { get; set; }

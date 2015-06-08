@@ -44,6 +44,12 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             return context.UnitDetails.GetAllItem().Where(x=>x.InvtID==id).ToList();
         }
 
-       
+
+
+
+        public IEnumerable<DAL.Models.Staff> GetListStaff()
+        {
+            return context.Staffs.GetAllItem();
+        }
     }
 }

@@ -36,6 +36,22 @@ namespace HB8.CSMS.MVC.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
+        /// Tra ve danh sach nhan vien
+        /// </summary>
+        /// <returns>JSON</returns>
+        [HttpGet]
+        public JsonResult ListStaff()
+        {
+            var model = billSaleOrderService.GetListStaff();
+            var data = (from a in model
+                        select new BillSaleOrderModel
+                        {
+                            StaffId = a.StaffID,
+                            StaffName = a.StaffName,
+                        }).OrderBy(x => x.StaffName);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
         /// Lay  danh sach don vi tinh dua vao ma san pham
         /// </summary>
         /// <returns>JSON</returns>
@@ -80,9 +96,9 @@ namespace HB8.CSMS.MVC.Controllers
         public ActionResult ShowColumnPrice(int? id, string idInventory)
         {
             var data = new BillSaleOrderModel();
-            if (id==null)
+            if (id == null)
             {
-                
+
                 data.SalesPrice = 0;
             }
             else
@@ -99,15 +115,65 @@ namespace HB8.CSMS.MVC.Controllers
                 }
                 data.UnitRate = (int)model.Where(x => x.UnitRate != null).First().UnitRate;
             }
-          
+
             return PartialView("ColumnPriceOfBillOrderPartialView", data);
         }
         //Hien thi cot tinh tien
-        public ActionResult TotalPrice(int quantity, decimal price,decimal tax)
+        public ActionResult TotalPrice(int quantity, decimal price, decimal tax)
         {
-            var data = new BillSaleOrderModel();         
-            data.SalesPrice =quantity * price * (1 + tax / 100);
-            return PartialView("ColumnTotalPriceInventoryOfBillPatialView",data);
+            var data = new BillSaleOrderModel();
+            data.SalesPrice = quantity * price * (1 + tax / 100);
+            return PartialView("ColumnTotalPriceInventoryOfBillPatialView", data);
+        }
+        #endregion
+        #region Save
+        public void Update(int id, string invtId, int quantity, decimal salePrice, decimal tax, decimal amount)
+        {
+            var oderDetails = Session["Order"] as List<BillSaleOrderModel>;
+            if (oderDetails == null)
+            {
+                oderDetails = new List<BillSaleOrderModel>();
+                var item = new BillSaleOrderModel
+                {
+                    ID = id,
+                    InvtID = invtId,
+                    Qty = quantity,
+                    SalesPrice = salePrice,
+                    Discount = 0,
+                    TaxAmt = tax,
+                    Amount = amount,
+                };
+                oderDetails.Add(item);
+            }
+            else
+            {
+                var item = oderDetails.FirstOrDefault(x => x.ID == id);
+                if (item == null)
+                {
+                    oderDetails = new List<BillSaleOrderModel>();
+                    var itemOrder = new BillSaleOrderModel
+                    {
+                        ID = id,
+                        InvtID = invtId,
+                        Qty = quantity,
+                        SalesPrice = salePrice,
+                        Discount = 0,
+                        TaxAmt = tax,
+                        Amount = amount,
+                    };
+                    oderDetails.Add(itemOrder);
+                }
+                else
+                {
+                    item.InvtID = invtId;
+                    item.Qty = quantity;
+                    item.SalesPrice = salePrice;
+                    item.TaxAmt = tax;
+                    item.Amount = amount;
+                }
+
+            }
+            Session["Order"] = oderDetails;    
         }
         #endregion
         public ActionResult ListBillSaleOrder()

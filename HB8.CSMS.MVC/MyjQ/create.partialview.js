@@ -357,13 +357,34 @@ $(document).ready(function () {
         }
     });
 })
+//Do du lieu vao dropdowlist nhan vien quan li
+$(document).ready(function () {
+    $.ajax({
+        url: "/BillSaleOrderManager/ListStaff",
+        type: 'Get',
+        data: "{}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            $.each(data, function (key, value) {
+                $("#ddlStaffForBillSaleOrder").append($("<option></option>").val(value.StaffId).html(value.StaffName));
+            });
+        },
+        error: function (result) {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+    });
+})
 //Hien thi lich 
 $(document).ready(function () {
     $("#createdatepicker").datepicker();//Hien lich cho nguoi dung chon ngay thang nam
+    $("#overdatepicker").datepicker();
+    
 })
 //Hien thi dong du lieu
 $(document).ready(function () {
     $("#showrow").click(function () {
+        var index = 0;
         $.ajax({
             url: "/BillSaleOrderManager/ShowRow",
             type: 'Get',
@@ -373,6 +394,8 @@ $(document).ready(function () {
                 var theDialog = $("#showLoading").dialog(opt);
                 theDialog.dialog("close");
                 $("#tableInventory").append(data);
+                index= $("#tableInventory tr").length;
+                $("#tableInventory > tr:last >td:nth-child(1) >p").text(index);
             },
             beforeSend: function () {
                 var theDialog = $("#showLoading").dialog(opt);

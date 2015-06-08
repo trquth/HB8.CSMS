@@ -30,7 +30,11 @@ namespace HB8.CSMS.BLL.Abstract
         /// </summary>
         /// <returns></returns>
         List<UnitDetail> GetUnitDetailByID(string id);
-      
+        /// <summary>
+        /// Tra ve danh sach nhan vien duoc sap xep
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<Staff> GetListStaff();
         
         
     }
