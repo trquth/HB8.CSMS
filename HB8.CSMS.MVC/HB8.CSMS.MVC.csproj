@@ -143,6 +143,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BillSaleOrderManagerController.cs" />
+    <Compile Include="Controllers\BillSaleOrderModelDomain.cs" />
     <Compile Include="Controllers\CategoryManagerController.cs" />
     <Compile Include="Controllers\CustomerManagerController.cs" />
     <Compile Include="Controllers\InventoryManagerController.cs" />

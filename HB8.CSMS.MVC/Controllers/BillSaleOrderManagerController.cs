@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using HB8.CSMS.MVC.Models.BillSaleOrder;
+using HB8.CSMS.BLL.DomainModels;
 
 namespace HB8.CSMS.MVC.Controllers
 {
@@ -126,7 +127,7 @@ namespace HB8.CSMS.MVC.Controllers
             return PartialView("ColumnTotalPriceInventoryOfBillPatialView", data);
         }
         #endregion
-        #region Save
+        #region Save in Session
         public void Update(int id, string invtId, int quantity, decimal salePrice, decimal tax, decimal amount)
         {
             var oderDetails = Session["Order"] as List<BillSaleOrderModel>;
@@ -140,7 +141,7 @@ namespace HB8.CSMS.MVC.Controllers
                     Qty = quantity,
                     SalesPrice = salePrice,
                     Discount = 0,
-                    TaxAmt = tax,
+                    TaxAmtForInventory = tax,
                     Amount = amount,
                 };
                 oderDetails.Add(item);
@@ -158,8 +159,9 @@ namespace HB8.CSMS.MVC.Controllers
                         Qty = quantity,
                         SalesPrice = salePrice,
                         Discount = 0,
-                        TaxAmt = tax,
-                        Amount = amount,
+                        TaxAmtForInventory = tax,
+                        AmountForInventory = amount,
+                        
                     };
                     oderDetails.Add(itemOrder);
                 }
@@ -168,12 +170,73 @@ namespace HB8.CSMS.MVC.Controllers
                     item.InvtID = invtId;
                     item.Qty = quantity;
                     item.SalesPrice = salePrice;
-                    item.TaxAmt = tax;
-                    item.Amount = amount;
+                    item.TaxAmtForInventory = tax;
+                    item.AmountForInventory = amount;
                 }
 
             }
-            Session["Order"] = oderDetails;    
+            Session["Order"] = oderDetails;
+        }
+        #endregion
+        #region Create Action
+        public ActionResult CreateNewBillOrder()
+        {
+            return PartialView("CreateBillSaleOrderPartialView");
+        }
+        //Ham tao moi mot hoa don
+        public void CreateNewBillOrder(BillSaleOrderDomain model)
+        {
+            var item = new List<BillSaleOrderDomain>();
+            var list = GetListDetailInventory();
+            var items = from a in list
+                        select new BillSaleOrderDomain
+                        {
+                            OrderDate = model.OrderDate,
+                            InvoiceType = model.InvoiceType,
+                            CustID = model.CustID,
+                            TaxAmt = TotalTaxAmt(),
+                            TotalAmt = TotalAmt(),
+                            Description = model.Description,
+                            InvtID = a.InvtID,
+                            Qty = a.Qty,
+                            SalesPrice = a.SalesPrice,
+                            TaxAmtForInventory = a.TaxAmtForInventory,
+                            Discount = a.Discount,
+                            Amount = a.Amount,
+                            UnitID =a.UnitID,
+                            Payment =0,
+                            Debt = 0,                            
+                        };
+            billSaleOrderService.CreateBillSaleOrder(items);
+        }
+        #endregion
+        #region Method
+        //Tra ve danh sach san pham duoc luu
+        private List<BillSaleOrderModel> GetListDetailInventory()
+        {
+            return Session["Order"] as List<BillSaleOrderModel>;
+        }
+        //Tra ve tong thue cho cac mat hang
+        private decimal TotalTaxAmt()
+        {
+            decimal total = 0;
+            var list = GetListDetailInventory();
+            foreach (var item in list)
+            {
+                total += item.TaxAmtForInventory;
+            }
+            return total;
+        }
+        //Tra ve tong gia tri hoa don
+        private decimal TotalAmt()
+        {
+            decimal total = 0;
+            var list = GetListDetailInventory();
+            foreach (var item in list)
+            {
+                total += item.AmountForInventory;
+            }
+            return total;
         }
         #endregion
         public ActionResult ListBillSaleOrder()

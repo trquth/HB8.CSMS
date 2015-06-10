@@ -1,5 +1,6 @@
 ﻿using HB8.CSMS.BLL.Abstract;
 using HB8.CSMS.DAL.DBContext;
+using HB8.CSMS.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +22,10 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             return context.Customers.GetAllItem();
         }
 
-
         public IEnumerable<DAL.Models.Stock> GetListStock()
         {
             return context.Stocks.GetAllItem().ToList();
         }
-
 
         public List<DAL.Models.Inventory> GetListInventory()
         {
@@ -38,18 +37,58 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             return context.UnitDetails.GetAllItem().ToList();
         }
 
-
         public List<DAL.Models.UnitDetail> GetUnitDetailByID(string id)
         {
-            return context.UnitDetails.GetAllItem().Where(x=>x.InvtID==id).ToList();
+            return context.UnitDetails.GetAllItem().Where(x => x.InvtID == id).ToList();
         }
-
-
-
 
         public IEnumerable<DAL.Models.Staff> GetListStaff()
         {
             return context.Staffs.GetAllItem();
+        }
+
+
+        public int CreateBillSaleOrder(IEnumerable<DomainModels.BillSaleOrderDomain> inventory)
+        {
+            if (inventory != null)
+            {
+                var model = new BillSaleOrder();
+                var item = inventory.FirstOrDefault();
+                model.OrderDate = item.OrderDate;
+                model.CustID = item.CustID;
+                model.OverdueDate = item.OverdueDate;
+                model.OrderDisc = item.OrderDisc;
+                model.TaxAmt = item.TaxAmt;
+                model.TotalAmt = item.TotalAmt;
+                model.Payment = item.Payment;
+                model.Debt = item.Debt;
+                model.Description = item.Description;
+                model.InvoiceType = item.InvoiceType;
+
+                //Luu MANY TO MANY 
+                for (int i = 0; i < inventory.Count(); i++)
+                {
+                    var billOrderDetail = new BillSlsOrderDetail();
+                    var itemDetail = inventory.ElementAt(i);
+                    billOrderDetail.InvtID = itemDetail.InvtID;
+                    billOrderDetail.Qty = itemDetail.Qty;
+                    billOrderDetail.SalesPrice = itemDetail.SalesPrice;
+                    billOrderDetail.Discount = itemDetail.Discount;
+                    billOrderDetail.TaxAmt = item.TaxAmt;
+                    billOrderDetail.Amount = item.Amount;
+                    billOrderDetail.UnitID = item.UnitID;
+                    model.BillSlsOrderDetails.Add(billOrderDetail);
+                }
+
+                context.Orders.Create(model);
+                context.Save();
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+
         }
     }
 }

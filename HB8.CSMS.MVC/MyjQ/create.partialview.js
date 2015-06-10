@@ -31,7 +31,6 @@ $(document).ready(function () {
         }
     });
 })
-
 //Do du lieu vao dropdowlist
 $(document).ready(function () {
     $("#manv").keyup(function () {
@@ -55,7 +54,6 @@ $(document).ready(function () {
         }
     });
 })
-
 $(document).ready(function () {
     $("#create-button").click(function () {
         $(this).attr('type', 'button');
@@ -99,13 +97,11 @@ $(document).ready(function () {
         }
     });
 });
-
 //Kiem tra thong tin nhap vao dung hay sai
 $(document).ready(function () {
     $('#staffform').validate({
     });
 });
-
 //Save hinh vao thu muc
 $(document).ready(function () {
     $("#uploadFile").change(function () {
@@ -148,7 +144,6 @@ $(document).ready(function () {
         }
     });
 });
-
 //Dung de dong diaglog chua form
 $("#buttonExitCreate").button().click(function () {
     $.ajax({
@@ -379,7 +374,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     $("#createdatepicker").datepicker();//Hien lich cho nguoi dung chon ngay thang nam
     $("#overdatepicker").datepicker();
-    
+
 })
 //Hien thi dong du lieu
 $(document).ready(function () {
@@ -394,7 +389,7 @@ $(document).ready(function () {
                 var theDialog = $("#showLoading").dialog(opt);
                 theDialog.dialog("close");
                 $("#tableInventory").append(data);
-                index= $("#tableInventory tr").length;
+                index = $("#tableInventory tr").length;
                 $("#tableInventory > tr:last >td:nth-child(1) >p").text(index);
             },
             beforeSend: function () {
@@ -408,4 +403,18 @@ $(document).ready(function () {
         });
 
     });
+})
+//Luu thong tin hoa don ban hang
+$(document).ready(function () {
+    $("#createBillSaleOrder-button").click(function () {
+        alert('vao day 2')
+        var custId = $("#ddlCustomer").val();
+        var description = $("#description").val();
+        var dataCreate = $("#createdatepicker").val();
+        var staffId = $("#ddlStaffForBillSaleOrder").val();
+        var overDueDate = $("#overdatepicker").val();
+        $.post('/BillSaleOrderManager/CreateNewBillOrder', { CustID: custId, Description: description, OrderDate: dataCreate, StaffId: staffId, OverdueDate: overDueDate }, function () {
+            swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
+        })
+    })
 })

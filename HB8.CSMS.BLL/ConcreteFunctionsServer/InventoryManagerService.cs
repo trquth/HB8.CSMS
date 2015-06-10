@@ -19,7 +19,6 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
         }
         public int CreateInventory(DomainModels.InventoryDomain inventory)
         {
-
             var model = new Inventory();
             var unitDetailL = new UnitDetail();
             var unitDetailT = new UnitDetail();

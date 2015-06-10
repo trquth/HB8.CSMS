@@ -35,7 +35,12 @@ namespace HB8.CSMS.BLL.Abstract
         /// </summary>
         /// <returns></returns>
         IEnumerable<Staff> GetListStaff();
-        
+        /// <summary>
+        /// Ham luu thong tin hoa don
+        /// </summary>
+        /// <param name="inventory"></param>
+        /// <returns></returns>
+        int CreateBillSaleOrder(IEnumerable<BillSaleOrderDomain> inventory);
         
     }
 }

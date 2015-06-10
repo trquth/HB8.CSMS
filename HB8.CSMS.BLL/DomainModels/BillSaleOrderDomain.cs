@@ -15,6 +15,7 @@ namespace HB8.CSMS.BLL.DomainModels
         public Nullable<System.DateTime> OverdueDate { get; set; }
         public decimal OrderDisc { get; set; }
         public decimal TaxAmt { get; set; }
+        public decimal TaxAmtForInventory { get; set; }
         public decimal TotalAmt { get; set; }
         public decimal Payment { get; set; }
         public decimal Debt { get; set; }
@@ -26,5 +27,7 @@ namespace HB8.CSMS.BLL.DomainModels
         public decimal SalesPrice { get; set; }
         public decimal Discount { get; set; }
         public decimal Amount { get; set; }
+        public decimal AmountForInventory { get; set; }
+        public int UnitID { get; set; }
     }
 }
