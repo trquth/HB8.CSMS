@@ -6,16 +6,16 @@ namespace HB8.CSMS.DAL.Models
     public partial class BillSlsOrderDetail
     {
         public int ID { get; set; }
-        public Nullable<int> SOrderNo { get; set; }
+        public int SOrderNo { get; set; }
         public string InvtID { get; set; }
         public int Qty { get; set; }
         public decimal SalesPrice { get; set; }
         public Nullable<decimal> Discount { get; set; }
         public decimal TaxAmt { get; set; }
         public decimal Amount { get; set; }
-        public Nullable<int> UnitID { get; set; }
+        public string UnitName { get; set; }
+        public int UnitId { get; set; }
         public virtual BillSaleOrder BillSaleOrder { get; set; }
-        public virtual Unit Unit { get; set; }
         public virtual Inventory Inventory { get; set; }
     }
 }

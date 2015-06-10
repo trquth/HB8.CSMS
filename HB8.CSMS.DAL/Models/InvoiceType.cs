@@ -10,7 +10,7 @@ namespace HB8.CSMS.DAL.Models
             this.BillSaleOrders = new List<BillSaleOrder>();
         }
 
-        public string InvoiceType1 { get; set; }
+        public string InvoiceID { get; set; }
         public string TypeName { get; set; }
         public virtual ICollection<BillSaleOrder> BillSaleOrders { get; set; }
     }

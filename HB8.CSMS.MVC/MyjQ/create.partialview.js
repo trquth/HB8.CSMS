@@ -407,13 +407,14 @@ $(document).ready(function () {
 //Luu thong tin hoa don ban hang
 $(document).ready(function () {
     $("#createBillSaleOrder-button").click(function () {
-        alert('vao day 2')
         var custId = $("#ddlCustomer").val();
         var description = $("#description").val();
         var dataCreate = $("#createdatepicker").val();
         var staffId = $("#ddlStaffForBillSaleOrder").val();
+        //"OverdueDate": overDueDate
+        //"OrderDate": dataCreate,
         var overDueDate = $("#overdatepicker").val();
-        $.post('/BillSaleOrderManager/CreateNewBillOrder', { CustID: custId, Description: description, OrderDate: dataCreate, StaffId: staffId, OverdueDate: overDueDate }, function () {
+        $.post('/BillSaleOrderManager/CreateBillOrder', { "CustID": custId, "Description": description, "StaffId": staffId }, function () {
             swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
         })
     })

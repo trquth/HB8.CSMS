@@ -21,8 +21,8 @@ namespace HB8.CSMS.DAL.Models
         public Nullable<decimal> Debt { get; set; }
         public string Description { get; set; }
         public string StaffID { get; set; }
-        public string InvoiceType { get; set; }
-        public virtual InvoiceType InvoiceType1 { get; set; }
+        public string InvoiceID { get; set; }
+        public virtual InvoiceType InvoiceType { get; set; }
         public virtual Staff Staff { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual ICollection<BillSlsOrderDetail> BillSlsOrderDetails { get; set; }

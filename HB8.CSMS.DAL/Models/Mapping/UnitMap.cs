@@ -11,6 +11,9 @@ namespace HB8.CSMS.DAL.Models.Mapping
             this.HasKey(t => t.UnitID);
 
             // Properties
+            this.Property(t => t.UnitID)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
             this.Property(t => t.UnitName)
                 .HasMaxLength(50);
 

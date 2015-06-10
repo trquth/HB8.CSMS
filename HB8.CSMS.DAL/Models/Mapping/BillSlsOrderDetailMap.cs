@@ -12,7 +12,12 @@ namespace HB8.CSMS.DAL.Models.Mapping
 
             // Properties
             this.Property(t => t.InvtID)
+                .IsRequired()
                 .HasMaxLength(20);
+
+            this.Property(t => t.UnitName)
+                .IsRequired()
+                .HasMaxLength(50);
 
             // Table & Column Mappings
             this.ToTable("BillSlsOrderDetail");
@@ -24,16 +29,14 @@ namespace HB8.CSMS.DAL.Models.Mapping
             this.Property(t => t.Discount).HasColumnName("Discount");
             this.Property(t => t.TaxAmt).HasColumnName("TaxAmt");
             this.Property(t => t.Amount).HasColumnName("Amount");
-            this.Property(t => t.UnitID).HasColumnName("UnitID");
+            this.Property(t => t.UnitName).HasColumnName("UnitName");
+            this.Property(t => t.UnitId).HasColumnName("UnitId");
 
             // Relationships
-            this.HasOptional(t => t.BillSaleOrder)
+            this.HasRequired(t => t.BillSaleOrder)
                 .WithMany(t => t.BillSlsOrderDetails)
                 .HasForeignKey(d => d.SOrderNo);
-            this.HasOptional(t => t.Unit)
-                .WithMany(t => t.BillSlsOrderDetails)
-                .HasForeignKey(d => d.UnitID);
-            this.HasOptional(t => t.Inventory)
+            this.HasRequired(t => t.Inventory)
                 .WithMany(t => t.BillSlsOrderDetails)
                 .HasForeignKey(d => d.InvtID);
 

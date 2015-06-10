@@ -89,12 +89,13 @@ $(document).ready(function () {
         var id = $(this).parents('tr:first').find('td:eq(0)').find('p').html();;
         var invtId = $(this).parents('tr:first').find('td:eq(1)').find('select.ddlInventoryForBill ').val();
         var quantity = $(this).parents('tr:first').find('td:eq(2)').find('input').val();
+        var unitId = $(this).parents('tr:first').find('td:eq(3)').find('select.ddlUnitForBill').val();
         var price = $(this).parents('tr:first').find('td:eq(4)').find('p').html();
         var tax = $(this).parents('tr:first').find('td:eq(6)').find('select.ddlTaxForBill').val();
         var amount = $(this).parents('tr:first').find('td:eq(7)').find('p').html();
         $.ajax({
             url: "/BillSaleOrderManager/Update",
-            data: { id: id, invtId: invtId, quantity: quantity, salePrice: price, tax: tax, amount: amount },
+            data: { id: id, invtId: invtId, quantity: quantity, salePrice: price, tax: tax, amount: amount,unitId:unitId },
             contentType: "application/json; charset=utf-8",
             success: function (data) {             
                 setTimeout(function () {

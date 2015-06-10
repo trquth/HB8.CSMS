@@ -8,10 +8,10 @@ namespace HB8.CSMS.DAL.Models.Mapping
         public InvoiceTypeMap()
         {
             // Primary Key
-            this.HasKey(t => t.InvoiceType1);
+            this.HasKey(t => t.InvoiceID);
 
             // Properties
-            this.Property(t => t.InvoiceType1)
+            this.Property(t => t.InvoiceID)
                 .IsRequired()
                 .HasMaxLength(2);
 
@@ -20,7 +20,7 @@ namespace HB8.CSMS.DAL.Models.Mapping
 
             // Table & Column Mappings
             this.ToTable("InvoiceType");
-            this.Property(t => t.InvoiceType1).HasColumnName("InvoiceType");
+            this.Property(t => t.InvoiceID).HasColumnName("InvoiceID");
             this.Property(t => t.TypeName).HasColumnName("TypeName");
         }
     }

@@ -128,7 +128,7 @@ namespace HB8.CSMS.MVC.Controllers
         }
         #endregion
         #region Save in Session
-        public void Update(int id, string invtId, int quantity, decimal salePrice, decimal tax, decimal amount)
+        public void Update(int id, string invtId, int quantity, decimal salePrice, decimal tax, decimal amount,int unitId)
         {
             var oderDetails = Session["Order"] as List<BillSaleOrderModel>;
             if (oderDetails == null)
@@ -143,6 +143,7 @@ namespace HB8.CSMS.MVC.Controllers
                     Discount = 0,
                     TaxAmtForInventory = tax,
                     Amount = amount,
+                    UnitID = unitId
                 };
                 oderDetails.Add(item);
             }
@@ -161,6 +162,7 @@ namespace HB8.CSMS.MVC.Controllers
                         Discount = 0,
                         TaxAmtForInventory = tax,
                         AmountForInventory = amount,
+                        UnitID = unitId
                         
                     };
                     oderDetails.Add(itemOrder);
@@ -172,6 +174,7 @@ namespace HB8.CSMS.MVC.Controllers
                     item.SalesPrice = salePrice;
                     item.TaxAmtForInventory = tax;
                     item.AmountForInventory = amount;
+                    item.UnitID = unitId;
                 }
 
             }
@@ -184,7 +187,7 @@ namespace HB8.CSMS.MVC.Controllers
             return PartialView("CreateBillSaleOrderPartialView");
         }
         //Ham tao moi mot hoa don
-        public void CreateNewBillOrder(BillSaleOrderDomain model)
+        public void CreateBillOrder(BillSaleOrderDomain model)
         {
             var item = new List<BillSaleOrderDomain>();
             var list = GetListDetailInventory();
@@ -203,9 +206,10 @@ namespace HB8.CSMS.MVC.Controllers
                             TaxAmtForInventory = a.TaxAmtForInventory,
                             Discount = a.Discount,
                             Amount = a.Amount,
-                            UnitID =a.UnitID,
-                            Payment =0,
-                            Debt = 0,                            
+                            UnitID = a.UnitID,
+                            Payment = 0,
+                            Debt = 0,
+                            StaffId = model.StaffId
                         };
             billSaleOrderService.CreateBillSaleOrder(items);
         }

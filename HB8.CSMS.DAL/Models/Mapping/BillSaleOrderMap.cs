@@ -15,14 +15,13 @@ namespace HB8.CSMS.DAL.Models.Mapping
                 .HasMaxLength(20);
 
             this.Property(t => t.Description)
-                .IsRequired()
                 .HasMaxLength(200);
 
             this.Property(t => t.StaffID)
                 .IsRequired()
                 .HasMaxLength(20);
 
-            this.Property(t => t.InvoiceType)
+            this.Property(t => t.InvoiceID)
                 .IsRequired()
                 .HasMaxLength(2);
 
@@ -39,12 +38,12 @@ namespace HB8.CSMS.DAL.Models.Mapping
             this.Property(t => t.Debt).HasColumnName("Debt");
             this.Property(t => t.Description).HasColumnName("Description");
             this.Property(t => t.StaffID).HasColumnName("StaffID");
-            this.Property(t => t.InvoiceType).HasColumnName("InvoiceType");
+            this.Property(t => t.InvoiceID).HasColumnName("InvoiceID");
 
             // Relationships
-            this.HasRequired(t => t.InvoiceType1)
+            this.HasRequired(t => t.InvoiceType)
                 .WithMany(t => t.BillSaleOrders)
-                .HasForeignKey(d => d.InvoiceType);
+                .HasForeignKey(d => d.InvoiceID);
             this.HasRequired(t => t.Staff)
                 .WithMany(t => t.BillSaleOrders)
                 .HasForeignKey(d => d.StaffID);

@@ -52,37 +52,47 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
         {
             if (inventory != null)
             {
-                var model = new BillSaleOrder();
-                var item = inventory.FirstOrDefault();
-                model.OrderDate = item.OrderDate;
-                model.CustID = item.CustID;
-                model.OverdueDate = item.OverdueDate;
-                model.OrderDisc = item.OrderDisc;
-                model.TaxAmt = item.TaxAmt;
-                model.TotalAmt = item.TotalAmt;
-                model.Payment = item.Payment;
-                model.Debt = item.Debt;
-                model.Description = item.Description;
-                model.InvoiceType = item.InvoiceType;
-
-                //Luu MANY TO MANY 
-                for (int i = 0; i < inventory.Count(); i++)
+                try
                 {
-                    var billOrderDetail = new BillSlsOrderDetail();
-                    var itemDetail = inventory.ElementAt(i);
-                    billOrderDetail.InvtID = itemDetail.InvtID;
-                    billOrderDetail.Qty = itemDetail.Qty;
-                    billOrderDetail.SalesPrice = itemDetail.SalesPrice;
-                    billOrderDetail.Discount = itemDetail.Discount;
-                    billOrderDetail.TaxAmt = item.TaxAmt;
-                    billOrderDetail.Amount = item.Amount;
-                    billOrderDetail.UnitID = item.UnitID;
-                    model.BillSlsOrderDetails.Add(billOrderDetail);
+                    var model = new BillSaleOrder();
+                    var item = inventory.FirstOrDefault();
+                    model.OrderDate = DateTime.Now;
+                    model.CustID = item.CustID;
+                    model.OverdueDate = DateTime.Now;
+                    model.OrderDisc = 12;
+                    model.TaxAmt = 12;
+                    model.TotalAmt = 12;
+                    model.Payment = 12;
+                    model.Debt = item.Debt;
+                    model.Description = item.Description;
+                    model.InvoiceID = "AB";
+                    model.StaffID = item.StaffId;
+                    //context.Orders.Create(model);
+                    ////Luu MANY TO MANY 
+                    //for (int i = 0; i < inventory.Count(); i++)
+                    //{
+                    //    var billOrderDetail = new BillSlsOrderDetail();
+                    //    var itemDetail = inventory.ElementAt(i);
+                    //    billOrderDetail.InvtID = itemDetail.InvtID;
+                    //    billOrderDetail.Qty = itemDetail.Qty;
+                    //    billOrderDetail.SalesPrice = itemDetail.SalesPrice;
+                    //    billOrderDetail.Discount = itemDetail.Discount;
+                    //    billOrderDetail.TaxAmt = item.TaxAmt;
+                    //    billOrderDetail.Amount = item.Amount;
+                    //    //billOrderDetail.UnitID = item.UnitID;
+                    //    billOrderDetail.UnitName = "thung";
+                    //    model.BillSlsOrderDetails.Add(billOrderDetail);
+                    //}
+                    context.Orders.Create(model);
+                    context.Save();
+                    return 1;
                 }
-
-                context.Orders.Create(model);
-                context.Save();
-                return 1;
+                catch (Exception ex)
+                {
+                    
+                    throw ex;
+                }
+             
             }
             else
             {
