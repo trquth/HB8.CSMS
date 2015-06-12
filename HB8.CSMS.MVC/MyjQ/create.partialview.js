@@ -379,7 +379,7 @@ $(document).ready(function () {
 //Hien thi dong du lieu
 $(document).ready(function () {
     $("#showrow").click(function () {
-        var index = 0;
+        var index = $("#tableInventory > tr:last >td:nth-child(1) >p").html()
         $.ajax({
             url: "/BillSaleOrderManager/ShowRow",
             type: 'Get',
@@ -389,8 +389,14 @@ $(document).ready(function () {
                 var theDialog = $("#showLoading").dialog(opt);
                 theDialog.dialog("close");
                 $("#tableInventory").append(data);
-                index = $("#tableInventory tr").length;
-                $("#tableInventory > tr:last >td:nth-child(1) >p").text(index);
+                //index = $("#tableInventory tr").length;
+                if (index==null) {
+                    $("#tableInventory > tr:last >td:nth-child(1) >p").text(1);
+                } else {
+                    var i = parseInt(index,10)+1
+                    $("#tableInventory > tr:last >td:nth-child(1) >p").text(i);
+                }
+              
             },
             beforeSend: function () {
                 var theDialog = $("#showLoading").dialog(opt);
@@ -407,16 +413,12 @@ $(document).ready(function () {
 //Luu thong tin hoa don ban hang
 $(document).ready(function () {
     $("#createNewBillSaleOrder-button").click(function () {
-        alert('vao day')
         var custId = $("#ddlCustomer").val();
         var description = $("#description").val();
         var dataCreate = $("#createdatepicker").val();
-        alert(dataCreate)
         var staffId = $("#ddlStaffForBillSaleOrder").val();
         var orderDisc = $("#orderDiscForBill").val();
-        alert(orderDisc)
         var overDueDate = $("#overdatepicker").val();
-        alert(overDueDate)
         $.post('/BillSaleOrderManager/CreateBillOrder', { "CustID": custId, "Description": description, "StaffId": staffId, "OrderDisc": orderDisc, "OrderDate": dataCreate, "OverdueDate": overDueDate }, function () {
             swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
         })

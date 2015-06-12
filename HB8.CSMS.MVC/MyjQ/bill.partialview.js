@@ -112,8 +112,7 @@ $(document).ready(function () {
 //Xac nhan san pham duoc chon
 $(document).ready(function () {
     $('.btnOkForBillSaleOrder').click(function () {
-        var request, timeout;
-        var id = $(this).parents('tr:first').find('td:eq(0)').find('p').html();;
+        var id = $(this).parents('tr:first').find('td:eq(0)').find('p').html();
         var invtId = $(this).parents('tr:first').find('td:eq(1)').find('select.ddlInventoryForBill ').val();
         var quantity = $(this).parents('tr:first').find('td:eq(2)').find('input').val();
         var unitId = $(this).parents('tr:first').find('td:eq(3)').find('select.ddlUnitForBill').val();
@@ -141,4 +140,22 @@ $(document).ready(function () {
         });
     })
 
+})
+//Xoa di san pham duoc chon
+$(document).ready(function () {
+    $(".btnDeleteForBillSaleOrder").click(function () {
+        var id = $(this).parents('tr:first').find('td:eq(0)').find('p').html();
+        $(this).closest("tr").remove();
+        $.ajax({
+            url: "/BillSaleOrderManager/DeteleAnInventory",
+            data: { id: id },
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+              
+            },          
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
+    })
 })

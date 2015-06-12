@@ -129,7 +129,46 @@ namespace HB8.CSMS.MVC.Controllers
             return PartialView("ColumnTotalPriceInventoryOfBillPatialView", data);
         }
         #endregion
-        #region Save in Session
+        #region Create Action
+        public ActionResult CreateNewBillOrder()
+        {
+            return PartialView("CreateBillSaleOrderPartialView");
+        }
+        //Ham tao moi mot hoa don
+        public void CreateBillOrder(BillSaleOrderDomain model)
+        {
+            var item = new List<BillSaleOrderDomain>();
+            var list = GetListDetailInventory();
+            var items = from a in list
+                        select new BillSaleOrderDomain
+                        {
+                            //Bang BILLSALEORDER
+                            OrderDate = model.OrderDate,
+                            CustID = model.CustID,
+                            OverdueDate = model.OverdueDate,
+                            OrderDisc = model.OrderDisc,
+                            TaxAmt = TotalTaxAmt(),
+                            TotalAmt = TotalAmt(),
+                            Payment = 0,
+                            Debt = 0,
+                            Description = model.Description,
+                            StaffId = model.StaffId,
+                            InvoiceID ="AB",
+                            //Bang BILLSALEORDERDETAIL
+                            InvtID = a.InvtID,
+                            Qty = a.Qty,
+                            SalesPrice = a.SalesPrice,
+                            Discount = 0,
+                            TaxAmtForInventory = a.TaxAmtForInventory,
+                            Amount = a.Amount,
+                            UnitID = a.UnitID,
+                            OrderDiscForInvt = a.OrderDiscForInvt
+                        };
+            billSaleOrderService.CreateBillSaleOrder(items);
+            Session.Remove("Order");//Xoa di session luu thong tin danh sach mat hang
+        }
+        #endregion
+        #region Method
         public void Update(int id, string invtId, int quantity, decimal salePrice, decimal tax, decimal amount, int unitId, decimal orderDisc)
         {
             var oderDetails = Session["Order"] as List<BillSaleOrderModel>;
@@ -183,46 +222,6 @@ namespace HB8.CSMS.MVC.Controllers
             }
             Session["Order"] = oderDetails;
         }
-        #endregion
-        #region Create Action
-        public ActionResult CreateNewBillOrder()
-        {
-            return PartialView("CreateBillSaleOrderPartialView");
-        }
-        //Ham tao moi mot hoa don
-        public void CreateBillOrder(BillSaleOrderDomain model)
-        {
-            var item = new List<BillSaleOrderDomain>();
-            var list = GetListDetailInventory();
-            var items = from a in list
-                        select new BillSaleOrderDomain
-                        {
-                            //Bang BILLSALEORDER
-                            OrderDate = model.OrderDate,
-                            CustID = model.CustID,
-                            OverdueDate = model.OverdueDate,
-                            OrderDisc = model.OrderDisc,
-                            TaxAmt = TotalTaxAmt(),
-                            TotalAmt = TotalAmt(),
-                            Payment = 0,
-                            Debt = 0,
-                            Description = model.Description,
-                            StaffId = model.StaffId,
-                            InvoiceID ="AB",
-                            //Bang BILLSALEORDERDETAIL
-                            InvtID = a.InvtID,
-                            Qty = a.Qty,
-                            SalesPrice = a.SalesPrice,
-                            Discount = 0,
-                            TaxAmtForInventory = a.TaxAmtForInventory,
-                            Amount = a.Amount,
-                            UnitID = a.UnitID,
-                            OrderDiscForInvt = a.OrderDiscForInvt
-                        };
-            billSaleOrderService.CreateBillSaleOrder(items);
-        }
-        #endregion
-        #region Method
         //Tra ve danh sach san pham duoc luu
         private List<BillSaleOrderModel> GetListDetailInventory()
         {
@@ -249,6 +248,21 @@ namespace HB8.CSMS.MVC.Controllers
                 total += item.AmountForInventory;
             }
             return total;
+        }
+        //Xoa di mat han da duoc chon
+        public void DeteleAnInventory(int id)
+        {
+            var oderDetails = Session["Order"] as List<BillSaleOrderModel>;
+            if (oderDetails!=null)
+            {
+                var item = oderDetails.FirstOrDefault(x => x.ID == id);
+                if (item != null)
+                {
+                    oderDetails.Remove(item);
+                    Session["Order"] = oderDetails;
+                }
+            }
+           
         }
         #endregion
         public ActionResult ListBillSaleOrder()
