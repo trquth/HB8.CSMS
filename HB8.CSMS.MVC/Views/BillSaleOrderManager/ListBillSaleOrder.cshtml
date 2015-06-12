@@ -2,6 +2,32 @@
     ViewBag.Title = "ListBillSaleOrder";
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".page-numberForBill").on('click', function () {
+            var page = parseInt($(this).html());
+            $.ajax({
+                url: '/BillSaleOrderManager/ListBillView',
+                data: { "page": page },
+                type: 'GET',
+                success: function (data) {
+                    var theDialog = $("#showLoading").dialog(opt);
+                    theDialog.dialog("close");
+                    $("#billsaleorder-list").empty();
+                    $("#billsaleorder-list").append(data);
+                },
+                beforeSend: function () {
+                    var theDialog = $("#showLoading").dialog(opt);
+                    theDialog.dialog("open");
+                },
+                error: function () {
+                    swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+                }
+            });
+
+        });
+    });
+</script>
 <div class="row">
     <div class="col-lg-12">
         <nav role="navigation" class="navbar navbar-default">
@@ -62,7 +88,7 @@
         <div class="panel panel-heading">
             <div class="panel panel-body">
                 <div id="billsaleorder-list">
-                    @Html.Partial("CreateBillSaleOrderPartialView")
+                    @Html.Partial("ListBillSaleOrderParitalView")
                 </div>
             </div>          
             <div id="showspinner"></div>
@@ -89,4 +115,3 @@
         </div>
     </div>
 </div>
-<script src="~/MyjQ/Index.js"></script>

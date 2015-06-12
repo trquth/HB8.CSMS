@@ -1,7 +1,17 @@
 ﻿@model HB8.CSMS.MVC.Models.BillSaleOrder.BillSaleOrderModel
-<select class="form-control ddlUnitForBill" data-rule-required="true" data-msg-required="Đơn vị tính không được rỗng">
-    <option selected="selected" value="">--Chọn đơn vị tính--</option>
-    <option  value="@Model.UnitID_T">@Model.UnitName_T</option>
-    <option value="@Model.UnitID_L">@Model.UnitName_L</option>
-</select>
+           @if (Model != null)
+           {
+            <select class="form-control ddlUnitForBill" data-rule-required="true" data-msg-required="Vui lòng chọn đơn vị tính">
+                <option selected="selected" value="">--Chọn đơn vị tính--</option>
+                <option value="@Model.UnitID_T">@Model.UnitName_T</option>
+                <option value="@Model.UnitID_L">@Model.UnitName_L</option>
+            </select>
+           }
+           else
+           {
+            <select class="form-control ddlUnitForBill" data-rule-required="true" data-msg-required="Vui lòng chọn đơn vị tính">
+                <option selected="selected" value="">--Chọn đơn vị tính--</option>
+            </select>
+           }
+
 <script src="~/MyjQ/bill.partialview.js"></script>

@@ -40,5 +40,6 @@ namespace HB8.CSMS.MVC.Models.BillSaleOrder
         public int UnitID { get; set; }
         public decimal OrderDiscForInvt { get; set; }
         public string InvoiceID { get; set; }
+        public string TypeName { get; set; }
     }
 }

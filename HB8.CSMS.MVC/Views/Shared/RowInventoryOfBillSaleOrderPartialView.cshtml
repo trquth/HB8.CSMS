@@ -1,11 +1,10 @@
 ﻿@model IEnumerable<HB8.CSMS.MVC.Models.BillSaleOrder.BillSaleOrderModel>
-
 <tr class="rowForBillSaleOrder">
     <td class="text-center itemIdClass">
         <p></p>
     </td>
     <td class="text-center">
-        <select class="form-control ddlInventoryForBill" data-rule-required="true" data-msg-required="Tên khách hàng không được rỗng">
+        <select class="form-control ddlInventoryForBill" data-rule-required="true" data-msg-required="Vui lòng chọn tên sản phẩm">
             <option selected="selected" value="">--Chọn sản phẩm--</option>
             @foreach (var item in Model)
             {
@@ -14,10 +13,10 @@
         </select>
     </td>
     <td class="text-center">
-        <input class="form-control quantity" type="text" data-rule-required="true" data-msg-required="Số lượng không được rỗng" data-val-number="Số lượng là một số" value="1" placeholder="1" />
+        <input class="form-control quantity" type="text" data-rule-required="true" data-msg-required="Vui lòng nhập số lượng" data-val-number="Số lượng là một số" value="1" placeholder="1" />
     </td>
     <td class="text-center columnUnitForBillSaleOrder" id="">
-        <select class="form-control ddlUnitForBill" data-rule-required="true" data-msg-required="Đơn vị tính không được rỗng">
+        <select class="form-control ddlUnitForBill" data-rule-required="true" data-msg-required="Vui lòng chọn đơn vị tính">
             <option selected="selected" value="">--Chọn đơn vị tính--</option>
         </select>
     </td>
@@ -29,7 +28,7 @@
     </td>
     <td class="text-center">
         <p>
-            <select class="form-control ddlTaxForBill" data-rule-required="true" data-msg-required="Đơn vị tính không được rỗng">
+            <select class="form-control ddlTaxForBill">
                 <option selected="selected" value="0">--Chọn mức thuế--</option>
                 <option value="5">Thuế GTGT phải nộp 5%</option>
                 <option value="10">Thuế GTGT phải nộp 10%</option>
@@ -39,7 +38,7 @@
 
     </td>
     <td class="text-center totalprice">
-        <input class="form-control disc" type="text" data-val-number="Chiếc khấu  là một số" value="0" placeholder="0 %" />
+       <p>0</p>
     </td>
     <td>
         <button type="button" class="btn btn-default btnOkForBillSaleOrder" aria-label="Left Align">

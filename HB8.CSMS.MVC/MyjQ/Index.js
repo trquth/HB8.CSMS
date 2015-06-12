@@ -837,6 +837,7 @@ $(document).ready(function () {
 //Hien thi danh sach san pham hdang list tung trang
 $(document).ready(function () {
     $(".page-numberForInventory").on('click', function () {
+        alert('vao day')
         var page = parseInt($(this).html());
         $.ajax({
             url: '/InventoryManager/ListInventoryView',
@@ -967,5 +968,35 @@ $(document).ready(function () {
                 swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
             }
         });
+    });
+});
+
+//***************************************************************************//
+//PHAN CHO BILL SALE ORDER
+//**************************************************************************//
+
+//Hien thi danh sach hoa don tung trang
+$(document).ready(function () {
+    $(".page-numberForBill").on('click', function () {
+        var page = parseInt($(this).html());
+        $.ajax({
+            url: '/BillSaleOrderManager/ListBillView',
+            data: { "page": page },
+            type: 'GET',
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                $("#billsaleorder-list").empty();
+                $("#billsaleorder-list").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
+
     });
 });

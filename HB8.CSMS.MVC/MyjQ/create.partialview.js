@@ -419,8 +419,18 @@ $(document).ready(function () {
         var staffId = $("#ddlStaffForBillSaleOrder").val();
         var orderDisc = $("#orderDiscForBill").val();
         var overDueDate = $("#overdatepicker").val();
-        $.post('/BillSaleOrderManager/CreateBillOrder', { "CustID": custId, "Description": description, "StaffId": staffId, "OrderDisc": orderDisc, "OrderDate": dataCreate, "OverdueDate": overDueDate }, function () {
-            swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
-        })
+        var nuCust = custId.length
+        var nuStaff = staffId.length
+        var nuDateCr = dataCreate.length
+        var nuOverDue = overDueDate.length
+        if (nuCust*nuStaff*nuDateCr*nuOverDue==0) {
+            $(this).attr('type', 'submit');
+        } else {
+            $(this).attr('type', 'button');
+            $.post('/BillSaleOrderManager/CreateBillOrder', { "CustID": custId, "Description": description, "StaffId": staffId, "OrderDisc": orderDisc, "OrderDate": dataCreate, "OverdueDate": overDueDate }, function () {
+                swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
+            })
+        }
+       
     })
 })

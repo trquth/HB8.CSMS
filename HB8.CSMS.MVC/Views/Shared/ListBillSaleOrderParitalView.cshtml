@@ -1,25 +1,32 @@
-﻿<div class="col-lg-12">
+﻿@model  HB8.CSMS.MVC.Models.Paging.PagedData<HB8.CSMS.MVC.Models.BillSaleOrder.BillSaleOrderModel>
+<div class="col-lg-12">
     <table class="table table-striped ">
         <thead>
             <tr>
                 <th class="text-center">
-                    <h5>Tên sản phẩm</h5>
+                    <h5>Tên khách hàng</h5>
                 </th>
                 <th class="text-center">
 
-                    <h5>Đơn vị tính</h5>
+                    <h5>Ngày lập hóa đơn</h5>
 
                 </th>
                 <th class="text-center">
 
-                    <h5>Số lượng nhập</h5>
+                    <h5>Ngày thanh toán hóa đơn</h5>
 
                 </th>
                 <th class="text-center">
-                    <h5>Gía bán sĩ</h5>
+                    <h5>Số tiền</h5>
                 </th>
                 <th class="text-center">
-                    <h5>Gía bán lẻ</h5>
+                    <h5>Thuế</h5>
+                </th>
+                <th class="text-center">
+                    <h5>Tổng tiền</h5>
+                </th>
+                <th class="text-center">
+                    <h5>Trạng thái</h5>
                 </th>
             </tr>
         </thead>
@@ -29,31 +36,41 @@
                 {
                     <tr>
                         <td class="text-center itemIdClass">
-                            <input class="ID" type="hidden" value="@item.InvtID" name="">
+                            <input class="ID" type="hidden" value="@item.SOrderNo" name="">
                         </td>
                         <td class="text-center">
 
-                            <p>@item.InvtName</p>
-
-                        </td>
-                        <td class="text-center">
-
-                            <p>@item.UnitName_L</p>
+                            <p>@item.CustName</p>
 
                         </td>
                         <td class="text-center">
 
-                            <p>@item.QtyStock</p>
+                            <p>@item.OrderDate </p>
 
                         </td>
                         <td class="text-center">
 
-                            <p>@item.SalePrice_T</p>
+                            <p>@item.OverdueDate</p>
 
                         </td>
                         <td class="text-center">
 
-                            <p>@item.SalePrice_L</p>
+                            <p>@item.TotalAmt</p>
+
+                        </td>
+                        <td class="text-center">
+
+                            <p>@item.TaxAmt</p>
+
+                        </td>
+                        <td class="text-center">
+
+                            <p>@(item.TotalAmt * (1 - item.TaxAmt / 100))</p>
+
+                        </td>
+                        <td class="text-center">
+
+                            <p>@item.TypeName</p>
 
                         </td>
                     </tr>
@@ -74,7 +91,7 @@
                             else
                             {
 
-                                <li class=""><a class="page-numberForInventory" href="javascript:;">@i<span class="sr-only"></span></a></li>
+                                <li class=""><a class="page-numberForBill" href="javascript:;">@i<span class="sr-only"></span></a></li>
                             }
                         }
                     </ul>
@@ -82,5 +99,4 @@
             </tr>
         </tfoot>
     </table>
-
 </div>

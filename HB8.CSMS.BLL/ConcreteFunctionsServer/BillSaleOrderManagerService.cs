@@ -47,7 +47,6 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             return context.Staffs.GetAllItem();
         }
 
-
         public int CreateBillSaleOrder(IEnumerable<DomainModels.BillSaleOrderDomain> inventory)
         {
             if (inventory != null)
@@ -99,6 +98,12 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
                 return 0;
             }
 
+        }
+
+
+        public List<BillSaleOrder> GetListBill()
+        {
+            return context.Orders.GetAllItem().ToList();
         }
     }
 }

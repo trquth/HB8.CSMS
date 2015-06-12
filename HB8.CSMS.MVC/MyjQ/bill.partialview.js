@@ -52,7 +52,6 @@ $(document).ready(function () {
             success: function (data) {
                 $("#tableInventory > tr:last >td:nth-child(8)").empty();
                 $("#tableInventory > tr:last >td:nth-child(8)").append(data);
-
             },
             error: function (result) {
                 swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });

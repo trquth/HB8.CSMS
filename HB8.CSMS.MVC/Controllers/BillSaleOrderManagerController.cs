@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using HB8.CSMS.MVC.Models.BillSaleOrder;
 using HB8.CSMS.BLL.DomainModels;
+using HB8.CSMS.MVC.Models.Paging;
+using System.Globalization;
 
 namespace HB8.CSMS.MVC.Controllers
 {
@@ -85,13 +87,21 @@ namespace HB8.CSMS.MVC.Controllers
         //Hien thi cot gia tri
         public ActionResult ShowColumnUnit(string id)
         {
-            var model = billSaleOrderService.GetUnitDetailByID(id);
             var data = new BillSaleOrderModel();
-            data.UnitName_L = model.Where(x => x.UnitRate == null).First().Unit.UnitName;
-            data.UnitName_T = model.Where(x => x.UnitRate != null).First().Unit.UnitName;
-            data.UnitID_L = model.Where(x => x.UnitRate == null).First().Unit.UnitID;
-            data.UnitID_T = model.Where(x => x.UnitRate != null).First().Unit.UnitID;
+            if (id != "")
+            {
+                var model = billSaleOrderService.GetUnitDetailByID(id);
+                data.UnitName_L = model.Where(x => x.UnitRate == null).First().Unit.UnitName;
+                data.UnitName_T = model.Where(x => x.UnitRate != null).First().Unit.UnitName;
+                data.UnitID_L = model.Where(x => x.UnitRate == null).First().Unit.UnitID;
+                data.UnitID_T = model.Where(x => x.UnitRate != null).First().Unit.UnitID;
+            }
+            else
+            {
+                data = null;
+            }
             return PartialView("ColumnUnitOfBillSaleOrderPartialView", data);
+
         }
         //Hien thi cot don gia
         public ActionResult ShowColumnPrice(int? id, string idInventory)
@@ -153,7 +163,7 @@ namespace HB8.CSMS.MVC.Controllers
                             Debt = 0,
                             Description = model.Description,
                             StaffId = model.StaffId,
-                            InvoiceID ="AB",
+                            InvoiceID = "AB",
                             //Bang BILLSALEORDERDETAIL
                             InvtID = a.InvtID,
                             Qty = a.Qty,
@@ -169,6 +179,7 @@ namespace HB8.CSMS.MVC.Controllers
         }
         #endregion
         #region Method
+        //Luu danh sach hoa don vao Session
         public void Update(int id, string invtId, int quantity, decimal salePrice, decimal tax, decimal amount, int unitId, decimal orderDisc)
         {
             var oderDetails = Session["Order"] as List<BillSaleOrderModel>;
@@ -253,7 +264,7 @@ namespace HB8.CSMS.MVC.Controllers
         public void DeteleAnInventory(int id)
         {
             var oderDetails = Session["Order"] as List<BillSaleOrderModel>;
-            if (oderDetails!=null)
+            if (oderDetails != null)
             {
                 var item = oderDetails.FirstOrDefault(x => x.ID == id);
                 if (item != null)
@@ -262,13 +273,80 @@ namespace HB8.CSMS.MVC.Controllers
                     Session["Order"] = oderDetails;
                 }
             }
-           
+        }
+        private PagedData<BillSaleOrderModel> GetPaginatedBill(int page)
+        {
+            var billOrderSales = new PagedData<BillSaleOrderModel>();
+            var skipRecords = page * pageSize;
+            var model = billSaleOrderService.GetListBill();
+            int count = model.Count();
+            var listOfBill = (from item in model
+                              select new BillSaleOrderModel
+                              {
+                                  SOrderNo = item.SOrderNo,
+                                  CustName = item.Customer.CustName,
+                                  OrderDate = item.OrderDate,
+                                  OverdueDate = item.OverdueDate,
+                                  TaxAmt = item.TaxAmt,
+                                  TotalAmt = item.TotalAmt,
+                                  TypeName = item.InvoiceType.TypeName
+                              }).Skip(skipRecords).Take(pageSize).ToList();
+            billOrderSales.Data = listOfBill;
+            billOrderSales.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
+            billOrderSales.Count = count;
+            billOrderSales.PageSize = pageSize;
+            billOrderSales.CurrentPage = page + 1;
+            return billOrderSales;
+        }
+        public PagedData<BillSaleOrderModel> GetBillForListPage()
+        {
+            var listBill = new PagedData<BillSaleOrderModel>();
+            var model = billSaleOrderService.GetListBill();
+            int count = model.Count();
+            var listOfBill = (from item in model
+                                   select new BillSaleOrderModel
+                                   {
+                                       SOrderNo = item.SOrderNo,
+                                       CustName = item.Customer.CustName,
+                                       OrderDate =item.OrderDate,
+                                       OverdueDate = item.OverdueDate,
+                                       TaxAmt = item.TaxAmt,
+                                       TotalAmt = item.TotalAmt,
+                                       TypeName = item.InvoiceType.TypeName
+                                   }).ToList();
+            listBill.Data = listOfBill.Take(pageSize);
+            listBill.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
+            listBill.CurrentPage = 1;
+            listBill.Count = count;
+            listBill.PageSize = pageSize;
+            return listBill;
         }
         #endregion
+        #region Hien thi danh sach hoa don
         public ActionResult ListBillSaleOrder()
         {
-            return View();
+            var listBill = GetBillForListPage();
+            return View("ListBillSaleOrder", listBill);
         }
+        /// <summary>
+        /// Hien thi danh sach nhan vien dang LIST VIEW
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ListBillView(int? page)
+        {
+            var pageNumber = 0;
+            if (page == null)
+            {
+                pageNumber = page ?? 0;
+            }
+            else
+            {
+                pageNumber = (int)page - 1;
+            }
+            return PartialView("ListBillSaleOrderParitalView", GetPaginatedBill(pageNumber));
+        }
+        #endregion
+
 
     }
 }

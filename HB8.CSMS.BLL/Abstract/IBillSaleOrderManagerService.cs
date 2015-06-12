@@ -41,6 +41,11 @@ namespace HB8.CSMS.BLL.Abstract
         /// <param name="inventory"></param>
         /// <returns></returns>
         int CreateBillSaleOrder(IEnumerable<BillSaleOrderDomain> inventory);
+        /// <summary>
+        /// Tra ve danh sach hoa don
+        /// </summary>
+        /// <returns></returns>
+        List<BillSaleOrder> GetListBill();
         
     }
 }
