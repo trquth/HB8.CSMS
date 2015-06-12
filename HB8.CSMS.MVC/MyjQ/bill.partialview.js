@@ -43,10 +43,36 @@ $(document).ready(function () {
         var quantity = $(this).val();
         var price = $(this).parents('tr:first').find('td:eq(4)').find('p').html();
         var tax = $(this).parents('tr:first').find('td:eq(6)').find('select.ddlTaxForBill').val();
+        var overDisc = $(this).parents('tr:first').find('td:eq(5)').find('input').val();
         $.ajax({
             url: "/BillSaleOrderManager/TotalPrice",
             type: 'Get',
-            data: { quantity: quantity, price: price, tax: tax },
+            data: { quantity: quantity, price: price, tax: tax, overDisc: overDisc },
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $("#tableInventory > tr:last >td:nth-child(8)").empty();
+                $("#tableInventory > tr:last >td:nth-child(8)").append(data);
+
+            },
+            error: function (result) {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
+
+    });
+})
+//Hien thi gia tien khi thay doi gia chiec khau
+$(document).ready(function () {
+    $('.disc').change(function () {
+        var quantity = $(this).val();
+        var price = $(this).parents('tr:first').find('td:eq(4)').find('p').html();
+        var overDisc = $(this).parents('tr:first').find('td:eq(5)').find('input').val();
+        var tax = $(this).parents('tr:first').find('td:eq(6)').find('select.ddlTaxForBill').val();
+       
+        $.ajax({
+            url: "/BillSaleOrderManager/TotalPrice",
+            type: 'Get',
+            data: { quantity: quantity, price: price, tax: tax, overDisc: overDisc },
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 $("#tableInventory > tr:last >td:nth-child(8)").empty();
@@ -66,10 +92,11 @@ $(document).ready(function () {
         var quantity = $(this).parents('tr:first').find('td:eq(2)').find('input').val();
         var price = $(this).parents('tr:first').find('td:eq(4)').find('p').html();
         var tax = $(this).parents('tr:first').find('td:eq(6)').find('select.ddlTaxForBill').val();
+        var overDisc = $(this).parents('tr:first').find('td:eq(5)').find('input').val();
         $.ajax({
             url: "/BillSaleOrderManager/TotalPrice",
             type: 'Get',
-            data: { quantity: quantity, price: price, tax: tax },
+            data: { quantity: quantity, price: price, tax: tax, overDisc: overDisc },
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 $("#tableInventory > tr:last >td:nth-child(8)").empty();
@@ -91,11 +118,12 @@ $(document).ready(function () {
         var quantity = $(this).parents('tr:first').find('td:eq(2)').find('input').val();
         var unitId = $(this).parents('tr:first').find('td:eq(3)').find('select.ddlUnitForBill').val();
         var price = $(this).parents('tr:first').find('td:eq(4)').find('p').html();
+        var orderDisc = $(this).parents('tr:first').find('td:eq(5)').find('input').val();
         var tax = $(this).parents('tr:first').find('td:eq(6)').find('select.ddlTaxForBill').val();
         var amount = $(this).parents('tr:first').find('td:eq(7)').find('p').html();
         $.ajax({
             url: "/BillSaleOrderManager/Update",
-            data: { id: id, invtId: invtId, quantity: quantity, salePrice: price, tax: tax, amount: amount,unitId:unitId },
+            data: { id: id, invtId: invtId, quantity: quantity, salePrice: price, tax: tax, amount: amount, unitId: unitId, orderDisc: orderDisc },
             contentType: "application/json; charset=utf-8",
             success: function (data) {             
                 setTimeout(function () {

@@ -29,5 +29,6 @@ namespace HB8.CSMS.BLL.DomainModels
         public string StaffName { get; set; }
         public string StockName { get; set; }
         public string Image { get; set; }
+        public decimal OrderDiscForInvt { get; set; }
     }
 }

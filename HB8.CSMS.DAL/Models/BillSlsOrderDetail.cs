@@ -13,8 +13,8 @@ namespace HB8.CSMS.DAL.Models
         public Nullable<decimal> Discount { get; set; }
         public decimal TaxAmt { get; set; }
         public decimal Amount { get; set; }
-        public string UnitName { get; set; }
         public int UnitId { get; set; }
+        public decimal OrderDiscForInvt { get; set; }
         public virtual BillSaleOrder BillSaleOrder { get; set; }
         public virtual Inventory Inventory { get; set; }
     }

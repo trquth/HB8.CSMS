@@ -120,15 +120,17 @@ namespace HB8.CSMS.MVC.Controllers
             return PartialView("ColumnPriceOfBillOrderPartialView", data);
         }
         //Hien thi cot tinh tien
-        public ActionResult TotalPrice(int quantity, decimal price, decimal tax)
+        public ActionResult TotalPrice(int quantity, decimal price, decimal tax, decimal overDisc)
         {
             var data = new BillSaleOrderModel();
-            data.SalesPrice = quantity * price * (1 + tax / 100);
+            decimal priceOverDisc = price * (1 - (overDisc / 100));//Tinh gia da chiec khau
+            decimal priceTax = priceOverDisc + (price * (tax / 100));//Gia da tinh thue
+            data.SalesPrice = priceTax * quantity;//Gia tinh thue
             return PartialView("ColumnTotalPriceInventoryOfBillPatialView", data);
         }
         #endregion
         #region Save in Session
-        public void Update(int id, string invtId, int quantity, decimal salePrice, decimal tax, decimal amount,int unitId)
+        public void Update(int id, string invtId, int quantity, decimal salePrice, decimal tax, decimal amount, int unitId, decimal orderDisc)
         {
             var oderDetails = Session["Order"] as List<BillSaleOrderModel>;
             if (oderDetails == null)
@@ -143,16 +145,16 @@ namespace HB8.CSMS.MVC.Controllers
                     Discount = 0,
                     TaxAmtForInventory = tax,
                     Amount = amount,
-                    UnitID = unitId
+                    UnitID = unitId,
+                    OrderDiscForInvt = orderDisc
                 };
                 oderDetails.Add(item);
             }
             else
             {
-                var item = oderDetails.FirstOrDefault(x => x.ID == id);
+                var item = oderDetails.Where(x => x.ID == id).FirstOrDefault();
                 if (item == null)
                 {
-                    oderDetails = new List<BillSaleOrderModel>();
                     var itemOrder = new BillSaleOrderModel
                     {
                         ID = id,
@@ -162,8 +164,8 @@ namespace HB8.CSMS.MVC.Controllers
                         Discount = 0,
                         TaxAmtForInventory = tax,
                         AmountForInventory = amount,
-                        UnitID = unitId
-                        
+                        UnitID = unitId,
+                        OrderDiscForInvt = orderDisc
                     };
                     oderDetails.Add(itemOrder);
                 }
@@ -175,6 +177,7 @@ namespace HB8.CSMS.MVC.Controllers
                     item.TaxAmtForInventory = tax;
                     item.AmountForInventory = amount;
                     item.UnitID = unitId;
+                    item.OrderDiscForInvt = orderDisc;
                 }
 
             }
@@ -194,22 +197,27 @@ namespace HB8.CSMS.MVC.Controllers
             var items = from a in list
                         select new BillSaleOrderDomain
                         {
+                            //Bang BILLSALEORDER
                             OrderDate = model.OrderDate,
-                            InvoiceType = model.InvoiceType,
                             CustID = model.CustID,
+                            OverdueDate = model.OverdueDate,
+                            OrderDisc = model.OrderDisc,
                             TaxAmt = TotalTaxAmt(),
                             TotalAmt = TotalAmt(),
+                            Payment = 0,
+                            Debt = 0,
                             Description = model.Description,
+                            StaffId = model.StaffId,
+                            InvoiceID ="AB",
+                            //Bang BILLSALEORDERDETAIL
                             InvtID = a.InvtID,
                             Qty = a.Qty,
                             SalesPrice = a.SalesPrice,
+                            Discount = 0,
                             TaxAmtForInventory = a.TaxAmtForInventory,
-                            Discount = a.Discount,
                             Amount = a.Amount,
                             UnitID = a.UnitID,
-                            Payment = 0,
-                            Debt = 0,
-                            StaffId = model.StaffId
+                            OrderDiscForInvt = a.OrderDiscForInvt
                         };
             billSaleOrderService.CreateBillSaleOrder(items);
         }

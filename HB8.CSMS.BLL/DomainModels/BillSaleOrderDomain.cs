@@ -29,5 +29,7 @@ namespace HB8.CSMS.BLL.DomainModels
         public decimal Amount { get; set; }
         public decimal AmountForInventory { get; set; }
         public int UnitID { get; set; }
+        public decimal OrderDiscForInvt { get; set; }
+        public string InvoiceID { get; set; }
     }
 }

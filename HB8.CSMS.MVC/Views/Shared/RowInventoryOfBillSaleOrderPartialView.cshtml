@@ -5,7 +5,6 @@
         <p></p>
     </td>
     <td class="text-center">
-
         <select class="form-control ddlInventoryForBill" data-rule-required="true" data-msg-required="Tên khách hàng không được rỗng">
             <option selected="selected" value="">--Chọn sản phẩm--</option>
             @foreach (var item in Model)
@@ -19,7 +18,7 @@
     </td>
     <td class="text-center columnUnitForBillSaleOrder" id="">
         <select class="form-control ddlUnitForBill" data-rule-required="true" data-msg-required="Đơn vị tính không được rỗng">
-            <option selected="selected" value="">--Chọn đơn vị tính--</option>   
+            <option selected="selected" value="">--Chọn đơn vị tính--</option>
         </select>
     </td>
     <td class="text-center columnPriceForBillSaleOrder">
@@ -32,15 +31,15 @@
         <p>
             <select class="form-control ddlTaxForBill" data-rule-required="true" data-msg-required="Đơn vị tính không được rỗng">
                 <option selected="selected" value="0">--Chọn mức thuế--</option>
-                <option  value="5">Thuế GTGT phải nộp 5%</option>
-                <option  value="10">Thuế GTGT phải nộp 10%</option>
-                <option  value="15">Thuế GTGT phải nộp 15%</option>
+                <option value="5">Thuế GTGT phải nộp 5%</option>
+                <option value="10">Thuế GTGT phải nộp 10%</option>
+                <option value="15">Thuế GTGT phải nộp 15%</option>
             </select>
         </p>
 
     </td>
-    <td class="text-center totalprice" >
-        <p>0</p>
+    <td class="text-center totalprice">
+        <input class="form-control disc" type="text" data-val-number="Chiếc khấu  là một số" value="0" placeholder="0 %" />
     </td>
     <td>
         <button type="button" class="btn btn-default btnOkForBillSaleOrder" aria-label="Left Align">
@@ -52,6 +51,6 @@
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </button>
     </td>
-   
+
 </tr>
 <script src="~/MyjQ/bill.partialview.js"></script>

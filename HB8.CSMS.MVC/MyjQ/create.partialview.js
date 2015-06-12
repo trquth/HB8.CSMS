@@ -406,15 +406,18 @@ $(document).ready(function () {
 })
 //Luu thong tin hoa don ban hang
 $(document).ready(function () {
-    $("#createBillSaleOrder-button").click(function () {
+    $("#createNewBillSaleOrder-button").click(function () {
+        alert('vao day')
         var custId = $("#ddlCustomer").val();
         var description = $("#description").val();
         var dataCreate = $("#createdatepicker").val();
+        alert(dataCreate)
         var staffId = $("#ddlStaffForBillSaleOrder").val();
-        //"OverdueDate": overDueDate
-        //"OrderDate": dataCreate,
+        var orderDisc = $("#orderDiscForBill").val();
+        alert(orderDisc)
         var overDueDate = $("#overdatepicker").val();
-        $.post('/BillSaleOrderManager/CreateBillOrder', { "CustID": custId, "Description": description, "StaffId": staffId }, function () {
+        alert(overDueDate)
+        $.post('/BillSaleOrderManager/CreateBillOrder', { "CustID": custId, "Description": description, "StaffId": staffId, "OrderDisc": orderDisc, "OrderDate": dataCreate, "OverdueDate": overDueDate }, function () {
             swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
         })
     })

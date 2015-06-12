@@ -119,6 +119,12 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                            <label class="control-label col-lg-3">Chiếc khấu cho hóa đơn:</label>
+                                            <div class="col-lg-9">
+                                                <input class="form-control " id="orderDiscForBill" type="text" data-val-number="Chiết khấu là một số" value="0" placeholder="0 %" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="control-label col-lg-3">Ngày đến hạn:</label>
                                             <div class="col-lg-9">
                                                 @Html.TextBoxFor(x => x.OrderDate, new { @class = "form-control", @data_rule_required = "true", @data_msg_required = "Ngày đến hạn không được rỗng", @id = "overdatepicker" })
@@ -136,7 +142,7 @@
 
                 </div>
                 <div class=" col-lg-12 text-center">
-                    <input type="button" class="btn btn-primary submit" value="Cập nhật" id="createBillSaleOrder-button">
+                    <input type="button" class="btn btn-primary submit" value="Cập nhật" id="createNewBillSaleOrder-button">
                     <input type="button" class="btn btn-primary " id="buttonExitCreate" value="Thoát">
                 </div>
             </fieldset>
