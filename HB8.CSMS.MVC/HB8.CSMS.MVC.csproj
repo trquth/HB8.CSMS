@@ -323,16 +323,18 @@
     <Content Include="Views\Shared\ListInventoryPartialView.cshtml" />
     <Content Include="Views\Shared\DetailStaffPartialView.cshtml" />
     <Content Include="Views\Shared\LargeCustomerPartialView.cshtml" />
-    <Content Include="Views\Shared\CreateInventoryPartialView.cshtml" />
+    <Content Include="Views\InventoryManager\CreateInventoryPartialView.cshtml" />
     <Content Include="Views\Shared\DetailInventoryPartialView.cshtml" />
     <Content Include="Views\Shared\EditInventoryPartialView.cshtml" />
     <Content Include="Views\BillSaleOrderManager\ListBillSaleOrder.cshtml" />
-    <Content Include="Views\Shared\CreateBillSaleOrderPartialView.cshtml" />
-    <Content Include="Views\Shared\RowInventoryOfBillSaleOrderPartialView.cshtml" />
-    <Content Include="Views\Shared\ListBillSaleOrderParitalView.cshtml" />
-    <Content Include="Views\Shared\ColumnUnitOfBillSaleOrderPartialView.cshtml" />
-    <Content Include="Views\Shared\ColumnPriceOfBillOrderPartialView.cshtml" />
-    <Content Include="Views\Shared\ColumnTotalPriceInventoryOfBillPatialView.cshtml" />
+    <Content Include="Views\BillSaleOrderManager\CreateBillSaleOrderPartialView.cshtml" />
+    <Content Include="Views\BillSaleOrderManager\RowInventoryOfBillSaleOrderPartialView.cshtml" />
+    <Content Include="Views\BillSaleOrderManager\ListBillSaleOrderParitalView.cshtml" />
+    <Content Include="Views\BillSaleOrderManager\ColumnUnitOfBillSaleOrderPartialView.cshtml" />
+    <Content Include="Views\BillSaleOrderManager\ColumnPriceOfBillOrderPartialView.cshtml" />
+    <Content Include="Views\BillSaleOrderManager\ColumnTotalPriceInventoryOfBillPatialView.cshtml" />
+    <Content Include="Views\BillSaleOrderManager\DetailBillSaleOrderPartialView.cshtml" />
+    <Content Include="Views\BillSaleOrderManager\EditBillSaleOrderPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

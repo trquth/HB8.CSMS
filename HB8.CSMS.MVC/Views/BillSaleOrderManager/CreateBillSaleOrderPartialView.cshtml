@@ -19,6 +19,23 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="control-label col-lg-3">Người bán hàng:</label>
+                                <div class="col-lg-9">
+                                    <select id="ddlStaffForBillSaleOrder" class="form-control" data-rule-required="true" data-msg-required="Tên  nhân viên không được rỗng">
+                                        <option selected="selected" value="">--Chọn nhân viên quản lí--</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 ">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-3">Chiếc khấu cho hóa đơn:</label>
+                                    <div class="col-lg-9">
+                                        <input class="form-control " id="orderDiscForBill" type="text" data-val-number="Chiết khấu là một số" value="0" placeholder="0 %" />
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
                                 <label class="control-label col-lg-3">Mô tả:</label>
                                 <div class="col-lg-9">
                                     @Html.TextAreaFor(x => x.Description, new { @class = "form-control", @data_rule_maxlength = "100", @data_msg_maxlength = "Mô tả tối đa 200 kí tự", @data_rule_minlength = "10", @data_msg_minlength = "Mô tả tối thiểu 10 kí tự", @id = "description" })
@@ -32,12 +49,17 @@
                                     @Html.TextBoxFor(x => x.OrderDate, new { @class = "form-control", @data_rule_required = "true", @data_msg_required = "Ngày tạo không được rỗng", @id = "createdatepicker" })
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-3">Ngày đến hạn:</label>
+                                <div class="col-lg-9">
+                                    @Html.TextBoxFor(x => x.OrderDate, new { @class = "form-control", @data_rule_required = "true", @data_msg_required = "Ngày đến hạn không được rỗng", @id = "overdatepicker" })
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-12">
                         <ul class="nav nav-tabs" data-tabs="tabs">
-                            <li class="active"><a data-toggle="tab" href="#description"><h5>Chi tiết hóa đơn</h5> </a></li>
-                            <li class=""><a data-toggle="tab" href="#second"><h5>Thông tin khác</h5> </a></li>
+                            <li class="active"><a data-toggle="tab" href="#description"><h5>Chi tiết hóa đơn</h5> </a></li>   
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="description">
@@ -78,7 +100,6 @@
                                         </thead>
                                         <tbody class="text-center" id="tableInventory"></tbody>
                                     </table>
-
                                 </div>
                                 <div class="col-lg-12">
                                     <a href="javascript:;" id="showrow">Thêm một mục</a>
@@ -86,54 +107,9 @@
                                     <hr />
                                     <hr />
                                 </div>
-                                <div class="col-lg-12">
-                                    <div class="col-lg-12">
-                                        <div class="col-lg-10 text-right">Số tiền:</div>
-                                        <div class="col-lg-2">0đ</div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="col-lg-10 text-right">Thuế:</div>
-                                        <div class="col-lg-2">0đ</div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="col-lg-8"></div>
-                                        <div class="col-lg-4"><hr /></div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="col-lg-10 text-right"><strong>Tổng cộng:</strong></div>
-                                        <div class="col-lg-2">0đ</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane " id="second">
-                                <br />
-                                <div class="col-lg-12 ">
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-3">Người bán hàng:</label>
-                                            <div class="col-lg-9">
-                                                <select id="ddlStaffForBillSaleOrder" class="form-control" data-rule-required="true" data-msg-required="Tên  nhân viên không được rỗng">
-                                                    <option selected="selected" value="">--Chọn nhân viên quản lí--</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-3">Chiếc khấu cho hóa đơn:</label>
-                                            <div class="col-lg-9">
-                                                <input class="form-control " id="orderDiscForBill" type="text" data-val-number="Chiết khấu là một số" value="0" placeholder="0 %" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-3">Ngày đến hạn:</label>
-                                            <div class="col-lg-9">
-                                                @Html.TextBoxFor(x => x.OrderDate, new { @class = "form-control", @data_rule_required = "true", @data_msg_required = "Ngày đến hạn không được rỗng", @id = "overdatepicker" })
-                                            </div>
-                                        </div>                                
-                                </div>
-
-                            </div>
+                            </div>                     
                         </div>
                     </div>
-
                 </div>
                 <div class=" col-lg-12 text-center">
                     <input type="button" class="btn btn-primary submit" value="Cập nhật" id="createNewBillSaleOrder-button">

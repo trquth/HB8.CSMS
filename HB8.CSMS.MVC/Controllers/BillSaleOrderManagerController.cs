@@ -101,7 +101,6 @@ namespace HB8.CSMS.MVC.Controllers
                 data = null;
             }
             return PartialView("ColumnUnitOfBillSaleOrderPartialView", data);
-
         }
         //Hien thi cot don gia
         public ActionResult ShowColumnPrice(int? id, string idInventory)
@@ -245,7 +244,7 @@ namespace HB8.CSMS.MVC.Controllers
             var list = GetListDetailInventory();
             foreach (var item in list)
             {
-                total += item.TaxAmtForInventory;
+                total += item.TaxAmtForInventory*item.SalesPrice;
             }
             return total;
         }
@@ -321,6 +320,37 @@ namespace HB8.CSMS.MVC.Controllers
             listBill.PageSize = pageSize;
             return listBill;
         }
+        public BillSaleOrderModel GetBillById(int id)
+        {
+            var model = new BillSaleOrderModel();
+            var billDetail = billSaleOrderService.GetBillById(id);
+            model.SOrderNo = billDetail.SOrderNo;
+            model.OrderDate = billDetail.OrderDate;
+            model.OverdueDate = billDetail.OverdueDate;
+            model.OrderDisc = billDetail.OrderDisc;
+            model.TaxAmt = billDetail.TaxAmt;
+            model.Description = billDetail.Description;
+            return model;
+
+        }
+        public IEnumerable<BillSaleOrderModel> GetBillDetailById(int id)
+        {
+            
+            var details = billSaleOrderService.GetBillDetailById(id);
+            var model = from a in details
+                        select new BillSaleOrderModel
+                        {
+                            InvtName = a.InvtName,
+                            Qty = a.Qty,
+                            SalesPrice = a.SalesPrice,
+                            Discount = (decimal)a.Discount,
+                            TaxAmt = a.TaxAmt,
+                            Amount = a.Amount,
+                            UnitName = a.UnitName,
+                            OrderDiscForInvt = a.OrderDiscForInvt,
+                        };
+            return model;
+        }
         #endregion
         #region Hien thi danh sach hoa don
         public ActionResult ListBillSaleOrder()
@@ -344,6 +374,18 @@ namespace HB8.CSMS.MVC.Controllers
                 pageNumber = (int)page - 1;
             }
             return PartialView("ListBillSaleOrderParitalView", GetPaginatedBill(pageNumber));
+        }
+        #endregion
+        #region Hien thi chi tiet hoa don
+        public ActionResult DetailBill(int id)
+        {
+            var model = GetBillById(id);
+            return PartialView("DetailBillSaleOrderPartialView", model);
+        }
+        public ActionResult ShowListInventoryOfBill(int id)
+        {
+            var model = GetBillDetailById(id);
+            return PartialView("RowInventoryOfBillSaleOrderPartialView", model);
         }
         #endregion
 

@@ -16,6 +16,7 @@ namespace HB8.CSMS.DAL.Models
         public int UnitId { get; set; }
         public decimal OrderDiscForInvt { get; set; }
         public virtual BillSaleOrder BillSaleOrder { get; set; }
+        public virtual Unit Unit { get; set; }
         public virtual Inventory Inventory { get; set; }
     }
 }

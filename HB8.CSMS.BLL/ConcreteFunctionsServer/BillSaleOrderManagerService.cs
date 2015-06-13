@@ -1,4 +1,5 @@
 ﻿using HB8.CSMS.BLL.Abstract;
+using HB8.CSMS.BLL.DomainModels;
 using HB8.CSMS.DAL.DBContext;
 using HB8.CSMS.DAL.Models;
 using System;
@@ -46,7 +47,6 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
         {
             return context.Staffs.GetAllItem();
         }
-
         public int CreateBillSaleOrder(IEnumerable<DomainModels.BillSaleOrderDomain> inventory)
         {
             if (inventory != null)
@@ -99,11 +99,40 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             }
 
         }
-
-
         public List<BillSaleOrder> GetListBill()
         {
             return context.Orders.GetAllItem().ToList();
+        }     
+        BillSaleOrderDomain IBillSaleOrderManagerService.GetBillById(int id)
+        {
+            var billDetail = context.Orders.GetItemByIdWithIntType(id);
+            var model = new BillSaleOrderDomain();
+            model.SOrderNo = billDetail.SOrderNo;
+            model.OrderDate = billDetail.OrderDate;
+            model.OverdueDate = billDetail.OverdueDate;
+            model.OrderDisc = billDetail.OrderDisc;
+            model.TaxAmt = billDetail.TaxAmt;
+            model.Description = billDetail.Description;
+            return model;
+        }
+
+
+        public IEnumerable<BillSaleOrderDomain> GetBillDetailById(int id)
+        {
+            var items = context.OrderDetails.GetAllItem().Where(x=>x.SOrderNo ==id);
+            var model = from a in items
+                        select new BillSaleOrderDomain
+                        {
+                            InvtName = a.Inventory.InvtName,
+                            Qty = a.Qty,
+                            SalesPrice = a.SalesPrice,
+                            Discount = (decimal)a.Discount,
+                            TaxAmt = a.TaxAmt,
+                            Amount = a.Amount,
+                            UnitName = a.Unit.UnitName,
+                            OrderDiscForInvt = a.OrderDiscForInvt,
+                        };
+            return model;
         }
     }
 }

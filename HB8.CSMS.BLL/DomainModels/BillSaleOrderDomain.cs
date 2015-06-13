@@ -31,5 +31,8 @@ namespace HB8.CSMS.BLL.DomainModels
         public int UnitID { get; set; }
         public decimal OrderDiscForInvt { get; set; }
         public string InvoiceID { get; set; }
+        public string UnitName { get; set; }
+        public string InvtName { get; set; }
+        public string TypeName { get; set; }
     }
 }

@@ -63,6 +63,9 @@ namespace HB8.CSMS.DAL.ConcreteFunctions
         {
             return GetDbSet.Find(keys);
         }
-
+        public T GetItemByIdWithIntType(int id)
+        {
+            return GetDbSet.Find(id);
+        }
     }
 }

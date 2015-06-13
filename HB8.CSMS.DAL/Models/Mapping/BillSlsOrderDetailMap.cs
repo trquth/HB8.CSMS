@@ -32,6 +32,9 @@ namespace HB8.CSMS.DAL.Models.Mapping
             this.HasRequired(t => t.BillSaleOrder)
                 .WithMany(t => t.BillSlsOrderDetails)
                 .HasForeignKey(d => d.SOrderNo);
+            this.HasRequired(t => t.Unit)
+                .WithMany(t => t.BillSlsOrderDetails)
+                .HasForeignKey(d => d.UnitId);
             this.HasRequired(t => t.Inventory)
                 .WithMany(t => t.BillSlsOrderDetails)
                 .HasForeignKey(d => d.InvtID);

@@ -974,7 +974,13 @@ $(document).ready(function () {
 //***************************************************************************//
 //PHAN CHO BILL SALE ORDER
 //**************************************************************************//
-
+//Cai dat
+$(document).ready(function () {
+    $("#buttonEditForBillSaleOrder").hide();
+    $("#buttonDeleteForBillSaleOrder").hide();
+    $("#buttonpreviousForBillSaleOrder").hide();
+    $("#buttonnextForBillSaleOrder").hide();
+})
 //Hien thi danh sach hoa don tung trang
 $(document).ready(function () {
     $(".page-numberForBill").on('click', function () {
@@ -1000,3 +1006,57 @@ $(document).ready(function () {
 
     });
 });
+//Goi trang tao hoa don
+$("#buttonCreateForBillSaleOrder").button().click(function () {
+    $.ajax({
+        url: "/BillSaleOrderManager/CreateNewBillOrder",
+        type: 'Get',
+        success: function (data) {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("close");
+            $("#billsaleorder-list").empty().append(data);
+        },
+        beforeSend: function () {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("open");
+        },
+        error: function () {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+    });
+});
+//Chon 1 dong se hien ra thong tin chi tiet hoa don
+$(document).ready(function () {
+    $('#tableDetailBill').find('tr').click(function () {
+        var id = $(this).find('input').attr('value');
+        $.ajax({
+            url: '/BillSaleOrderManager/DetailBill',
+            data: { "id": id },
+            type: "Get",
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                $("#buttonEditForBillSaleOrder").show();
+                $("#buttonpreviousForBillSaleOrder").show();
+                $("#buttonnextForBillSaleOrder").show();
+                $("#billsaleorder-list").empty();
+                $("#billsaleorder-list").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+                //$.ajax({
+                //    url: '/InventoryManager/IndexOfInventory',
+                //    data: { id: id },
+                //    success: function (data) {
+                //        $(".countInvnetory").empty();
+                //        $(".countInvnetory").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
+                //    }
+                //});
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
+    });
+})

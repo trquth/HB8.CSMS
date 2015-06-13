@@ -33,6 +33,12 @@ namespace HB8.CSMS.DAL.AbstractRepositories
         /// <returns></returns>
         T GetItemById(string id);
         /// <summary>
+        /// Tim mot doi tuong dua vao ID(kieu int)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        T GetItemByIdWithIntType(int id);
+        /// <summary>
         /// Lay ra danh sach tu database
         /// </summary>
         /// <returns></returns>

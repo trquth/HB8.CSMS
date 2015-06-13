@@ -32,6 +32,7 @@ namespace HB8.CSMS.MVC.Models.BillSaleOrder
         public decimal SalePrice_L { get; set; }
         public string UnitName_T { get; set; }
         public string UnitName_L { get; set; }
+        public string UnitName { get; set; }
         public int UnitRate { get; set; }
         public int UnitID_T { get; set; }
         public int UnitID_L { get; set; }
@@ -40,6 +41,6 @@ namespace HB8.CSMS.MVC.Models.BillSaleOrder
         public int UnitID { get; set; }
         public decimal OrderDiscForInvt { get; set; }
         public string InvoiceID { get; set; }
-        public string TypeName { get; set; }
+        public string TypeName { get; set; }       
     }
 }

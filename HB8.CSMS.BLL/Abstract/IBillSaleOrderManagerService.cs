@@ -46,6 +46,17 @@ namespace HB8.CSMS.BLL.Abstract
         /// </summary>
         /// <returns></returns>
         List<BillSaleOrder> GetListBill();
-        
+        /// <summary>
+        /// Tra ve thong tin chi tiet hoa don
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        BillSaleOrderDomain GetBillById(int id);
+        /// <summary>
+        /// Tra ve thong tin danh sach mat hang co trong hoa don
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        IEnumerable<BillSaleOrderDomain> GetBillDetailById(int id);
     }
 }
