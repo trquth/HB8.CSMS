@@ -466,7 +466,7 @@ $(document).ready(function () {
             type: 'GET',
             success: function (data) {
                 var theDialog = $("#showLoading").dialog(opt);
-                theDialog.dialog("close");             
+                theDialog.dialog("close");
                 $("#btnloadcustomer").show();
                 $("#buttonEditForCustomer").hide();
                 $("#buttonpreviousForCustomer").hide();
@@ -494,7 +494,7 @@ $(document).ready(function () {
             data: {},
             type: 'GET',
             success: function (data) {
-                
+
                 var theDialog = $("#showLoading").dialog(opt);
                 theDialog.dialog("close");
                 $("#btnloadcustomer").hide();
@@ -594,7 +594,7 @@ $(document).ready(function () {
                 $.ajax({
                     url: '/CustomerManager/IndexOfCustomer',
                     data: { id: id },
-                    success: function (data) {      
+                    success: function (data) {
                         if (data.Index == data.Count) {
                             $(".countCustomer").empty();
                             $(".countCustomer").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
@@ -953,14 +953,14 @@ $(document).ready(function () {
                     url: '/InventoryManager/IndexOfInventory',
                     data: { id: id },
                     success: function (data) {
-                        if (data.Index ==1) {
+                        if (data.Index == 1) {
                             $(".countInvnetory").empty();
                             $(".countInvnetory").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
                         } else {
                             $(".countInvnetory").empty();
                             $(".countInvnetory").append('<a href="#">' + (data.Index - 1) + '/' + data.Count + '</a>');
                         }
-                     
+
                     }
                 });
             },
@@ -1039,24 +1039,49 @@ $(document).ready(function () {
                 $("#buttonEditForBillSaleOrder").show();
                 $("#buttonpreviousForBillSaleOrder").show();
                 $("#buttonnextForBillSaleOrder").show();
+                $("#buttonEditForBillSaleOrder").show();
                 $("#billsaleorder-list").empty();
                 $("#billsaleorder-list").append(data);
+                $.ajax({
+                    url: '/BillSaleOrderManager/ShowListInventoryOfBill',
+                    data: { id: id },
+                    type: "Get",
+                    success: function (data) {
+                        $("#tableInventory").empty();
+                        $("#tableInventory").append(data);
+                    }
+                });
             },
             beforeSend: function () {
                 var theDialog = $("#showLoading").dialog(opt);
                 theDialog.dialog("open");
-                //$.ajax({
-                //    url: '/InventoryManager/IndexOfInventory',
-                //    data: { id: id },
-                //    success: function (data) {
-                //        $(".countInvnetory").empty();
-                //        $(".countInvnetory").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
-                //    }
-                //});
+
             },
             error: function () {
                 swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
             }
         });
+    });
+})
+//Sua thong tin khi dang o trang xem chi tiet
+$("#buttonEditForBillSaleOrder").click(function () {
+    var selectedId = $("#id").val();
+    $.ajax({
+        // Gọi 
+        url: "/BillSaleOrderManager/EditBill",
+        data: { id: selectedId },
+        type: 'Get',
+        success: function (data) {
+            var thedialog = $("#showloading").dialog(opt);
+            thedialog.dialog("close");
+            $("#billsaleorder-list").empty().append(data);
+        },
+        beforeSend: function () {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("open");
+        },
+        error: function () {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
     });
 })

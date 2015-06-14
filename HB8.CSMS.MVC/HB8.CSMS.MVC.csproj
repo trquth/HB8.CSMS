@@ -335,6 +335,7 @@
     <Content Include="Views\BillSaleOrderManager\ColumnTotalPriceInventoryOfBillPatialView.cshtml" />
     <Content Include="Views\BillSaleOrderManager\DetailBillSaleOrderPartialView.cshtml" />
     <Content Include="Views\BillSaleOrderManager\EditBillSaleOrderPartialView.cshtml" />
+    <Content Include="Views\BillSaleOrderManager\RowDetailBillPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

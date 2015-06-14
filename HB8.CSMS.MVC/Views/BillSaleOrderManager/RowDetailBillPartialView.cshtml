@@ -1,0 +1,37 @@
+﻿@model IEnumerable<HB8.CSMS.MVC.Models.BillSaleOrder.BillSaleOrderModel>
+@{
+    int i = 0;
+    foreach (var item in Model)
+    {
+        <tr class="rowForBillSaleOrder">
+            <td class="text-center itemIdClass">
+                <p>
+                    @{i = i + 1;}
+                    @i
+                </p>
+            </td>
+            <td class="text-center">
+                <p>@item.InvtName</p>
+            </td>
+            <td class="text-center">
+                <p>@item.Qty</p>
+            </td>
+            <td class="text-center columnUnitForBillSaleOrder" id="">
+                <p>@item.UnitName</p>
+            </td>
+            <td class="text-center columnPriceForBillSaleOrder">
+                <p>@item.SalesPrice</p>
+            </td>
+            <td class="text-center">
+                <p>@item.Debt</p>
+            </td>
+            <td class="text-center">
+                <p>@item.TaxAmtForInventory</p>
+            </td>
+            <td class="text-center totalprice">
+                <p>0</p>
+            </td>
+        </tr>
+    }
+
+}

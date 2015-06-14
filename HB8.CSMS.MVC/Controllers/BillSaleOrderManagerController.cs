@@ -385,7 +385,14 @@ namespace HB8.CSMS.MVC.Controllers
         public ActionResult ShowListInventoryOfBill(int id)
         {
             var model = GetBillDetailById(id);
-            return PartialView("RowInventoryOfBillSaleOrderPartialView", model);
+            return PartialView("RowDetailBillPartialView", model);
+        }
+        #endregion
+        #region Sua thong tin hoa don
+        public ActionResult EditBill(int id)
+        {
+            var model = GetBillById(id);
+            return PartialView("EditBillSaleOrderPartialView", model);
         }
         #endregion
 
