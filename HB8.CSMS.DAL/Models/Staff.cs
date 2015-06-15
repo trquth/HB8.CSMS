@@ -22,6 +22,7 @@ namespace HB8.CSMS.DAL.Models
         public string Email { get; set; }
         public Nullable<System.DateTime> BirthDate { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
+        public string Password { get; set; }
         public virtual ICollection<BillPurchaseOrdDetail> BillPurchaseOrdDetails { get; set; }
         public virtual ICollection<BillSaleOrder> BillSaleOrders { get; set; }
         public virtual ICollection<Inventory> Inventories { get; set; }

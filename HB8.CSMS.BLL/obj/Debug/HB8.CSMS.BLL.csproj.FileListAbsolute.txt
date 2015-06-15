@@ -7,3 +7,12 @@ D:\GitHub\HB8.CSMS\HB8.CSMS.BLL\obj\Debug\HB8.CSMS.BLL.dll
 D:\GitHub\HB8.CSMS\HB8.CSMS.BLL\obj\Debug\HB8.CSMS.BLL.pdb
 D:\GitHub\HB8.CSMS\HB8.CSMS.BLL\bin\Debug\EntityFramework.dll
 D:\GitHub\HB8.CSMS\HB8.CSMS.BLL\bin\Debug\EntityFramework.xml
+E:\GitHub\HB8.CSMS\HB8.CSMS.BLL\bin\Debug\HB8.CSMS.BLL.dll
+E:\GitHub\HB8.CSMS\HB8.CSMS.BLL\bin\Debug\HB8.CSMS.BLL.pdb
+E:\GitHub\HB8.CSMS\HB8.CSMS.BLL\bin\Debug\HB8.CSMS.DAL.dll
+E:\GitHub\HB8.CSMS\HB8.CSMS.BLL\bin\Debug\EntityFramework.dll
+E:\GitHub\HB8.CSMS\HB8.CSMS.BLL\bin\Debug\HB8.CSMS.DAL.pdb
+E:\GitHub\HB8.CSMS\HB8.CSMS.BLL\bin\Debug\EntityFramework.xml
+E:\GitHub\HB8.CSMS\HB8.CSMS.BLL\obj\Debug\HB8.CSMS.BLL.csprojResolveAssemblyReference.cache
+E:\GitHub\HB8.CSMS\HB8.CSMS.BLL\obj\Debug\HB8.CSMS.BLL.dll
+E:\GitHub\HB8.CSMS\HB8.CSMS.BLL\obj\Debug\HB8.CSMS.BLL.pdb

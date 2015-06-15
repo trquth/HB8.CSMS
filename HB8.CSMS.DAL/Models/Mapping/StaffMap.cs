@@ -34,6 +34,9 @@ namespace HB8.CSMS.DAL.Models.Mapping
             this.Property(t => t.Email)
                 .HasMaxLength(100);
 
+            this.Property(t => t.Password)
+                .HasMaxLength(20);
+
             // Table & Column Mappings
             this.ToTable("Staff");
             this.Property(t => t.StaffID).HasColumnName("StaffID");
@@ -45,6 +48,7 @@ namespace HB8.CSMS.DAL.Models.Mapping
             this.Property(t => t.Email).HasColumnName("Email");
             this.Property(t => t.BirthDate).HasColumnName("BirthDate");
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
+            this.Property(t => t.Password).HasColumnName("Password");
 
             // Relationships
             this.HasRequired(t => t.User)

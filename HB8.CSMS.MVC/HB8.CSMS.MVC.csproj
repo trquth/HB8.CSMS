@@ -163,6 +163,7 @@
     <Compile Include="StructureMap\StructureMapControllerFactory.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\background\pw_pattern.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -296,7 +297,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\sweetalert.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -309,19 +312,19 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_MainLayout.cshtml" />
     <Content Include="Views\StaffManager\ListStaff.cshtml" />
-    <Content Include="Views\Shared\EditStaffPartialView.cshtml" />
-    <Content Include="Views\Shared\CreateStaffPartialView.cshtml" />
+    <Content Include="Views\StaffManager\EditStaffPartialView.cshtml" />
+    <Content Include="Views\StaffManager\CreateStaffPartialView.cshtml" />
     <Content Include="Views\Shared\CreateCustomerPartialView.cshtml" />
     <Content Include="Views\Shared\EditCustomerPartialView.cshtml" />
     <Content Include="Views\CustomerManager\ListCustomer.cshtml" />
     <Content Include="Views\Shared\ListCustomerPartialView.cshtml" />
     <Content Include="Views\Shared\DetailCustomerParitalView.cshtml" />
-    <Content Include="Views\Shared\LargeStaffPartialView.cshtml" />
-    <Content Include="Views\Shared\ListStaffPartialView.cshtml" />
+    <Content Include="Views\StaffManager\LargeStaffPartialView.cshtml" />
+    <Content Include="Views\StaffManager\ListStaffPartialView.cshtml" />
     <Content Include="Views\InventoryManager\ListInventory.cshtml" />
     <Content Include="Views\Shared\LargeInventoryPartialView.cshtml" />
     <Content Include="Views\Shared\ListInventoryPartialView.cshtml" />
-    <Content Include="Views\Shared\DetailStaffPartialView.cshtml" />
+    <Content Include="Views\StaffManager\DetailStaffPartialView.cshtml" />
     <Content Include="Views\Shared\LargeCustomerPartialView.cshtml" />
     <Content Include="Views\InventoryManager\CreateInventoryPartialView.cshtml" />
     <Content Include="Views\Shared\DetailInventoryPartialView.cshtml" />

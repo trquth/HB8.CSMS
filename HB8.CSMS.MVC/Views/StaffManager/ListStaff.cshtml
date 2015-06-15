@@ -42,7 +42,6 @@
                             </ul>
                         </div>
                     </div>
-
                     <div class="col-md-2 text-center ">
                         <br />
                         <button type="button" class="btn btn-default  right" aria-label="Left Align" id="btnListView">
@@ -59,37 +58,34 @@
             </div>
         </nav>
     </div>
-    <div class="col-md-12">
-        <div class="panel panel-heading">
-            <div class="panel panel-body">
-                <div id="staff-list">
-                    @Html.Partial("LargeStaffPartialView")
+    <div class="col-lg-12">
+        <div id="staff-list">
+            @Html.Partial("LargeStaffPartialView")
+        </div>
+
+        <div class="text-center">
+            <button class="btn btn-default " id="btnloadstaff" value="">Hiện thêm</button>
+        </div>
+        <div id="showspinner"></div>
+        <div id="deleteFormStaff" style="display:none">
+            <div class="panel panel-warning">
+                <div class="panel-heading"> <span><i class="fa fa-exclamation-triangle fa-2x"></i>  <b>Xóa thông tin nhân viên</b> </span> </div>
+                <div class="alert alert-error " style="text-align: center">
+                    <strong>Cảnh báo!</strong> <p>Bạn có chắc là sẽ xóa thông tin nhân viên này</p>
+                    <br />
+                    <input type="button" value="Đồng ý" class="okDelete btn btn-danger right" />
+                    <input type="button" value="Thoát" class="buttonCloseDelete btn btn-primary right " />
                 </div>
             </div>
-            <div class="text-center">
-                <button class="btn btn-default " id="btnloadstaff" value="">Hiện thêm</button>
-            </div>
-            <div id="showspinner"></div>
-            <div id="deleteFormStaff" style="display:none">
-                <div class="panel panel-warning">
-                    <div class="panel-heading"> <span><i class="fa fa-exclamation-triangle fa-2x"></i>  <b>Xóa thông tin nhân viên</b> </span> </div>
-                    <div class="alert alert-error " style="text-align: center">
-                        <strong>Cảnh báo!</strong> <p>Bạn có chắc là sẽ xóa thông tin nhân viên này</p>
-                        <br />
-                        <input type="button" value="Đồng ý" class="okDelete btn btn-danger right" />
-                        <input type="button" value="Thoát" class="buttonCloseDelete btn btn-primary right " />                        
-                    </div>
-                </div>
-            </div>
-            <div id="showspinnerForm" style="display:none">
-                <center><i class='fa fa-spinner fa-spin fa-5x ' id='spinner'></i></center>
-            </div>
-            <div id="showLoading" style="display:none">
-                <center><i class='fa fa-spinner fa-spin fa-4x ' id='spinner'></i></center>
-            </div>
-            <div id="section">
-                <input type="hidden" id="lastRowId" value="0" />
-            </div>
+        </div>
+        <div id="showspinnerForm" style="display:none">
+            <center><i class='fa fa-spinner fa-spin fa-5x ' id='spinner'></i></center>
+        </div>
+        <div id="showLoading" style="display:none">
+            <center><i class='fa fa-spinner fa-spin fa-4x ' id='spinner'></i></center>
+        </div>
+        <div id="section">
+            <input type="hidden" id="lastRowId" value="0" />
         </div>
     </div>
 </div>
