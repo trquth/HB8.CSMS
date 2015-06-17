@@ -21,8 +21,10 @@ $(document).ready(function () {
         data: "{}",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        success: function (data) {
-            $.each(data, function (key, value) {
+        success: function (data) {         
+            $("#ddlPosition").empty();
+            $("#ddlPosition").append('<option selected="selected" value="">--Chọn chức vụ--</option>');
+            $.each(data, function (key, value) {            
                 $("#ddlPosition").append($("<option></option>").val(value.UserId).html(value.UserName));
             });
         },
@@ -31,7 +33,8 @@ $(document).ready(function () {
         }
     });
 })
-//Do du lieu vao dropdowlist
+
+//Kiem tra ma nv da ton tai chua
 $(document).ready(function () {
     $("#manv").keyup(function () {
         var checkId = $(this).val();
@@ -54,6 +57,7 @@ $(document).ready(function () {
         }
     });
 })
+//Luu thong tin
 $(document).ready(function () {
     $("#create-button").click(function () {
         $(this).attr('type', 'button');
@@ -64,6 +68,7 @@ $(document).ready(function () {
         var phone = $("#numberphone").val();
         var mail = $("#email").val();
         var image = $("#uploadFile").val();
+        var confirmPass = $("#confirmPass").val();
         if (id != '') {
             //Kiem tra 1 lan nua xem ma nv co ton tai hay khong
             $.ajax({
@@ -79,10 +84,11 @@ $(document).ready(function () {
                         //Dung kiem tra xem cac thong tin nhap vao dung hay sai
                         if (name.length <= 10 || name.length >= 50 || address.length < 2 || phone.length < 1 || position.length < 2) {
                             $(this).attr('type', 'submit');
-                            $("#staffform").submit();
+                           
                         } else {
+                            $(this).attr('type', 'button');
                             $("#editForm").dialog("close");
-                            $.post('/StaffManager/CreateStaff', { "Id": id, "staffName": name, "userId": position, "address": address, "numberphone": phone, "email": mail, "Image": image }, function () {
+                            $.post('/StaffManager/CreateStaff', { "Id": id, "staffName": name, "userId": position, "address": address, "numberphone": phone, "email": mail, "Image": image, "ConfirmPassword": confirmPass }, function () {
                                 swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
                                 window.location.reload(true);
                             })
@@ -94,6 +100,8 @@ $(document).ready(function () {
                 }
             });
 
+        } else {
+            $(this).attr('type', 'submit');
         }
     });
 });
@@ -390,13 +398,13 @@ $(document).ready(function () {
                 theDialog.dialog("close");
                 $("#tableInventory").append(data);
                 //index = $("#tableInventory tr").length;
-                if (index==null) {
+                if (index == null) {
                     $("#tableInventory > tr:last >td:nth-child(1) >p").text(1);
                 } else {
-                    var i = parseInt(index,10)+1
+                    var i = parseInt(index, 10) + 1
                     $("#tableInventory > tr:last >td:nth-child(1) >p").text(i);
                 }
-              
+
             },
             beforeSend: function () {
                 var theDialog = $("#showLoading").dialog(opt);
@@ -423,7 +431,7 @@ $(document).ready(function () {
         var nuStaff = staffId.length
         var nuDateCr = dataCreate.length
         var nuOverDue = overDueDate.length
-        if (nuCust*nuStaff*nuDateCr*nuOverDue==0) {
+        if (nuCust * nuStaff * nuDateCr * nuOverDue == 0) {
             $(this).attr('type', 'submit');
         } else {
             $(this).attr('type', 'button');
@@ -431,6 +439,6 @@ $(document).ready(function () {
                 swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
             })
         }
-       
+
     })
 })

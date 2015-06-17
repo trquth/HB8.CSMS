@@ -163,7 +163,7 @@
     <Compile Include="StructureMap\StructureMapControllerFactory.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\background\pw_pattern.png" />
+    <Content Include="Content\background\symphony.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />

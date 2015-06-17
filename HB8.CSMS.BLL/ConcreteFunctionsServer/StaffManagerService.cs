@@ -33,6 +33,7 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             model.Image = staff.Image;
             model.Address = staff.Address;
             model.Email = staff.Email;
+            
             context.Staffs.Create(model);
             context.Save();
             return 0;

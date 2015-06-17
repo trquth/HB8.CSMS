@@ -11,6 +11,9 @@ using System.Web.Mvc;
 using PagedList;
 using HB8.CSMS.BLL.DomainModels;
 using HB8.CSMS.MVC.Models.Paging;
+using System.Text;
+using System.Configuration;
+using System.Security.Cryptography;
 
 namespace HB8.CSMS.MVC.Controllers
 {
@@ -43,13 +46,13 @@ namespace HB8.CSMS.MVC.Controllers
             var model = staffService.GetListStaff();
             int count = model.Count();
             var listOfStaff = (from a in model
-                                  select new StaffModel
-                                  {
-                                      ID = a.StaffID,
-                                      StaffName = a.StaffName,
-                                      NumberPhone = a.NumberPhone,
-                                      Address = a.Address
-                                  }).ToList();
+                               select new StaffModel
+                               {
+                                   ID = a.StaffID,
+                                   StaffName = a.StaffName,
+                                   NumberPhone = a.NumberPhone,
+                                   Address = a.Address
+                               }).ToList();
             staff.Data = listOfStaff.Take(pageSize);
             staff.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
             staff.CurrentPage = 1;
@@ -69,20 +72,20 @@ namespace HB8.CSMS.MVC.Controllers
             var model = staffService.GetListStaff();
             int count = model.Count();
             var listOfStaff = (from a in model
-                                  select new StaffModel
-                                  {
-                                      ID = a.StaffID,
-                                      StaffName = a.StaffName,   
-                                      Image =a.Image,
-                                      Address =a.Address,
-                                      NumberPhone =a.NumberPhone,
-                                      Email =a.Email
-                                  }).OrderBy(x=>x.StaffName).Skip(skipRecords).Take(pageSize).ToList();
+                               select new StaffModel
+                               {
+                                   ID = a.StaffID,
+                                   StaffName = a.StaffName,
+                                   Image = a.Image,
+                                   Address = a.Address,
+                                   NumberPhone = a.NumberPhone,
+                                   Email = a.Email
+                               }).OrderBy(x => x.StaffName).Skip(skipRecords).Take(pageSize).ToList();
             staff.Data = listOfStaff;
             staff.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
             staff.Count = count;
             staff.PageSize = pageSize;
-            staff.CurrentPage = page+1;
+            staff.CurrentPage = page + 1;
             return staff;
         }
         /// <summary>
@@ -91,19 +94,19 @@ namespace HB8.CSMS.MVC.Controllers
         /// <returns></returns>
         public ActionResult ListStaffView(int? page)
         {
-            var pageNumber =0;
-            if (page==null)
+            var pageNumber = 0;
+            if (page == null)
             {
-                 pageNumber = page ?? 0;
+                pageNumber = page ?? 0;
             }
             else
             {
-                 pageNumber =(int)page - 1;
+                pageNumber = (int)page - 1;
             }
             return View("ListStaffPartialView", GetPaginatedStaffs(pageNumber));
         }
         #endregion
-
+        #region Ham tra ve danh sach theo dang JSON
         /// <summary>
         /// Trả về một danh sách các chức vụ dang JSON
         /// </summary>
@@ -138,6 +141,9 @@ namespace HB8.CSMS.MVC.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
 
         }
+        #endregion
+        #region Method
+
         /// <summary>
         /// Gan danh sach chuc vu cua nhan vien lay tu DATABASE vao MODEL
         /// </summary>
@@ -159,12 +165,6 @@ namespace HB8.CSMS.MVC.Controllers
             ViewBag.Position = GetListPosition();
             return View();
         }
-        [HttpPost]
-        public ViewResult CreateNewStaff(StaffModel staff)
-        {
-            return View();
-        }
-
         /// <summary>
         /// Lay ve danh sach nhan vien
         /// </summary>
@@ -184,18 +184,6 @@ namespace HB8.CSMS.MVC.Controllers
                              UserName = item.User.UserName,
                          });
             return model;
-        }
-        public ViewResult EditStaff(string staffId)
-        {
-            var model = GetStaffByStaffId(staffId);
-            ViewBag.Position = GetListPosition();
-            return View(model);
-        }
-        [HttpPost]
-        public void EditStaff(StaffModel staff)
-        {
-            var model = new StaffDomain(staff.ID, staff.UserId, staff.StaffName, staff.Image, staff.Address, staff.NumberPhone, staff.Email);
-            staffService.UpdateStaff(model);
         }
         /// <summary>
         /// Gan nhan vien co manv duoc chon tu DATABASE vao MODEL
@@ -217,6 +205,74 @@ namespace HB8.CSMS.MVC.Controllers
             return model;
         }
         /// <summary>
+        /// Ham ma hoa MD5
+        /// </summary>
+        /// <param name="toEncrypt"></param>
+        /// <param name="useHashing"></param>
+        /// <returns></returns>
+        public static string Encrypt(string toEncrypt, bool useHashing)
+        {
+            byte[] keyArray;
+            byte[] toEncryptArray = UTF8Encoding.UTF8.GetBytes(toEncrypt);
+
+            System.Configuration.AppSettingsReader settingsReader =
+                                                new AppSettingsReader();
+            // Get the key from config file
+
+            string key = (string)settingsReader.GetValue("SecurityKey",
+                                                             typeof(String));
+            //System.Windows.Forms.MessageBox.Show(key);
+            //If hashing use get hashcode regards to your key
+            if (useHashing)
+            {
+                MD5CryptoServiceProvider hashmd5 = new MD5CryptoServiceProvider();
+                keyArray = hashmd5.ComputeHash(UTF8Encoding.UTF8.GetBytes(key));
+                //Always release the resources and flush data
+                // of the Cryptographic service provide. Best Practice
+
+                hashmd5.Clear();
+            }
+            else
+                keyArray = UTF8Encoding.UTF8.GetBytes(key);
+
+            TripleDESCryptoServiceProvider tdes = new TripleDESCryptoServiceProvider();
+            //set the secret key for the tripleDES algorithm
+            tdes.Key = keyArray;
+            //mode of operation. there are other 4 modes.
+            //We choose ECB(Electronic code Book)
+            tdes.Mode = CipherMode.ECB;
+            //padding mode(if any extra byte added)
+
+            tdes.Padding = PaddingMode.PKCS7;
+
+            ICryptoTransform cTransform = tdes.CreateEncryptor();
+            //transform the specified region of bytes array to resultArray
+            byte[] resultArray =
+              cTransform.TransformFinalBlock(toEncryptArray, 0,
+              toEncryptArray.Length);
+            //Release resources held by TripleDes Encryptor
+            tdes.Clear();
+            //Return the encrypted data into unreadable string format
+            return Convert.ToBase64String(resultArray, 0, resultArray.Length);
+        }
+        #endregion
+
+        public ViewResult EditStaff(string staffId)
+        {
+            var model = GetStaffByStaffId(staffId);
+            ViewBag.Position = GetListPosition();
+            return View(model);
+        }
+        [HttpPost]
+        public void EditStaff(StaffModel staff)
+        {
+            string pass = staff.ConfirmPassword;
+            string passMD5 = Encrypt(pass, true);
+            var model = new StaffDomain(staff.ID, staff.UserId, staff.StaffName, staff.Image, staff.Address, staff.NumberPhone, staff.Email, passMD5);
+            staffService.UpdateStaff(model);
+        }
+
+        /// <summary>
         /// Goi form sua thong tin nhan vien
         /// </summary>
         /// <param name="id"></param>
@@ -227,11 +283,12 @@ namespace HB8.CSMS.MVC.Controllers
             var model = GetStaffByStaffId(id);
             return PartialView("EditStaffPartialView", model);
         }
+        #region Ham luu
         /// <summary>
         /// Goi form  them nhan vien
         /// </summary>
         /// <returns></returns>
-
+        [HttpGet]
         public ActionResult CreateStaffPV()
         {
             return PartialView("CreateStaffPartialView");
@@ -242,9 +299,11 @@ namespace HB8.CSMS.MVC.Controllers
         /// <param name="staff"></param>
         public void CreateStaff(StaffModel staff)
         {
-            var model = new StaffDomain(staff.ID, staff.UserId, staff.StaffName, staff.Image, staff.Address, staff.NumberPhone, staff.Email);
+            var model = new StaffDomain(staff.ID, staff.UserId, staff.StaffName, staff.Image, staff.Address, staff.NumberPhone, staff.Email, staff.ConfirmPassword);
             staffService.CreateStaff(model);
         }
+        #endregion
+
         /// <summary>
         /// Xoa thong tin nhan vien
         /// </summary>
