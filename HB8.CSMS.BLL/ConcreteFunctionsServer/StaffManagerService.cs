@@ -26,14 +26,14 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
         public int CreateStaff(StaffDomain staff)
         {
             var model = new Staff();
-            model.StaffID = staff.ID;
+            model.StaffID = staff.ID.ToUpper();
             model.UserId = staff.UserId;
             model.StaffName = staff.StaffName;
             model.NumberPhone = staff.NumberPhone;
             model.Image = staff.Image;
             model.Address = staff.Address;
             model.Email = staff.Email;
-            
+            model.Password = staff.Password;
             context.Staffs.Create(model);
             context.Save();
             return 0;
@@ -65,6 +65,7 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             model.NumberPhone = staff.NumberPhone;
             model.Address = staff.Address;
             model.Email = staff.Email;
+            model.Password = staff.Password;
             context.Staffs.Update(model);
             context.Save();
             return 0;

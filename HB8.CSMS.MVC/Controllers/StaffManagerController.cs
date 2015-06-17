@@ -159,12 +159,6 @@ namespace HB8.CSMS.MVC.Controllers
                         }).OrderBy(x => x.UserName);
             return data;
         }
-        [HttpGet]
-        public ViewResult CreateNewStaff()
-        {
-            ViewBag.Position = GetListPosition();
-            return View();
-        }
         /// <summary>
         /// Lay ve danh sach nhan vien
         /// </summary>
@@ -199,9 +193,11 @@ namespace HB8.CSMS.MVC.Controllers
             model.ID = item.StaffID;
             model.StaffName = item.StaffName;
             model.UserName = item.User.UserName;
+            model.UserId = item.User.UserID;
             model.Address = item.Address;
             model.Email = item.Email;
             model.NumberPhone = item.NumberPhone;
+            model.Role = item.User.Role;
             return model;
         }
         /// <summary>
@@ -256,14 +252,19 @@ namespace HB8.CSMS.MVC.Controllers
             return Convert.ToBase64String(resultArray, 0, resultArray.Length);
         }
         #endregion
-
-        public ViewResult EditStaff(string staffId)
+        #region Ham hien thi chi tiet
+        public ActionResult DetailStaff(string staffId)
         {
             var model = GetStaffByStaffId(staffId);
-            ViewBag.Position = GetListPosition();
-            return View(model);
+            return PartialView("DetailStaffPartialView", model);
         }
-        [HttpPost]
+        #endregion
+        #region Ham sua
+        public ActionResult ListPositonForStaff()
+        {
+            var model = GetListPosition();
+            return PartialView("DropdownListPositionPartialView", model);
+        }
         public void EditStaff(StaffModel staff)
         {
             string pass = staff.ConfirmPassword;
@@ -283,13 +284,16 @@ namespace HB8.CSMS.MVC.Controllers
             var model = GetStaffByStaffId(id);
             return PartialView("EditStaffPartialView", model);
         }
+        #endregion
+        [HttpPost]
+        
         #region Ham luu
         /// <summary>
         /// Goi form  them nhan vien
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult CreateStaffPV()
+        public ActionResult CreateNewStaff()
         {
             return PartialView("CreateStaffPartialView");
         }
@@ -299,7 +303,9 @@ namespace HB8.CSMS.MVC.Controllers
         /// <param name="staff"></param>
         public void CreateStaff(StaffModel staff)
         {
-            var model = new StaffDomain(staff.ID, staff.UserId, staff.StaffName, staff.Image, staff.Address, staff.NumberPhone, staff.Email, staff.ConfirmPassword);
+            string pass = staff.ConfirmPassword;
+            string passMD5 = Encrypt(pass, true);
+            var model = new StaffDomain(staff.ID, staff.UserId, staff.StaffName, staff.Image, staff.Address, staff.NumberPhone, staff.Email, passMD5);
             staffService.CreateStaff(model);
         }
         #endregion
@@ -317,11 +323,7 @@ namespace HB8.CSMS.MVC.Controllers
         /// </summary>
         /// <param name="staffId"></param>
         /// <returns></returns>
-        public ActionResult DetailStaff(string staffId)
-        {
-            var model = GetStaffByStaffId(staffId);
-            return View("DetailStaffPartialView", model);
-        }
+       
 
     }
 }

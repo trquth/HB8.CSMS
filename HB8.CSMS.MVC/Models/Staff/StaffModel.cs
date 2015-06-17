@@ -24,5 +24,6 @@ namespace HB8.CSMS.MVC.Models.Staff
         public string Password { get; set; }
         [Compare("Password", ErrorMessage = "Mật khẩu chính xác")]
         public string ConfirmPassword { get; set; }
+        public string Role { get; set; }
     }
 }

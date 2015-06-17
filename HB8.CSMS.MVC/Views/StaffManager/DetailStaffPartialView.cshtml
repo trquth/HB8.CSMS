@@ -1,51 +1,85 @@
 ﻿@model  HB8.CSMS.MVC.Models.Staff.StaffModel
-<div class="row">
-    <div class="col-md-2">
-        <img class="img-rounded" src="~/Images/StaffImages/@Model.Image" alt="" height="110" width="110">
-        <br />
-        <br />
-    </div>
-    <div class="col-md-3">
-        <input id="getId" type="hidden" value="@Model.ID" />
-        <h3> <b>Tên nhân viên: </b></h3>
-        <h3><b> Ngày sinh:</b> </h3>
-    </div>
-    <div class="col-md-7">
-        <h3></h3>
-        <h3> </h3>
-    </div>
-    <div class="col-md-12">
-        <ul class="nav nav-tabs" data-tabs="tabs">
-            <li class="active"><a data-toggle="tab" href="#staff"><h5>Thông tin nhân viên</h5> </a></li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane active" id="staff">
-                <div class="col-md-8">
-                    <h3>Thông tin liên hệ:</h3>
-                    <div class="col-md-4">
-                        <h4><b>Địa chỉ:</b></h4>
-                        <h4><b>Số điện thoại: </b></h4>
-                        <h4><b>Email:</b></h4>
-                        <h4><b>Fax:</b></h4>
-                    </div>
-                    <div class="col-md-8">
-                        <h4></h4>
-                        <h4></h4>
-                        <h4></h4>
-                        <h4></h4>
+<div class="panel-body my-background">
+    <div class="partialViewWrapper">
+        <div class="col-lg-12  background-partial">
+            <br />
+            <div class="col-lg-2">
+                @if (Model.Image !=null)
+                {
+                    <img class="img-rounded" src="~/Images/StaffImages/@Model.Image" alt="" height="140" width="110">
+                    <br />
+                    <br />
+                }
+                else
+                {
+                    <img class="img-rounded" src="~/Images/no_image.jpg" alt="" height="140" width="110">
+                    <br />
+                    <br />
+                }
+            </div>
+            <div class="col-lg-10">             
+                <div class="form-group">
+                    <input id="getId" type="hidden" value="@Model.ID" />
+                    <label class="control-label col-lg-3 add-line">Tên nhân viên:</label>
+                    <div class="col-lg-9">
+                        <p>@Model.StaffName</p>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <h3>Chức vụ:</h3>
-                    <div class="col-md-4">
-                        <h4><b>Chức vụ:</b></h4>
+                <div class="form-group">
+                    <label class="control-label col-lg-3 add-line">Quyền:</label>
+                    <div class="col-lg-9 ">
+                        <p class="color-p">@Model.Role</p>
                     </div>
-                    <div class="col-md-8">
-
-                    </div>
+                    <hr />
                 </div>
             </div>
+            <div class="col-lg-12">
+                <ul class="nav nav-tabs" data-tabs="tabs">
+                    <li class="active"><a data-toggle="tab" href="#staff"><h5>Thông tin nhân viên</h5> </a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="staff">
+                        <div class="col-lg-7 change-color">
+                            <h4>Thông tin liên hệ:</h4>
+                            <div class="form-group">
+                                <div class="col-lg-4 add-line">
+                                    <b>Địa chỉ:</b>
+                                </div>
+                                <div class="col-lg-8">
+                                    <p>@Model.Address</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-4 add-line">
+                                    <b>Số điện thoại:</b>
+                                </div>
+                                <div class="col-lg-8">
+                                    <p>@Model.NumberPhone</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-4 add-line">
+                                    <b>Email:</b>
+                                </div>
+                                <div class="col-lg-8">
+                                    <p>@Model.Email</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 change-color">
+                            <h4>Chức vụ:</h4>
+                            <div class="form-group">
+                                <div class="col-lg-4 add-line">
+                                    <b>Chức vụ:</b>
+                                </div>
+                                <div class="col-lg-8">
+                                    <p>@Model.UserName</p>
+                                </div>
+                            </div>                        
+                        </div>
+                    </div>
+                </div>
+            </div>     
         </div>
-
     </div>
 </div>

@@ -21,10 +21,10 @@ $(document).ready(function () {
         data: "{}",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        success: function (data) {         
+        success: function (data) {
             $("#ddlPosition").empty();
             $("#ddlPosition").append('<option selected="selected" value="">--Chọn chức vụ--</option>');
-            $.each(data, function (key, value) {            
+            $.each(data, function (key, value) {
                 $("#ddlPosition").append($("<option></option>").val(value.UserId).html(value.UserName));
             });
         },
@@ -68,7 +68,8 @@ $(document).ready(function () {
         var phone = $("#numberphone").val();
         var mail = $("#email").val();
         var image = $("#uploadFile").val();
-        var confirmPass = $("#confirmPass").val();
+        var confirmPass = $("#confirmPass").val().toUpperCase();
+        var pass = $("#pass").val().toUpperCase();
         if (id != '') {
             //Kiem tra 1 lan nua xem ma nv co ton tai hay khong
             $.ajax({
@@ -84,14 +85,39 @@ $(document).ready(function () {
                         //Dung kiem tra xem cac thong tin nhap vao dung hay sai
                         if (name.length <= 10 || name.length >= 50 || address.length < 2 || phone.length < 1 || position.length < 2) {
                             $(this).attr('type', 'submit');
-                           
+
                         } else {
-                            $(this).attr('type', 'button');
-                            $("#editForm").dialog("close");
-                            $.post('/StaffManager/CreateStaff', { "Id": id, "staffName": name, "userId": position, "address": address, "numberphone": phone, "email": mail, "Image": image, "ConfirmPassword": confirmPass }, function () {
-                                swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
-                                window.location.reload(true);
-                            })
+                            //So sanh pass
+                            if (pass != confirmPass) {
+                                $(this).attr('type', 'submit');
+                            } else {
+                                $(this).attr('type', 'button');
+                                $("#editForm").dialog("close");
+                                $.post('/StaffManager/CreateStaff', { "Id": id, "staffName": name, "userId": position, "address": address, "numberphone": phone, "email": mail, "Image": image, "ConfirmPassword": confirmPass }, function () {
+                                    swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
+                                    $.ajax({
+                                        url: '/StaffManager/DetailStaff',
+                                        data: { "staffId": id },
+                                        type: "Get",
+                                        success: function (data) {
+                                            var theDialog = $("#showLoading").dialog(opt);
+                                            theDialog.dialog("close");
+                                            $("#btnloadstaff").hide();
+                                            $("#buttonEditForStaff").show();
+                                            $("#buttonDeleteForStaff").show();
+                                            $("#staff-list").empty();
+                                            $("#staff-list").append(data);
+                                        },
+                                        beforeSend: function () {
+                                            var theDialog = $("#showLoading").dialog(opt);
+                                            theDialog.dialog("open");
+                                        },
+                                        error: function () {
+                                            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+                                        }
+                                    });
+                                })
+                            }
                         }
                     }
                 },

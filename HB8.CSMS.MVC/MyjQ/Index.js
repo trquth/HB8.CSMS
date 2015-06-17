@@ -67,10 +67,11 @@ $("#showLoading").dialog({
     },
 });
 //Goi hien ra form them nhan vien
-$(".buttonCreate").button().click(function () {
+$("#buttonCreateForStaff").button().click(function () {
     $.ajax({
         // Goi CreateStaffPV action
-        url: "/StaffManager/CreateStaffPV",
+        url: "/StaffManager/CreateNewStaff",
+        data:"{}",
         type: 'Get',
         success: function (data) {
             var theDialog = $("#showLoading").dialog(opt);

@@ -14,22 +14,24 @@ var opt = {
         setTimeout("$('#showLoading').dialog('close')", 100);
     },
 };
+//Do du lieu vao dropdownlist cho position
 $(document).ready(function () {
-    $.ajax({
-        url: "/StaffManager/ListPosition",
-        type: 'Get',
-        data: "{}",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data) {
-            $.each(data, function (key, value) {              
-                $("#ddlPosition").append($("<option></option>").val(value.UserId).html(value.UserName));
-            });
-        },
-        error: function (result) {
-            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
-        }
-    });
+    $('#ddlPosition').click(function () {
+        $.ajax({
+            url: "/StaffManager/ListPositonForStaff",
+            type: 'Get',
+            data: "{}",
+            success: function (data) {
+                $("#dropdownlistForPosition").empty();
+                $("#dropdownlistForPosition").append(data);
+
+            },
+            error: function (result) {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
+    })
+
 })
 
 //Kiem tra thong tin nhap vao dung hay sai
@@ -37,7 +39,7 @@ $(document).ready(function () {
     $('#staffform').validate({
     });
 });
-
+//Luu nhung thay doi
 $(document).ready(function () {
     $("#update-button").click(function () {
         $(this).attr('type', 'button');
@@ -48,16 +50,43 @@ $(document).ready(function () {
         var phone = $("#numberphone").val();
         var mail = $("#email").val();
         var image = $("#uploadFile").val();
+        var confirmPass = $("#confirmPass").val().toUpperCase();
+        var pass = $("#pass").val().toUpperCase();
         //Dung kiem tra xem cac thong tin nhap vao dung hay sai
         if (name.length <= 10 || name.length >= 50 || address.length < 2 || phone.length < 1 || position.length < 2) {
             $(this).attr('type', 'submit');
-            $("#staffform").submit();
         } else {
-            $("#editForm").dialog("close");
-            $.post('/StaffManager/EditStaff', { "Id": id, "staffName": name, "userId": position, "address": address, "numberphone": phone, "email": mail, "Image": image }, function () {
-                swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
-                window.location.reload(true);
-            })
+            //So sanh pass
+            if (pass != confirmPass) {
+                $(this).attr('type', 'submit');
+            } else {
+                $("#editForm").dialog("close");
+                $.post('/StaffManager/EditStaff', { "Id": id, "staffName": name, "userId": position, "address": address, "numberphone": phone, "email": mail, "Image": image, "ConfirmPassword": confirmPass }, function () {
+                    swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
+                    $.ajax({
+                        url: '/StaffManager/DetailStaff',
+                        data: { "staffId": id },
+                        type: "Get",
+                        success: function (data) {
+                            var theDialog = $("#showLoading").dialog(opt);
+                            theDialog.dialog("close");
+                            $("#btnloadstaff").hide();
+                            $("#buttonEditForStaff").show();
+                            $("#buttonDeleteForStaff").show();
+                            $("#staff-list").empty();
+                            $("#staff-list").append(data);
+                        },
+                        beforeSend: function () {
+                            var theDialog = $("#showLoading").dialog(opt);
+                            theDialog.dialog("open");
+                        },
+                        error: function () {
+                            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+                        }
+                    });
+                })
+            }
+
         }
     });
 });
@@ -197,7 +226,7 @@ $(document).ready(function () {
 //                    }
 //                });
 //            })
-          
+
 //        }
 //    });
 //});
