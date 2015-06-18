@@ -269,6 +269,7 @@
     <Content Include="MyjQ\bill.partialview.js" />
     <Content Include="MyjQ\create.partialview.js" />
     <Content Include="MyjQ\Index.js" />
+    <Content Include="MyjQ\Main.js" />
     <Content Include="Scripts\additional-methods.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
@@ -341,6 +342,7 @@
     <Content Include="Views\BillSaleOrderManager\RowDetailBillPartialView.cshtml" />
     <Content Include="Views\StaffManager\DropdownListPositionPartialView.cshtml" />
     <Content Include="Views\StaffManager\IndexPartialView.cshtml" />
+    <Content Include="Views\InventoryManager\IndexPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -22,6 +22,11 @@ namespace HB8.CSMS.MVC.Controllers
         }
         #endregion 
         #region Show Large View
+        public ActionResult Index()
+        {
+            var inventory = GetInventoryForListPage();
+            return PartialView("IndexPartialView", inventory);
+        }
         public ActionResult ListInventory(int? id)
         {
             var page = id ?? 0;

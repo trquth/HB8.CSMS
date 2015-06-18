@@ -1,31 +1,4 @@
-﻿//*************************************************************************************//
-//PHAN CHUNG
-//************************************************************************************//
-$(document).ready(function () {
-    //$("#qlnv").click(function () {
-    //    $.ajax({
-    //        // Goi CreateStaffPV action
-    //        url: "/StaffManager/ListStaff",
-    //        type: 'Get',
-    //        success: function (data) {
-    //            var theDialog = $("#showLoading").dialog(opt);
-    //            theDialog.dialog("close");
-    //            $("#content").empty().append(data);
-    //        },
-    //        beforeSend: function () {
-    //            var theDialog = $("#showLoading").dialog(opt);
-    //            theDialog.dialog("open");
-    //        },
-    //        error: function () {
-    //            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
-    //        }
-    //    });
-    //})
-})
-
-
-
-
+﻿
 //**************************************************************************************//
 //PHAN DANH CHO STAFF
 //**************************************************************************************//
@@ -797,11 +770,12 @@ $(document).ready(function () {
 //PHAN DANH CHO INVENTORY
 //*************************************************************************************//
 //Cai dat
-$(document).ready(function () {
+$(document).ready(function () {   
     $("#buttonEditForInventory").hide();
     $("#buttonpreviousForInventory").hide();
     $("#buttonnextForInventory").hide();
     $("#countInvnetory").hide();
+   
 })
 //Goi trang them san pham moi
 $(".buttonCreateForInventory").button().click(function () {

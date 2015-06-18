@@ -27,7 +27,7 @@
                 } else {
                     $.post('/InventoryManager/EditInventory', { "InvtID": id, "InvtName": name, "ClassId": className, "UnitID_T": unitT, "UnitID_L": unitL, "UnitRate": unitRate, "QtyStock": qutyStock, "StInventoryId": status, "Description": discription, "StaffId": staff, "StockId": stock, "SalePrice_T": salePriceT, "SalePrice_L": salePriceL, "SlsTax": tax, "Image": image }, function () {
                         swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
-                    })                  
+                    })
                 }
             } else {
                 $(this).attr('type', 'submit');
@@ -35,17 +35,29 @@
         });
     });
 </script>
-<div class="panel panel-primary">
-    <div class="panel-heading"><h5>Thêm sản phẩm mới</h5></div>
-    <div class="panel-body">
-        @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", @id = "inventoryform" }))
-        {
+
+
+<div class="panel-body my-background">
+    <div class="partialViewWrapper">
+        <br />
+        <div class="col-lg-12 background-partial">
+            @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", @id = "inventoryform" }))
+            {
             @Html.ValidationSummary(true);
             <fieldset>
                 <div class="row">
-                    <div class="col-lg-2  ">
+                    <div class="col-lg-3">
                         <div id="imagePreview">
-                            <img class="img-rounded fa fa-file-image-o centre-block" id="changeimage" height="180" width="180" src="~/Images/no_image.jpg" />
+                            @{
+                            if (Model.Image == null)
+                            {
+                            <img class="img-responsive img-center" id="changeimage" height="180" width="180" src="~/Images/no_image.jpg" />
+                            }
+                            else
+                            {
+                                <img class="img-responsive img-center" id="changeimage" height="180" width="180" src="~/Images/InventoryImages/@Model.Image" />
+                            }
+}
                         </div>
                         <br />
                         <div class="col-lg-12">
@@ -53,20 +65,21 @@
                                 <i class="glyphicon glyphicon-plus"></i>
                                 <span>Thêm hình</span>
                                 <input id="uploadFileForInventory" type="file" name="fileupload" />
-                            </span>
-                            <br />
+                            </span>                         
                         </div>
+                        <br />
+                        <br />
                     </div>
-                    <div class="col-lg-10 ">
+                    <div class="col-lg-9">
                         <div class="form-group">
-                            <label class="control-label col-lg-3">Tên sản phẩm:</label>
+                            <label class="control-label col-lg-3 add-line">Tên sản phẩm:</label>
                             <div class="col-lg-9">
                                 @Html.TextBoxFor(x => x.InvtName, new { @class = "form-control", @data_rule_required = "true", @data_msg_required = "Tên sản phẩm không được rỗng", @data_rule_maxlength = "50", @data_msg_maxlength = "Tên sản phẩm tối đa 100 kí tự", @data_rule_minlength = "10", @data_msg_minlength = "Tên sản phẩm  tối thiểu 10 kí tự", @id = "invtname" })
 
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-lg-3">Nhóm sản phẩm:</label>
+                            <label class="control-label col-lg-3 add-line">Nhóm sản phẩm:</label>
                             <div class="col-lg-5">
                                 <select id="ddlClass" class="form-control" data-rule-required="true" data-msg-required="Nhóm sản phẩm không được rỗng">
                                     <option selected="selected" value="">--Chọn nhóm sản phẩm--</option>
@@ -86,7 +99,7 @@
                                     <br />
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label col-lg-3">Đơn vị tính:</label>
+                                            <label class="control-label col-lg-3 add-line">Đơn vị tính:</label>
                                             <div class="col-lg-9">
                                                 <select id="ddlUnitT" class="form-control" data-rule-required="true" data-msg-required="Đơn vị tính không được rỗng">
                                                     <option selected="selected" value="">--Đơn vị tính--</option>
@@ -94,21 +107,21 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-lg-3">Số lượng:</label>
+                                            <label class="control-label col-lg-3 add-line">Số lượng:</label>
                                             <div class="col-lg-9">
                                                 @Html.TextBoxFor(x => x.UnitRate, new { @class = "form-control", @data_rule_required = "true", @data_msg_required = "Số lượng không được rỗng", @data_val_number = "Số lượng là một số", @id = "unitRate" })
 
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-lg-3">Gía bán :</label>
+                                            <label class="control-label col-lg-3 add-line">Gía bán :</label>
                                             <div class="col-lg-9">
                                                 @Html.TextBoxFor(x => x.SalePrice_T, new { @class = "form-control", @data_rule_required = "true", @data_msg_required = "Mã sản phẩm không được rỗng", @data_val_number = "Gía bán là một số", @id = "salePriceT" })
 
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-lg-3">Đơn vị tính lẻ:</label>
+                                            <label class="control-label col-lg-3 add-line">Đơn vị tính lẻ:</label>
                                             <div class="col-lg-9">
                                                 <select id="ddlUnitL" class="form-control" data-rule-required="true" data-msg-required="Đơn vị tính không được rỗng">
                                                     <option selected="selected" value="">--Đơn vị tính--</option>
@@ -116,7 +129,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-lg-3">Gía bán lẻ:</label>
+                                            <label class="control-label col-lg-3 add-line">Gía bán lẻ:</label>
                                             <div class="col-lg-9">
                                                 @Html.TextBoxFor(x => x.SalePrice_L, new { @class = "form-control", @data_rule_required = "true", @data_msg_required = "Gía bán không được rỗng", @data_val_number = "Gía bán là một số", @id = "salePriceL" })
 
@@ -125,7 +138,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label col-lg-3">Mã sản phẩm:</label>
+                                            <label class="control-label col-lg-3 add-line">Mã sản phẩm:</label>
                                             <div class="col-lg-9">
                                                 @Html.TextBoxFor(x => x.InvtID, new { @class = "form-control", @data_rule_maxlength = "5", @data_msg_maxlength = "Mã sản phẩm tối đa 5 kí tự", @data_rule_minlength = "5", @data_msg_minlength = "Mã nhân sản phẩm it nhất 5 kí tự", @data_rule_required = "true", @data_msg_required = "Mã sản phẩm không được rỗng", @data_rule_pattern = "[a-zA-z0-9]{5}", @data_msg_pattern = "Mã sản phẩm không chứa kí tự đặc biệt", @id = "invtId" })
 
@@ -134,7 +147,7 @@
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="form-group">
-                                            <label class="control-label col-lg-2">Mô tả sản phẩm:</label>
+                                            <label class="control-label col-lg-2 add-line">Mô tả sản phẩm:</label>
                                             @Html.TextAreaFor(x => x.Description, new { @class = "form-control", @data_rule_maxlength = "100", @data_msg_maxlength = "Miêu tả tối đa 200 kí tự", @data_rule_minlength = "10", @data_msg_minlength = "Miêu tả tối thiểu 10 kí tự", @id = "description" })
 
                                         </div>
@@ -143,11 +156,11 @@
                                 </div>
                             </div>
                             <div class="tab-pane " id="second">
-                                <div class="col-lg-12 ">
-                                    <h3>Tình trạng</h3>
+                                <div class="col-lg-12 change-color ">
+                                    <h4>Tình trạng</h4>
                                     <div class="form-group">
                                         <br />
-                                        <label class="control-label col-lg-2">Trạng thái:</label>
+                                        <label class="control-label col-lg-2 add-line">Trạng thái:</label>
                                         <div class="col-lg-5">
                                             <select id="ddlStatus" class="form-control" data-rule-required="true" data-msg-required="Trạng thái không được rỗng">
                                                 <option selected="selected" value="">--Chọn trạng thái--</option>
@@ -155,17 +168,17 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-lg-2">Quản lí sản phẩm:</label>
+                                        <label class="control-label col-lg-2 add-line">Quản lí sản phẩm:</label>
                                         <div class="col-lg-5">
                                             <select id="ddlStaff" class="form-control" data-rule-required="true" data-msg-required="Nhân viên quản lí không được rỗng">
                                                 <option selected="selected" value="">--Chọn nhân viên quản lí sản phẩm--</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <h3>Kho hàng</h3>
+                                    <h4>Kho hàng</h4>
                                     <div class="form-group">
                                         <br />
-                                        <label class="control-label col-lg-2">Kho hàng:</label>
+                                        <label class="control-label col-lg-2 add-line">Kho hàng:</label>
                                         <div class="col-lg-5">
                                             <select id="ddlStock" class="form-control" data-rule-required="true" data-msg-required="Kho hàng không được rỗng">
                                                 <option selected="selected" value="">--Chọn kho hàng--</option>
@@ -173,7 +186,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-lg-2">Số lượng dự kiến nhập:</label>
+                                        <label class="control-label col-lg-2 add-line">Số lượng dự kiến nhập:</label>
                                         <div class="col-lg-5">
                                             @Html.TextBoxFor(x => x.QtyStock, new { @class = "form-control", @data_rule_required = "true", @data_msg_required = "Số lượng không được rỗng", @data_val_number = "Số lượng là một số", @id = "qtyStock" })
 
@@ -183,8 +196,8 @@
 
                             </div>
                             <div class="tab-pane " id="third">
-                                <div class="col-lg-12 ">
-                                    <h3>Thuế</h3>
+                                <div class="col-lg-12 change-color ">
+                                    <h4>Thuế</h4>
                                     <div class="form-group">
                                         <label class="control-label col-lg-2">Mức thuế:</label>
                                         <div class="col-lg-10">
@@ -203,6 +216,8 @@
                     <input type="button" class="btn btn-primary " id="buttonExitCreate" value="Thoát">
                 </div>
             </fieldset>
-        }
+            }
+        </div>
     </div>
+
 </div>

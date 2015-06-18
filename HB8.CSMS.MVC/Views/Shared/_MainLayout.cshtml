@@ -29,32 +29,7 @@
     <link href="~/font-awesome/css/font-awesome.css" rel="stylesheet" />
     <link href="~/css/jquery.fileupload.css" rel="stylesheet" />
     <script src="~/js/bootstrap.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#qlnv").click(function () {
-                $.ajax({
-                    // Goi CreateStaffPV action
-                    url: "/StaffManager/Index",
-                    data:'{}',
-                    type: 'Get',
-                    success: function (data) {
-                        var theDialog = $("#showLoading").dialog(opt);
-                        theDialog.dialog("close");
-                        $("#content").empty();
-                        $("#content").append(data);
-                    },
-                    beforeSend: function () {
-                        var theDialog = $("#showLoading").dialog(opt);
-                        theDialog.dialog("open");
-                    },
-                    error: function () {
-                        swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
-                    }
-                });
-            })
-        })
-
-    </script>
+    <script src="~/MyjQ/Main.js"></script>
 </head>
 <body>
     <div>
@@ -71,6 +46,7 @@
                     </button>
                     <a class="navbar-brand" href="index.html">PHẦM MỀM QUẢN LÍ CSMS</a>
                     <a class="navbar-brand" href="javascript:;" id="qlnv">Quản lí nhân viên</a>
+                    <a class="navbar-brand" href="javascript:;" id="qlsp">Quản lí sản phẩm</a>
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
