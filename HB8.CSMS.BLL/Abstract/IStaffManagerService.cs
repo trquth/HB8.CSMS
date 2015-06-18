@@ -45,6 +45,11 @@ namespace HB8.CSMS.BLL.Abstract
         /// <param name="id"></param>
         /// <returns></returns>
         int DeleteStaff(string id);
-
+        /// <summary>
+        /// Tra ve so thu tu
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        int ReturnIndexStaff(string id);
     }
 }

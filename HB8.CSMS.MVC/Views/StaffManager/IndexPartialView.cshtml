@@ -1,7 +1,7 @@
 ﻿@{
-    ViewBag.Title = "Trang quản trị nhân lực";
-    Layout = "~/Views/Shared/_MainLayout.cshtml";
+    ViewBag.Title = "Index";
 }
+
 <div class="row">
     <div class="col-lg-12">
         <nav role="navigation" class="navbar navbar-default">
@@ -13,7 +13,7 @@
                 </button>
             </div>
             <!-- Collection of nav links, forms, and other content for toggling -->
-            <div id="navbarCollapse" class="collapse navbar-collapse"> 
+            <div id="navbarCollapse" class="collapse navbar-collapse">
                 <div class="col-lg-12">
                     <div class="col-lg-6 change-color">
                         <h4>Nhân viên</h4>
@@ -25,14 +25,14 @@
                             </div>
                         </form>
                     </div>
-                </div>              
-                
+                </div>
+
                 <div class="col-lg-12">
                     <div class="col-lg-6">
                         <div class=" navbar-left" id="addbutton">
                             <br />
                             <input type="button" value="Sửa " class="btn btn-default " id="buttonEditForStaff" />
-                            <input type="button" value="Tạo mới" class="btn btn-default " id="buttonCreateForStaff" />             
+                            <input type="button" value="Tạo mới" class="btn btn-default " id="buttonCreateForStaff" />
                             <input type="button" value="Xóa" class="btn btn-default " id="buttonDeleteForStaff" />
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                         <div class=" navbar-right pull-right" id="paging">
                             <ul class="pager">
                                 <li class="previous"><a href="javascript:;" id="buttonpreviousForStaff"><span aria-hidden="true">&larr;</span> Trước</a></li>
-                                <li class="countStaff"></li> 
+                                <li class="countStaff"></li>
                                 <li class="next"><a href="javascript:;" id="buttonnextForStaff">Sau <span aria-hidden="true">&rarr;</span></a></li>
                             </ul>
                         </div>
@@ -63,7 +63,8 @@
     <div class="col-lg-12">
         <div id="staff-list">
             @Html.Partial("LargeStaffPartialView")
-        </div>     
+        </div>
+
         <div id="showspinner"></div>
         <div id="deleteFormStaff" style="display:none">
             <div class="panel panel-warning">

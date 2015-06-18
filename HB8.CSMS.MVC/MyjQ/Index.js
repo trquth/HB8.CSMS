@@ -1,4 +1,32 @@
-﻿//**************************************************************************************//
+﻿//*************************************************************************************//
+//PHAN CHUNG
+//************************************************************************************//
+$(document).ready(function () {
+    //$("#qlnv").click(function () {
+    //    $.ajax({
+    //        // Goi CreateStaffPV action
+    //        url: "/StaffManager/ListStaff",
+    //        type: 'Get',
+    //        success: function (data) {
+    //            var theDialog = $("#showLoading").dialog(opt);
+    //            theDialog.dialog("close");
+    //            $("#content").empty().append(data);
+    //        },
+    //        beforeSend: function () {
+    //            var theDialog = $("#showLoading").dialog(opt);
+    //            theDialog.dialog("open");
+    //        },
+    //        error: function () {
+    //            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+    //        }
+    //    });
+    //})
+})
+
+
+
+
+//**************************************************************************************//
 //PHAN DANH CHO STAFF
 //**************************************************************************************//
 var selectedId = 0;
@@ -29,8 +57,8 @@ $(document).ready(function () {
     $("#buttonEditForStaff").hide();
     $(".itemIdClass").hide();
     $("#deleteForm").hide();
-    $("#buttonprevious").hide();//An di 2 nut Next va Previous
-    $("#buttonnext").hide();
+    $("#buttonpreviousForStaff").hide();//An di 2 nut Next va Previous
+    $("#buttonnextForStaff").hide();
     $("#buttonDeleteForStaff").hide();
 
 });
@@ -71,7 +99,7 @@ $("#buttonCreateForStaff").button().click(function () {
     $.ajax({
         // Goi CreateStaffPV action
         url: "/StaffManager/CreateNewStaff",
-        data:"{}",
+        data: {},
         type: 'Get',
         success: function (data) {
             var theDialog = $("#showLoading").dialog(opt);
@@ -313,6 +341,8 @@ $(document).ready(function () {
                 $("#btnloadstaff").hide();
                 $("#buttonEditForStaff").show();
                 $("#buttonDeleteForStaff").show();
+                $("#buttonpreviousForStaff").show();
+                $("#buttonnextForStaff").show();
                 $("#staff-list").empty();
                 $("#staff-list").append(data);
             },
@@ -327,6 +357,117 @@ $(document).ready(function () {
 
     });
 });
+//Chon 1 dong se hien ra thong tin chi tiet cua nhan vien
+$(document).ready(function () {
+    $('#tableStaff').find('tr').click(function () {
+        var id = $(this).find('input').attr('value');
+        $.ajax({
+            url: '/StaffManager/DetailStaff',
+            data: { "staffId": id },
+            type: "Get",
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                $("#btnloadstaff").hide();
+                $("#buttonEditForStaff").show();
+                $("#buttonDeleteForStaff").show();
+                $("#buttonpreviousForStaff").show();
+                $("#buttonnextForStaff").show();
+                $("#staff-list").empty();
+                $("#staff-list").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+                $.ajax({
+                    url: '/StaffManager/IndexOfStaff',
+                    data: { id: id },
+                    success: function (data) {
+                        $(".countStaff").empty();
+                        $(".countStaff").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
+                    }
+                });
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
+    });
+})
+//Hien thi thong tin san pham tiep theo
+$(document).ready(function () {
+    $("#buttonnextForStaff").click(function () {
+        var id = $("#id").val();
+        $.ajax({
+            url: '/StaffManager/NextStaff',
+            data: { id: id },
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                $("#staff-list").empty();
+                $("#staff-list").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+                $.ajax({
+                    url: '/StaffManager/IndexOfStaff',
+                    data: { id: id },
+                    success: function (data) {
+                        if (data.Index == data.Count) {
+                            $(".countStaff").empty();
+                            $(".countStaff").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
+                        } else {
+                            $(".countStaff").empty();
+                            $(".countStaff").append('<a href="#">' + (data.Index + 1) + '/' + data.Count + '</a>');
+                        }
+                    }
+                });
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
+    });
+});
+//Hien thi thong tin san pham truoc
+$(document).ready(function () {
+    $("#buttonpreviousForStaff").click(function () {
+        var id = $("#id").val();
+        $.ajax({
+            url: '/StaffManager/PreviousStaff',
+            data: { id: id },
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                $("#staff-list").empty();
+                $("#staff-list").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+                $.ajax({
+                    url: '/StaffManager/IndexOfStaff',
+                    success: function (data) {
+                        if (data.Index == 1) {
+                            $(".countStaff").empty();
+                            $(".countStaff").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
+                        } else {
+                            $(".countStaff").empty();
+                            $(".countStaff").append('<a href="#">' + (data.Index - 1) + '/' + data.Count + '</a>');
+                        }
+
+                    }
+                });
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
+    });
+});
+
+
 //********************************************************************************************//
 //PHAN JS DANH CHO CUSTOMER
 //*******************************************************************************************//

@@ -314,21 +314,21 @@
     <Content Include="Views\StaffManager\ListStaff.cshtml" />
     <Content Include="Views\StaffManager\EditStaffPartialView.cshtml" />
     <Content Include="Views\StaffManager\CreateStaffPartialView.cshtml" />
-    <Content Include="Views\Shared\CreateCustomerPartialView.cshtml" />
-    <Content Include="Views\Shared\EditCustomerPartialView.cshtml" />
+    <Content Include="Views\CustomerManager\CreateCustomerPartialView.cshtml" />
+    <Content Include="Views\CustomerManager\EditCustomerPartialView.cshtml" />
     <Content Include="Views\CustomerManager\ListCustomer.cshtml" />
-    <Content Include="Views\Shared\ListCustomerPartialView.cshtml" />
-    <Content Include="Views\Shared\DetailCustomerParitalView.cshtml" />
+    <Content Include="Views\CustomerManager\ListCustomerPartialView.cshtml" />
+    <Content Include="Views\CustomerManager\DetailCustomerParitalView.cshtml" />
     <Content Include="Views\StaffManager\LargeStaffPartialView.cshtml" />
     <Content Include="Views\StaffManager\ListStaffPartialView.cshtml" />
     <Content Include="Views\InventoryManager\ListInventory.cshtml" />
-    <Content Include="Views\Shared\LargeInventoryPartialView.cshtml" />
-    <Content Include="Views\Shared\ListInventoryPartialView.cshtml" />
+    <Content Include="Views\InventoryManager\LargeInventoryPartialView.cshtml" />
+    <Content Include="Views\InventoryManager\ListInventoryPartialView.cshtml" />
     <Content Include="Views\StaffManager\DetailStaffPartialView.cshtml" />
-    <Content Include="Views\Shared\LargeCustomerPartialView.cshtml" />
+    <Content Include="Views\CustomerManager\LargeCustomerPartialView.cshtml" />
     <Content Include="Views\InventoryManager\CreateInventoryPartialView.cshtml" />
-    <Content Include="Views\Shared\DetailInventoryPartialView.cshtml" />
-    <Content Include="Views\Shared\EditInventoryPartialView.cshtml" />
+    <Content Include="Views\InventoryManager\DetailInventoryPartialView.cshtml" />
+    <Content Include="Views\InventoryManager\EditInventoryPartialView.cshtml" />
     <Content Include="Views\BillSaleOrderManager\ListBillSaleOrder.cshtml" />
     <Content Include="Views\BillSaleOrderManager\CreateBillSaleOrderPartialView.cshtml" />
     <Content Include="Views\BillSaleOrderManager\RowInventoryOfBillSaleOrderPartialView.cshtml" />
@@ -340,6 +340,7 @@
     <Content Include="Views\BillSaleOrderManager\EditBillSaleOrderPartialView.cshtml" />
     <Content Include="Views\BillSaleOrderManager\RowDetailBillPartialView.cshtml" />
     <Content Include="Views\StaffManager\DropdownListPositionPartialView.cshtml" />
+    <Content Include="Views\StaffManager\IndexPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
