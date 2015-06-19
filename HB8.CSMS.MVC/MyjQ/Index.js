@@ -4,18 +4,18 @@
 //**************************************************************************************//
 var selectedId = 0;
 //Cau hinh dialog
-var opt = {
-    autoOpen: false,
-    modal: true,
-    height: 200,
-    width: 600,
-    resizable: false,
-    modal: true,
-    open: function (event, ui) {
-        $(".ui-dialog-titlebar-close").hide();
-        setTimeout("$('#showLoading').dialog('close')", 100);
-    }
-};
+//var opt = {
+//    autoOpen: false,
+//    modal: true,
+//    height: 200,
+//    width: 600,
+//    resizable: false,
+//    modal: true,
+//    open: function (event, ui) {
+//        $(".ui-dialog-titlebar-close").hide();
+//        setTimeout("$('#showLoading').dialog('close')", 100);
+//    }
+//};
 var optforDel = {
     autoOpen: false,
     modal: true,

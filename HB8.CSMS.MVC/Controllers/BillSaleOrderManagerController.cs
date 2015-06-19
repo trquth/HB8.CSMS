@@ -353,6 +353,11 @@ namespace HB8.CSMS.MVC.Controllers
         }
         #endregion
         #region Hien thi danh sach hoa don
+        public ActionResult Index()
+        {
+            var listBill = GetBillForListPage();
+            return PartialView("IndexPartialView", listBill);
+        }
         public ActionResult ListBillSaleOrder()
         {
             var listBill = GetBillForListPage();

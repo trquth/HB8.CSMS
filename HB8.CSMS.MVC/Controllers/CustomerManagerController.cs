@@ -23,6 +23,15 @@ namespace HB8.CSMS.MVC.Controllers
         #endregion
         #region Hien thi LARGE VIEW CUSTOMER
         /// <summary>
+        /// Trang chu cua CUSTOMER
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Index()
+        {
+            var customer = GetCustomerForListPage();
+            return PartialView("IndexPartialView", customer);
+        }
+        /// <summary>
         /// Danh sach khach hang
         /// </summary>
         /// <param name="page"></param>

@@ -343,6 +343,8 @@
     <Content Include="Views\StaffManager\DropdownListPositionPartialView.cshtml" />
     <Content Include="Views\StaffManager\IndexPartialView.cshtml" />
     <Content Include="Views\InventoryManager\IndexPartialView.cshtml" />
+    <Content Include="Views\CustomerManager\IndexPartialView.cshtml" />
+    <Content Include="Views\BillSaleOrderManager\IndexPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
