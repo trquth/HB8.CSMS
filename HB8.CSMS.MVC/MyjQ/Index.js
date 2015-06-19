@@ -78,6 +78,7 @@ $("#buttonCreateForStaff").button().click(function () {
             var theDialog = $("#showLoading").dialog(opt);
             theDialog.dialog("close");
             $("#btnloadstaff").hide();
+            $("#buttonCreateForStaff").hide();
             $("#staff-list").empty().append(data);
         },
         beforeSend: function () {
@@ -103,6 +104,12 @@ $(".buttonEdit").button().click(function () {
             var theDialog = $("#showLoading").dialog(opt);
             theDialog.dialog("close");
             $("#btnloadstaff").hide();
+            $("#buttonEditForStaff").hide();
+            $("#buttonpreviousForStaff").hide();
+            $("#buttonnextForStaff").hide();
+            $("#buttonDeleteForStaff").hide();
+            $("#buttonExitCreate").hide();
+            $(".countStaff").hide();
             $("#staff-list").empty().append(data);
         },
         beforeSend: function () {
@@ -126,6 +133,12 @@ $("#buttonEditForStaff").click(function () {
             var theDialog = $("#showLoading").dialog(opt);
             theDialog.dialog("close");
             $("#btnloadstaff").hide();
+            $("#buttonEditForStaff").hide();
+            $("#buttonpreviousForStaff").hide();
+            $("#buttonnextForStaff").hide();
+            $("#buttonDeleteForStaff").hide();
+            $("#buttonCreateForStaff").hide();
+            $(".countStaff").hide();
             $("#staff-list").empty().append(data);
         },
         beforeSend: function () {
@@ -195,19 +208,22 @@ $(".okDelete").button().click(function () {
         }
     });
 });
+
 //Dung trong phan trang
 $(document).ready(function () {
     var _inCallback = false;
     var page = 0;
     var numberPage = $(".getnumberpages").val();
     var pageSize = $(".pagesize").val();
+    var count = $(".count").val();
     $("#btnloadstaff").click(function () {
         if (page > -1 && !_inCallback) {
-            _inCallback = true;
             page++;
             $.get("/StaffManager/ListStaff/" + page, function (data) {
-                if (data != "") {
-                    var value = (pageSize * (page));//Tinh so nhan vien con lai 
+                if (data != "" && !_inCallback) {
+                    _inCallback = true;
+                    alert(_inCallback)
+                    var value = count - pageSize - (pageSize * (page));//Tinh so nhan vien con lai 
                     $("#btnloadstaff").text('Còn ' + value + ' nhân viên')
                     $("#staff-list").append(data);
                     if (page == numberPage - 1) {
@@ -217,9 +233,9 @@ $(document).ready(function () {
                 else {
                     page = -1;
                 }
-                _inCallback = false;
-                $("#showLoading").dialog("open");
             });
+            _inCallback = false;
+            $("#showLoading").dialog("open");
         }
     });
 });
@@ -234,7 +250,9 @@ $(document).ready(function () {
                 var theDialog = $("#showLoading").dialog(opt);
                 theDialog.dialog("close");
                 $("#staff-list").empty();
-                $("#btnloadstaff").hide();
+                $("#btnloadstaff").hide()
+                $(".countStaff").hide();
+                $("#buttonCreateForStaff").show();
                 $("#staff-list").append(data);
 
             },
@@ -288,6 +306,8 @@ $(document).ready(function () {
                 theDialog.dialog("close");
                 $("#staff-list").empty();
                 $("#btnloadstaff").show();
+                $(".countStaff").hide();
+                $("#buttonCreateForStaff").show();
                 $("#staff-list").append(data);
             },
             beforeSend: function () {
@@ -316,12 +336,21 @@ $(document).ready(function () {
                 $("#buttonDeleteForStaff").show();
                 $("#buttonpreviousForStaff").show();
                 $("#buttonnextForStaff").show();
+                $(".countStaff").show();
                 $("#staff-list").empty();
                 $("#staff-list").append(data);
             },
             beforeSend: function () {
                 var theDialog = $("#showLoading").dialog(opt);
                 theDialog.dialog("open");
+                $.ajax({
+                    url: '/StaffManager/IndexOfStaff',
+                    data: { id: id },
+                    success: function (data) {
+                        $(".countStaff").empty();
+                        $(".countStaff").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
+                    }
+                });
             },
             error: function () {
                 swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
@@ -346,6 +375,7 @@ $(document).ready(function () {
                 $("#buttonDeleteForStaff").show();
                 $("#buttonpreviousForStaff").show();
                 $("#buttonnextForStaff").show();
+                $(".countStaff").show();
                 $("#staff-list").empty();
                 $("#staff-list").append(data);
             },
@@ -370,7 +400,7 @@ $(document).ready(function () {
 //Hien thi thong tin san pham tiep theo
 $(document).ready(function () {
     $("#buttonnextForStaff").click(function () {
-        var id = $("#id").val();
+        var id = $("#getId").val();
         $.ajax({
             url: '/StaffManager/NextStaff',
             data: { id: id },
@@ -406,7 +436,7 @@ $(document).ready(function () {
 //Hien thi thong tin san pham truoc
 $(document).ready(function () {
     $("#buttonpreviousForStaff").click(function () {
-        var id = $("#id").val();
+        var id = $("#getId").val();
         $.ajax({
             url: '/StaffManager/PreviousStaff',
             data: { id: id },
@@ -421,6 +451,7 @@ $(document).ready(function () {
                 theDialog.dialog("open");
                 $.ajax({
                     url: '/StaffManager/IndexOfStaff',
+                    data: { id: id },
                     success: function (data) {
                         if (data.Index == 1) {
                             $(".countStaff").empty();
@@ -770,12 +801,12 @@ $(document).ready(function () {
 //PHAN DANH CHO INVENTORY
 //*************************************************************************************//
 //Cai dat
-$(document).ready(function () {   
+$(document).ready(function () {
     $("#buttonEditForInventory").hide();
     $("#buttonpreviousForInventory").hide();
     $("#buttonnextForInventory").hide();
     $("#countInvnetory").hide();
-   
+
 })
 //Goi trang them san pham moi
 $(".buttonCreateForInventory").button().click(function () {

@@ -61,6 +61,7 @@ namespace HB8.CSMS.MVC.Controllers
             if (Request.IsAjaxRequest())
             {
                 return PartialView("LargeStaffPartialView", GetPaginatedStaffs(page));//Tra ve VIEW dang GRID 
+
             }
             var model = staffService.GetListStaff();
             int count = model.Count();
@@ -79,7 +80,7 @@ namespace HB8.CSMS.MVC.Controllers
             staff.PageSize = pageSize;
             return View("ListStaff", staff);
         }
-     
+
         /// <summary>
         /// Nhan ve danh sach thong tin STAFF de hien thi
         /// </summary>
@@ -101,7 +102,7 @@ namespace HB8.CSMS.MVC.Controllers
                                    NumberPhone = a.NumberPhone,
                                    Email = a.Email,
                                    UserName = a.User.UserName
-                               }).OrderBy(x => x.StaffName).Skip(skipRecords).Take(pageSize).ToList();
+                               }).Skip(skipRecords).Take(pageSize).ToList();
             staff.Data = listOfStaff;
             staff.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
             staff.Count = count;
@@ -319,7 +320,7 @@ namespace HB8.CSMS.MVC.Controllers
             var model = GetStaffByStaffId(id);
             return PartialView("EditStaffPartialView", model);
         }
-        #endregion     
+        #endregion
         #region Ham luu
         /// <summary>
         /// Goi form  them nhan vien
@@ -364,7 +365,7 @@ namespace HB8.CSMS.MVC.Controllers
         /// <returns></returns>
         public string FindNextID(string id)
         {
-            string lastId = staffService.GetListStaff().LastOrDefault().StaffID.ToString(); 
+            string lastId = staffService.GetListStaff().LastOrDefault().StaffID.ToString();
             //Kiem tra xem MNV vua nhan co phai la MNV cuoi cung k
             if (lastId == id)
             {

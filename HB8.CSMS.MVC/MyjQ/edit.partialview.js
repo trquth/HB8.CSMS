@@ -102,6 +102,7 @@ $("#buttonExitEdit").button().click(function () {
             theDialog.dialog("close");
             $("#staff-list").empty();
             $("#btnloadstaff").show();
+            $("#buttonCreateForStaff").show();
             $("#staff-list").append(data);
         },
         beforeSend: function () {

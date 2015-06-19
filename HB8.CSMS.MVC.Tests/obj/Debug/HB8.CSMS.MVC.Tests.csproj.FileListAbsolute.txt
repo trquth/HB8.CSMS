@@ -70,3 +70,9 @@ E:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\EntityFramework.xml
 E:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\obj\Debug\HB8.CSMS.MVC.Tests.csprojResolveAssemblyReference.cache
 E:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\obj\Debug\HB8.CSMS.MVC.Tests.dll
 E:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\obj\Debug\HB8.CSMS.MVC.Tests.pdb
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\System.Net.Http.Formatting.dll
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\System.Web.Http.dll
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\System.Web.Http.WebHost.dll
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\System.Net.Http.Formatting.xml
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\System.Web.Http.xml
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\System.Web.Http.WebHost.xml

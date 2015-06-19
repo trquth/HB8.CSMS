@@ -35,7 +35,6 @@ D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\PagedList.dll
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\PagedList.Mvc.dll
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\PagedList.xml
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\PagedList.Mvc.xml
-D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\StructureMap.dll
 E:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\HB8.CSMS.MVC.dll.config
 E:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\HB8.CSMS.MVC.dll
 E:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\HB8.CSMS.MVC.pdb
@@ -80,3 +79,9 @@ E:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\System.Web.WebPages.Razor.xml
 E:\GitHub\HB8.CSMS\HB8.CSMS.MVC\obj\Debug\HB8.CSMS.MVC.csprojResolveAssemblyReference.cache
 E:\GitHub\HB8.CSMS\HB8.CSMS.MVC\obj\Debug\HB8.CSMS.MVC.dll
 E:\GitHub\HB8.CSMS\HB8.CSMS.MVC\obj\Debug\HB8.CSMS.MVC.pdb
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\System.Net.Http.Formatting.dll
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\System.Web.Http.dll
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\System.Web.Http.WebHost.dll
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\System.Net.Http.Formatting.xml
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\System.Web.Http.xml
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\System.Web.Http.WebHost.xml
