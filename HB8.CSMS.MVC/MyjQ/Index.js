@@ -818,7 +818,8 @@ $(".buttonCreateForInventory").button().click(function () {
             var theDialog = $("#showLoading").dialog(opt);
             theDialog.dialog("close");
             $("#buttonEditForInventory").hide();
-            $("#btnloadstaff").hide();
+            $("#btnloadinventory").hide();
+            $(".buttonCreateForInventory").hide();
             $("#inventory-list").empty().append(data);
         },
         beforeSend: function () {
@@ -876,9 +877,14 @@ $("#buttonEditForInventory").click(function () {
         data: { id: selectedId },
         type: 'Get',
         success: function (data) {
-            //var theDialog = $("#showLoading").dialog(opt);
-            //theDialog.dialog("close");
-            //$("#btnloadstaff").hide();
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("close");
+            $("#btnloadinventory").hide();
+            $("#buttonEditForInventory").hide();
+            $(".buttonCreateForInventory").hide();
+            $("#buttonpreviousForInventory").hide();
+            $("#buttonnextForInventory").hide();
+            $(".countInvnetory").hide();
             $("#inventory-list").empty().append(data);
         },
         beforeSend: function () {
@@ -905,6 +911,8 @@ $(document).ready(function () {
                 $("#buttonEditForInventory").hide();
                 $("#buttonpreviousForInventory").hide();
                 $("#buttonnextForInventory").hide();
+                $(".buttonCreateForInventory").show();
+                $(".countInvnetory").hide();
                 $("#btnloadinventory").text('Hiển thêm');
                 $("#btnLargeViewForInventory").prop('value', '1');
                 $("#inventory-list").append(data);
@@ -931,6 +939,8 @@ $(document).ready(function () {
                 theDialog.dialog("close");
                 $("#btnloadinventory").hide();
                 $("#buttonEditForInventory").hide();
+                $(".buttonCreateForInventory").show();
+                $(".countInvnetory").hide();
                 $("#inventory-list").empty();
                 $("#inventory-list").append(data);
 
@@ -984,7 +994,6 @@ $(document).ready(function () {
 //Hien thi danh sach san pham hdang list tung trang
 $(document).ready(function () {
     $(".page-numberForInventory").on('click', function () {
-        alert('vao day')
         var page = parseInt($(this).html());
         $.ajax({
             url: '/InventoryManager/ListInventoryView',
@@ -1023,6 +1032,7 @@ $(document).ready(function () {
                 $("#buttonEditForInventory").show();
                 $("#buttonpreviousForInventory").show();
                 $("#buttonnextForInventory").show();
+                $(".countInvnetory").show();
                 $("#inventory-list").empty();
                 $("#inventory-list").append(data);
             },

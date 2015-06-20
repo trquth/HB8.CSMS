@@ -482,3 +482,93 @@ $(document).ready(function () {
         }
     });
 })
+//Luu thong tin da sua chua
+$(document).ready(function () {
+    $("#editInventory-button").click(function () {
+        $(this).attr('type', 'button');
+        var id = $("#invtId").val();
+        var name = $("#invtname").val();
+        var className = $("#ddlClass").val();
+        var unitT = $("#ddlUnitT").val();
+        var unitRate = $("#unitRate").val();
+        var salePriceT = $("#salePriceT").val();
+        var unitL = $("#ddlUnitL").val();
+        var salePriceL = $("#salePriceL").val();
+        var discription = $("#description").val();
+        var status = $("#ddlStatus").val();
+        var staff = $("#ddlStaff").val();
+        var stock = $("#ddlStock").val();
+        var qutyStock = $("#qtyStock").val();
+        var tax = $("#tax").val();
+        var image = $("#uploadFileForInventory").val();
+        if (id != '') {
+            var value = id.length * name.length * className.length * unitL.length * unitRate.length * salePriceT.length * unitL.length * salePriceL.length * status.length * staff.length * stock.length * qutyStock.length;
+            //Dung kiem tra xem cac thong tin nhap vao dung hay sai
+            if (value == 0) {
+                $(this).attr('type', 'submit');
+            } else {
+                $.post('/InventoryManager/EditInventory', { "InvtID": id, "InvtName": name, "ClassId": className, "UnitID_T": unitT, "UnitID_L": unitL, "UnitRate": unitRate, "QtyStock": qutyStock, "StInventoryId": status, "Description": discription, "StaffId": staff, "StockId": stock, "SalePrice_T": salePriceT, "SalePrice_L": salePriceL, "SlsTax": tax, "Image": image }, function () {
+                    swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
+                    $.ajax({
+                        url: '/InventoryManager/DetailInventory',
+                        data: { "id": id },
+                        type: "Get",
+                        success: function (data) {
+                            var theDialog = $("#showLoading").dialog(opt);
+                            theDialog.dialog("close");
+                            $("#btnloadinventory").hide();
+                            $("#buttonEditForInventory").show();
+                            $("#buttonpreviousForInventory").show();
+                            $("#buttonnextForInventory").show();
+                            $(".countInvnetory").show();
+                            $("#inventory-list").empty();
+                            $("#inventory-list").append(data);
+                        },
+                        beforeSend: function () {
+                            var theDialog = $("#showLoading").dialog(opt);
+                            theDialog.dialog("open");
+                            $.ajax({
+                                url: '/InventoryManager/IndexOfInventory',
+                                data: { id: id },
+                                success: function (data) {
+                                    $(".countInvnetory").empty();
+                                    $(".countInvnetory").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
+                                }
+                            });
+                        },
+                        error: function () {
+                            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+                        }
+                    });
+                })
+            }
+        } else {
+            $(this).attr('type', 'submit');
+        }
+    });
+});
+//Tra ve trang danh sach khi nhan nut BO QUA
+$(document).ready(function () {
+    $("#buttonExitCreate").click(function () {
+        $.ajax({
+            url: '/InventoryManager/ListInventory',
+            data: {},
+            type: 'GET',
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                $("#inventory-list").empty();
+                $("#btnloadinventory").show();
+                $(".buttonCreateForInventory").show();
+                $("#inventory-list").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        })
+    });
+})
