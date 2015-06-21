@@ -162,3 +162,35 @@ $(document).ready(function () {
         });
     })
 })
+//Goi trang chu cua phan HOA DON
+$(document).ready(function () {
+    $("#hoadon").click(function () {
+        $.ajax({
+            url: "/BillSaleOrderManager/Index",
+            data: '{}',
+            type: 'Get',
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                $("#content").empty();
+                $("#content").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+                $.ajax({
+                    url: "/BillSaleOrderManager/NavBar",
+                    data: '{}',
+                    type: 'Get',
+                    success: function (data) {
+                        $("#contentNavbar").empty();
+                        $("#contentNavbar").append(data);
+                    }
+                });
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
+    })
+})

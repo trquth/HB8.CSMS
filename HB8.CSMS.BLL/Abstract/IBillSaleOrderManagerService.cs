@@ -58,5 +58,17 @@ namespace HB8.CSMS.BLL.Abstract
         /// <param name="id"></param>
         /// <returns></returns>
         IEnumerable<BillSaleOrderDomain> GetBillDetailById(int id);
+        /// <summary>
+        /// Xac nhan hoa don
+        /// </summary>
+        /// <param name="staff"></param>
+        /// <returns></returns>
+        int Confirm(int id);
+        /// <summary>
+        /// Huy hoa don
+        /// </summary>
+        /// <param name="staff"></param>
+        /// <returns></returns>
+        int Cancel(int id);
     }
 }

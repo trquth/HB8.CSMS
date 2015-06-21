@@ -834,7 +834,6 @@ $(document).ready(function () {
     $("#buttonpreviousForInventory").hide();
     $("#buttonnextForInventory").hide();
     $("#countInvnetory").hide();
-
 })
 //Goi trang them san pham moi
 $(".buttonCreateForInventory").button().click(function () {
@@ -1227,8 +1226,8 @@ $(document).ready(function () {
                 $("#buttonpreviousForBillSaleOrder").show();
                 $("#buttonnextForBillSaleOrder").show();
                 $("#buttonEditForBillSaleOrder").show();
-                $("#buttonpreviousForBillSaleOrder").hide();
-                $("#buttonnextForBillSaleOrder").hide();
+                $("#buttonpreviousForBillSaleOrder").show();
+                $("#buttonnextForBillSaleOrder").show();
                 $("#billsaleorder-list").empty();
                 $("#billsaleorder-list").append(data);
                 $.ajax({

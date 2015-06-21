@@ -115,6 +115,7 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             model.OrderDisc = billDetail.OrderDisc;
             model.TaxAmt = billDetail.TaxAmt;
             model.Description = billDetail.Description;
+            model.InvoiceID = billDetail.InvoiceType.InvoiceID;
             return model;
         }
 
@@ -135,6 +136,22 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
                             OrderDiscForInvt = a.OrderDiscForInvt,
                         };
             return model;
+        }
+        public int Confirm(int id)
+        {
+            var items = context.Orders.GetAllItem().Where(x => x.SOrderNo == id).FirstOrDefault();
+            items.InvoiceID = "XY";
+            context.Orders.Update(items);
+            context.Save();
+            return 0;
+        }
+        public int Cancel(int id)
+        {
+            var items = context.Orders.GetAllItem().Where(x => x.SOrderNo == id).FirstOrDefault();
+            items.InvoiceID = "AB";
+            context.Orders.Update(items);
+            context.Save();
+            return 0;
         }
     }
 }

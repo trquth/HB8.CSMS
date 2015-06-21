@@ -4,6 +4,22 @@
         <div class="col-lg-12 background-partial">
             <br />
             <div class="col-lg-12">
+                <div class=" navbar-left" id="addbutton">
+                    @if (Model.InvoiceID == "AB")
+                    {
+                        <input type="button" value="Xác nhận" class="btn btn-primary " id="btnConfirmBill" />
+                    }
+                    else
+                    {
+                        <input type="button" value="Hủy" class="btn btn-default " id="btnCancleBill" />
+                    }
+
+                </div>
+                <br />
+                <hr />
+            </div>
+            <br />
+            <div class="col-lg-12">
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label class="control-label col-lg-4 add-line">Khách hàng:</label>
@@ -51,7 +67,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-lg-12">
                 <br />
                 <ul class="nav nav-tabs" data-tabs="tabs">
@@ -112,7 +127,7 @@
                                 <br />
                                 <br />
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -120,3 +135,4 @@
         </div>
     </div>
 </div>
+<script src="~/MyjQ/detail.partialview.js"></script>

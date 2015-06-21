@@ -176,6 +176,7 @@ namespace HB8.CSMS.MVC.Controllers
             billSaleOrderService.CreateBillSaleOrder(items);
             Session.Remove("Order");//Xoa di session luu thong tin danh sach mat hang
         }
+
         #endregion
         #region Method
         //Luu danh sach hoa don vao Session
@@ -334,6 +335,7 @@ namespace HB8.CSMS.MVC.Controllers
             model.Description = billDetail.Description;
             model.StaffName = billDetail.StaffName;
             model.Total = billDetail.TotalAmt + billDetail.TaxAmt;
+            model.InvoiceID = billDetail.InvoiceID;
             return model;
 
         }
@@ -357,6 +359,7 @@ namespace HB8.CSMS.MVC.Controllers
         }
         #endregion
         #region Hien thi danh sach hoa don
+       
         public ActionResult Index()
         {
             var listBill = GetBillForListPage();
@@ -402,6 +405,30 @@ namespace HB8.CSMS.MVC.Controllers
         {
             var model = GetBillById(id);
             return PartialView("EditBillSaleOrderPartialView", model);
+        }
+        #endregion
+        #region Confirm and Cancel
+        /// <summary>
+        /// Xac nhan lai hoa don
+        /// </summary>
+        /// <param name="id"></param>
+        public void Confirm(int id)
+        {
+            billSaleOrderService.Confirm(id);
+        }
+        /// <summary>
+        /// Huy hoa don
+        /// </summary>
+        /// <param name="id"></param>
+        public void Cancel(int id)
+        {
+            billSaleOrderService.Cancel(id);
+        }
+        #endregion
+        #region Show NAVBAR
+        public ActionResult NavBar()
+        {
+            return PartialView("PanelForCustomerPartialView");
         }
         #endregion
 
