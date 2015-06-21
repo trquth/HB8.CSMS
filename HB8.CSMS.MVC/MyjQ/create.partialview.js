@@ -202,6 +202,112 @@ $("#buttonExitCreate").button().click(function () {
     })
 
 })
+//************************************************************************//
+//PHAN CHO CUSTOMER
+//************************************************************************//
+//Do du lieu vao dropdowlist
+$(document).ready(function () {
+    $("#birthdatepicker").datepicker();//Hien lich cho nguoi dung chon ngay thang nam
+    $.ajax({
+        url: "/CustomerManager/ListStatus",
+        type: 'Get',
+        data: "{}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            $.each(data, function (key, value) {
+                $("#ddlPositionForCustomer").append($("<option></option>").val(value.StatusID).html(value.StatusName));
+            });
+        },
+        error: function (result) {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+    });
+})
+
+//Kiem tra thong tin nhap vao dung hay sai
+$(document).ready(function () {
+    $('#customerform').validate();
+});
+//Luu thong tin
+$(document).ready(function () {
+    $("#createCustomer-button").click(function () {
+        $(this).attr('type', 'button');
+        var id = $("#makh").val();
+        var name = $("#customerName").val();
+        var address = $("#address").val();
+        var phone = $("#numberphone").val();
+        var mail = $("#email").val();
+        var position = $("#ddlPositionForCustomer").val();
+        var description = $("#description").val();
+        var image = $("#uploadFile").val();
+        if (id != '') {
+            //Kiem tra 1 lan nua xem ma nv co ton tai hay khong
+            $.ajax({
+                url: "/CustomerManager/HaveCustomerId",
+                type: 'Get',
+                data: { custId: id },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data) {
+                        sweetAlert("Cảnh báo", "Mã khách hàng đã tồn tại!", "error");
+                    } else {
+                        //Dung kiem tra xem cac thong tin nhap vao dung hay sai
+                        if (name.length <= 10 || name.length >= 50 || address.length < 2 || phone.length < 1 || position.length < 2) {
+                            $(this).attr('type', 'submit');
+                        } else {
+                            $(this).attr('type', 'button');
+                            $("#editForm").dialog("close");
+                            $.post('/CustomerManager/CreateNewCustomer', { "CustID": id, "CustName": name, "StatusID": position, "Address": address, "Phone": phone, "Email": mail, "Image": image, "Description": description }, function () {
+                                swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
+                                $.ajax({
+                                    url: '/CustomerManager/DetailCustomer',
+                                    data: { custId: id },
+                                    type: "Get",
+                                    success: function (data) {
+                                        var theDialog = $("#showLoading").dialog(opt);
+                                        theDialog.dialog("close");
+                                        $("#buttonEditForCustomer").show();
+                                        $("#buttonDeleteForCustomer").show();
+                                        $("#buttonpreviousForCustomer").show();
+                                        $("#buttonnextForCustomer").show();
+                                        $(".countCustomer").show();
+                                        $("#customer-list").empty();
+                                        $("#customer-list").append(data);
+                                    },
+                                    beforeSend: function () {
+                                        var theDialog = $("#showLoading").dialog(opt);
+                                        theDialog.dialog("open");
+                                        $.ajax({
+                                            url: '/CustomerManager/IndexOfCustomer',
+                                            data: { id: id },
+                                            success: function (data) {
+                                                $(".countCustomer").empty();
+                                                $(".countCustomer").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
+                                            }
+                                        });
+                                    },
+                                    error: function () {
+                                        swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+                                    }
+                                });
+                            })
+                        }
+                    }
+                },
+                error: function (result) {
+                    swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+                }
+            });
+
+        } else {
+            $(this).attr('type', 'submit');
+        }
+    });
+});
+
+
 
 //***********************************************************************//
 //PHAN CHO INVENTORY

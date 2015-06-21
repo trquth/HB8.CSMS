@@ -23,6 +23,10 @@
 .add-line {
   padding-right:20px; border-right: 1px solid #ccc;
 }
+.inline li {
+    display: inline;
+}
+
 /* centered columns styles */
 .row-centered {
     text-align: center;

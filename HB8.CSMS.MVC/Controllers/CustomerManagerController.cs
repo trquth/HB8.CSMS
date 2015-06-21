@@ -133,8 +133,7 @@ namespace HB8.CSMS.MVC.Controllers
         /// </summary>
         /// <param name="custId"></param>
         /// <returns></returns>
-        #endregion
-      
+        #endregion     
         #region Create Action
         /// <summary>
         /// Goi form  them khach hang
@@ -143,6 +142,12 @@ namespace HB8.CSMS.MVC.Controllers
         public ActionResult CreateCustomerPV()
         {
             return PartialView("CreateCustomerPartialView");
+        }
+        //Ham luu
+        public void CreateNewCustomer(CustomerModel customer)
+        {
+            var model = new CustomerDomain(customer.CustID,customer.CustName,customer.Address,customer.Phone,customer.Email,customer.StatusID,customer.Description,customer.Image);
+            customerService.CreateCustomer(model);
         }
         #endregion
         #region Method
@@ -250,10 +255,8 @@ namespace HB8.CSMS.MVC.Controllers
             customer.Phone = model.Phone;
             customer.Fax = model.Fax;
             customer.Email = model.Email;
-            customer.StatusID = model.StatusID;
+            customer.StatusName = model.StatusName;
             customer.Description = model.Description;
-            customer.BirthDate = (DateTime)model.BirthDate;
-            customer.CreateDate = model.CreateDate;
             return customer;
         }
         /// <summary>
@@ -294,6 +297,23 @@ namespace HB8.CSMS.MVC.Controllers
             model.Index = index;
             return Json(model, JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// Kiem tra ma khach hang co ton tai hay khong 
+        /// </summary>
+        /// <param name="custId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public JsonResult HaveCustomerId(string custId)
+        {
+            var model = customerService.GetCustomerById(custId);
+            bool data = false;
+            if (model != null)
+            {
+                data = true;
+            }
+            return Json(data, JsonRequestBehavior.AllowGet);
+
+        }
         #endregion
         #region Edit Action
         /// <summary>
@@ -301,23 +321,17 @@ namespace HB8.CSMS.MVC.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet]
         public ActionResult EditCustomerPV(string id)
         {
             var model = GetCustomerByCustomerId(id);
             return PartialView("EditCustomerPartialView", model);
         }
-        //public ViewResult EditCustomer(string custId)
-        //{
-        //    var model = GetCustomerByCustomerId(custId);
-        //    return View(model);
-        //}
         [HttpPost]
         public void EditCustomer(CustomerModel customer)
         {
             var dateCreate = DateTime.Now;
             var model = new CustomerDomain(customer.CustID, customer.CustName, customer.Address,
-                customer.Phone, customer.Fax, customer.Email, customer.StatusID, customer.Description, customer.BirthDate, dateCreate, customer.Image);
+                customer.Phone, customer.Email, customer.StatusID, customer.Description,customer.Image);
             customerService.UpdateCustomer(model);
         }
         /// <summary>
@@ -330,8 +344,7 @@ namespace HB8.CSMS.MVC.Controllers
             return PartialView("CustomerPartialView", GetCustomerAfterEdit(page));
         }
        
-        #endregion
-     
+        #endregion     
         #region Code xu li Next va Privous
         /// <summary>
         /// Lay Ma khach hang tiep theo
@@ -386,6 +399,12 @@ namespace HB8.CSMS.MVC.Controllers
             string previousId = FindPreviousID(id);
             var model = GetCustomerDetail(previousId);
             return PartialView("DetailCustomerParitalView", model);
+        }
+        #endregion
+        #region Show NAVBAR
+        public ActionResult NavBar()
+        {
+            return PartialView("PanelForCustomerPartialView");
         }
         #endregion
 

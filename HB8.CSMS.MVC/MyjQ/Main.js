@@ -57,6 +57,36 @@ $(document).ready(function () {
         });
     })
 })
+//Goi trang chu cua phan BUON BAN
+$(document).ready(function () {
+    $("#buonban").click(function () {
+        $.ajax({
+            url: "/CustomerManager/Index",
+            data: '{}',
+            type: 'Get',
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                $("#content").empty();
+                $("#content").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+                $.ajax({
+                    url: "/CustomerManager/NavBar",
+                    data: '{}',
+                    type: 'Get',
+                    success: function (data) {
+                        $("#contentNavbar").empty();
+                        $("#contentNavbar").append(data);
+                    }
+
+                });
+            },
+        });
+    })
+})
 //Goi lai trang chu cho CUSTOMER
 $(document).ready(function () {
     $("#qlkh").click(function () {
@@ -72,11 +102,8 @@ $(document).ready(function () {
             },
             beforeSend: function () {
                 var theDialog = $("#showLoading").dialog(opt);
-                theDialog.dialog("open");
+                theDialog.dialog("open");              
             },
-            error: function () {
-                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
-            }
         });
     })
 })
@@ -96,6 +123,38 @@ $(document).ready(function () {
             beforeSend: function () {
                 var theDialog = $("#showLoading").dialog(opt);
                 theDialog.dialog("open");
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
+    })
+})
+//Goi trang chu cua phan NHAN LUC
+$(document).ready(function () {
+    $("#nhanluc").click(function () {
+        $.ajax({
+            url: "/StaffManager/Index",
+            data: '{}',
+            type: 'Get',
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                $("#content").empty();
+                $("#content").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+                $.ajax({
+                    url: "/StaffManager/NavBar",
+                    data: '{}',
+                    type: 'Get',
+                    success: function (data) {
+                        $("#contentNavbar").empty();
+                        $("#contentNavbar").append(data);
+                    }
+                });
             },
             error: function () {
                 swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });

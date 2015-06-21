@@ -25,11 +25,10 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             model.Address = customer.Address;
             model.Phone = customer.Phone;
             model.Fax = customer.Fax;
-            model.Email = customer.Email;         
+            model.Email = customer.Email;
             model.StatusId = customer.StatusID;
             model.Description = customer.Description;
-            model.BirthDate = customer.BirthDate;
-            model.CreateDate = customer.CreateDate;
+            model.CreateDate = DateTime.Now;
             context.Customers.Create(model);
             context.Save();
             return 0;
@@ -78,7 +77,7 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
         /// <param name="id"></param>
         /// <param name="isHistoryBack"></param>
         /// <returns></returns>
-      
+
         //public DomainModels.CustomerDomain GetNextCustomerTopList(string id, bool isHistoryBack)
         //{
         //    var model = new CustomerDomain();
@@ -102,22 +101,32 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
         {
             var model = context.Customers.GetItemById(id);
             var customer = new CustomerDomain();
-            customer.Image = model.Image;
-            customer.CustID = model.CustID;
-            customer.CustName = model.CustName;
-            customer.Address = model.Address;
-            customer.Phone = model.Phone;
-            customer.Fax = model.Fax;
-            customer.Email = model.Email;
-            customer.Overdue = model.Overdue;
-            customer.Amount = model.Amount;
-            customer.OverdueAmt = model.OverdueAmt;
-            customer.DueAmt = model.DueAmt;
-            customer.StatusID = model.StatusId;
-            customer.Description = model.Description;
-            customer.BirthDate = model.BirthDate;
-            customer.CreateDate = model.CreateDate;
-            return customer;
+            if (model != null)
+            {
+                customer.Image = model.Image;
+                customer.CustID = model.CustID;
+                customer.CustName = model.CustName;
+                customer.Address = model.Address;
+                customer.Phone = model.Phone;
+                customer.Fax = model.Fax;
+                customer.Email = model.Email;
+                customer.Overdue = model.Overdue;
+                customer.Amount = model.Amount;
+                customer.OverdueAmt = model.OverdueAmt;
+                customer.DueAmt = model.DueAmt;
+                customer.StatusID = model.StatusId;
+                customer.Description = model.Description;
+                customer.BirthDate = model.BirthDate;
+                customer.CreateDate = model.CreateDate;
+                customer.StatusName = model.Status.StatusName;
+                return customer;
+            }
+            else
+            {
+                customer = null;
+                return customer;
+            }
+
         }
         public int ReturnIndexCustomer(string id)
         {

@@ -475,7 +475,14 @@ $(document).ready(function () {
 //********************************************************************************************//
 //PHAN JS DANH CHO CUSTOMER
 //*******************************************************************************************//
-
+//An di cac nut khong can thiet
+$(document).ready(function () {
+   
+    $("#buttonEditForCustomer").hide();
+    $("#buttonDeleteForCustomer").hide();
+    $("#buttonpreviousForCustomer").hide();
+    $("#buttonnextForCustomer").hide();
+});
 //Goi hien ra form them khách hàng mới
 $(".buttonCreateForCustomer").button().click(function () {
     $.ajax({
@@ -486,7 +493,8 @@ $(".buttonCreateForCustomer").button().click(function () {
             var theDialog = $("#showLoading").dialog(opt);
             theDialog.dialog("close");
             $("#btnloadcustomer").hide();
-            $("#person-list").empty().append(data);
+            $(".buttonCreateForCustomer").hide();
+            $("#customer-list").empty().append(data);
         },
         beforeSend: function () {
             var theDialog = $("#showLoading").dialog(opt);
@@ -521,15 +529,6 @@ $(".detailcustomer").on("click", function () {
 
     })
 });
-
-
-//Cai dat
-$(document).ready(function () {
-    $("#buttonEditForCustomer").hide();
-    $("#buttonpreviousForCustomer").hide();
-    $("#buttonnextForCustomer").hide();
-    $("#countInvnetory").hide();
-})
 //Chuc nang load nhung khach hang con lai
 $(document).ready(function () {
     var page = 0;
@@ -588,7 +587,7 @@ $(document).ready(function () {
                 var theDialog = $("#showLoading").dialog(opt);
                 theDialog.dialog("open");
                 $.ajax({
-                    url: '/InventoryManager/IndexOfInventory',
+                    url: '/CustomerManager/IndexOfCustomer',
                     data: { id: id },
                     success: function (data) {
                         $(".countCustomer").empty();
@@ -616,7 +615,9 @@ $(document).ready(function () {
                 $("#btnloadcustomer").show();
                 $("#buttonEditForCustomer").hide();
                 $("#buttonpreviousForCustomer").hide();
+                $(".buttonCreateForCustomer").show();
                 $("#buttonnextForCustomer").hide();
+                $(".countCustomer").hide();
                 $("#btnloadcustomer").text('Hiển thêm');
                 $("#btnLargeViewForCustomer").prop('value', '1');
                 $("#customer-list").empty();
@@ -793,7 +794,34 @@ $(document).ready(function () {
         });
     });
 });
-
+//Sua thong tin khi dang o trang xem chi tiet
+$("#buttonEditForCustomer").click(function () {
+    var selectedId = $("#id").attr('value');
+    $.ajax({
+        // Gọi 
+        url: "/CustomerManager/EditCustomerPV",
+        data: { id: selectedId },
+        type: 'Get',
+        success: function (data) {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("close");
+            $("#buttonEditForCustomer").hide();
+            $("#buttonDeleteForCustomer").hide();
+            $("#buttonpreviousForCustomer").hide();
+            $("#buttonnextForCustomer").hide();
+            $(".buttonCreateForCustomer").hide();
+            $(".countCustomer").hide();
+            $("#customer-list").empty().append(data);
+        },
+        beforeSend: function () {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("open");
+        },
+        error: function () {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+    });
+})
 
 
 

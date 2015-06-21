@@ -413,6 +413,12 @@ namespace HB8.CSMS.MVC.Controllers
             return PartialView("DetailStaffPartialView", model);
         }
         #endregion
+        #region Show NAVBAR
+        public ActionResult NavBar()
+        {
+            return PartialView("PanelForStaffPartialView");
+        }
+        #endregion
 
     }
 }

@@ -345,9 +345,12 @@
     <Content Include="Views\InventoryManager\IndexPartialView.cshtml" />
     <Content Include="Views\CustomerManager\IndexPartialView.cshtml" />
     <Content Include="Views\BillSaleOrderManager\IndexPartialView.cshtml" />
+    <Content Include="Views\CustomerManager\PanelForCustomerPartialView.cshtml" />
+    <Content Include="Views\StaffManager\PanelForStaffPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\Customer\" />
     <Folder Include="Images\InventoryImages\" />
     <Folder Include="Images\StaffImages\" />
   </ItemGroup>
