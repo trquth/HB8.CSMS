@@ -108,6 +108,8 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             var billDetail = context.Orders.GetItemByIdWithIntType(id);
             var model = new BillSaleOrderDomain();
             model.SOrderNo = billDetail.SOrderNo;
+            model.CustName = billDetail.Customer.CustName;
+            model.StaffName = billDetail.Staff.StaffName;
             model.OrderDate = billDetail.OrderDate;
             model.OverdueDate = billDetail.OverdueDate;
             model.OrderDisc = billDetail.OrderDisc;

@@ -244,7 +244,7 @@ namespace HB8.CSMS.MVC.Controllers
             var list = GetListDetailInventory();
             foreach (var item in list)
             {
-                total += item.TaxAmtForInventory*item.SalesPrice;
+                total += item.TaxAmtForInventory * item.SalesPrice;
             }
             return total;
         }
@@ -303,16 +303,16 @@ namespace HB8.CSMS.MVC.Controllers
             var model = billSaleOrderService.GetListBill();
             int count = model.Count();
             var listOfBill = (from item in model
-                                   select new BillSaleOrderModel
-                                   {
-                                       SOrderNo = item.SOrderNo,
-                                       CustName = item.Customer.CustName,
-                                       OrderDate =item.OrderDate,
-                                       OverdueDate = item.OverdueDate,
-                                       TaxAmt = item.TaxAmt,
-                                       TotalAmt = item.TotalAmt,
-                                       TypeName = item.InvoiceType.TypeName
-                                   }).ToList();
+                              select new BillSaleOrderModel
+                              {
+                                  SOrderNo = item.SOrderNo,
+                                  CustName = item.Customer.CustName,
+                                  OrderDate = item.OrderDate,
+                                  OverdueDate = item.OverdueDate,
+                                  TaxAmt = item.TaxAmt,
+                                  TotalAmt = item.TotalAmt,
+                                  TypeName = item.InvoiceType.TypeName
+                              }).ToList();
             listBill.Data = listOfBill.Take(pageSize);
             listBill.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
             listBill.CurrentPage = 1;
@@ -325,17 +325,21 @@ namespace HB8.CSMS.MVC.Controllers
             var model = new BillSaleOrderModel();
             var billDetail = billSaleOrderService.GetBillById(id);
             model.SOrderNo = billDetail.SOrderNo;
-            model.OrderDate = billDetail.OrderDate;
-            model.OverdueDate = billDetail.OverdueDate;
+            model.CustName = billDetail.CustName;
+            model.OrderDateFormat = String.Format("{0:dd/MM/yyyy}", billDetail.OrderDate);
+            model.OverdueDateFormat = String.Format("{0:dd/MM/yyyy}", billDetail.OverdueDate);
             model.OrderDisc = billDetail.OrderDisc;
             model.TaxAmt = billDetail.TaxAmt;
+            model.TotalAmt = billDetail.TotalAmt;
             model.Description = billDetail.Description;
+            model.StaffName = billDetail.StaffName;
+            model.Total = billDetail.TotalAmt + billDetail.TaxAmt;
             return model;
 
         }
         public IEnumerable<BillSaleOrderModel> GetBillDetailById(int id)
         {
-            
+
             var details = billSaleOrderService.GetBillDetailById(id);
             var model = from a in details
                         select new BillSaleOrderModel
@@ -344,7 +348,7 @@ namespace HB8.CSMS.MVC.Controllers
                             Qty = a.Qty,
                             SalesPrice = a.SalesPrice,
                             Discount = (decimal)a.Discount,
-                            TaxAmt = a.TaxAmt,
+                            TaxAmtForInventory = a.TaxAmt,
                             Amount = a.Amount,
                             UnitName = a.UnitName,
                             OrderDiscForInvt = a.OrderDiscForInvt,

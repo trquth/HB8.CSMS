@@ -477,7 +477,7 @@ $(document).ready(function () {
 //*******************************************************************************************//
 //An di cac nut khong can thiet
 $(document).ready(function () {
-   
+
     $("#buttonEditForCustomer").hide();
     $("#buttonDeleteForCustomer").hide();
     $("#buttonpreviousForCustomer").hide();
@@ -1199,6 +1199,8 @@ $("#buttonCreateForBillSaleOrder").button().click(function () {
         success: function (data) {
             var theDialog = $("#showLoading").dialog(opt);
             theDialog.dialog("close");
+            $("#buttonCreateForBillSaleOrder").hide();
+            $("#buttonEditForBillSaleOrder").hide();
             $("#billsaleorder-list").empty().append(data);
         },
         beforeSend: function () {
@@ -1225,6 +1227,8 @@ $(document).ready(function () {
                 $("#buttonpreviousForBillSaleOrder").show();
                 $("#buttonnextForBillSaleOrder").show();
                 $("#buttonEditForBillSaleOrder").show();
+                $("#buttonpreviousForBillSaleOrder").hide();
+                $("#buttonnextForBillSaleOrder").hide();
                 $("#billsaleorder-list").empty();
                 $("#billsaleorder-list").append(data);
                 $.ajax({
@@ -1270,3 +1274,27 @@ $("#buttonEditForBillSaleOrder").click(function () {
         }
     });
 })
+//Hien thi dang LIST VIEW
+$(document).ready(function () {
+    $("#btnListViewForBillSaleOrder").click(function () {
+        $.ajax({
+            url: '/BillSaleOrderManager/ListBillView',
+            data: {},
+            type: 'GET',
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                $("#buttonCreateForBillSaleOrder").show();
+                $("#billsaleorder-list").empty();
+                $("#billsaleorder-list").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        })
+    });
+});

@@ -34,5 +34,7 @@ namespace HB8.CSMS.BLL.DomainModels
         public string UnitName { get; set; }
         public string InvtName { get; set; }
         public string TypeName { get; set; }
+        public string CustName { get; set; }
+        public string StaffName { get; set; }
     }
 }

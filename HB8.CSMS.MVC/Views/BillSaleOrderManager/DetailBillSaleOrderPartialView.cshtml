@@ -6,48 +6,54 @@
             <div class="col-lg-12">
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label class="control-label col-lg-3 add-line">Khách hàng:</label>
-                        <div class="col-lg-9">
+                        <label class="control-label col-lg-4 add-line">Khách hàng:</label>
+                        <div class="col-lg-8">
                             <input type="hidden" id="id" value="@Model.SOrderNo" />
-                            <h4>@Model.CustName</h4>
+                            <p>@Model.CustName</p>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-lg-3">Người bán hàng:</label>
-                        <div class="col-lg-9">
-                            <h4>@Model.StaffName</h4>
+                        <label class="control-label col-lg-4 add-line">Nhân viên:</label>
+                        <div class="col-lg-8">
+                            <p>@Model.StaffName</p>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-lg-3">Chiếc khấu cho hóa đơn:</label>
-                        <div class="col-lg-9">
+                        <label class="control-label col-lg-4 add-line">Chiếc khấu:</label>
+                        <div class="col-lg-8">
                             <p>@Model.Debt</p>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label col-lg-3">Mô tả:</label>
-                        <div class="col-lg-9">
-                            <p>@Model.Description</p>
-                        </div>
-                    </div>
+
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label class="control-label col-lg-3 add-line">Ngày tạo:</label>
-                        <div class="col-lg-9">
-                            <p>@Model.OrderDate</p>
+                        <label class="control-label col-lg-4 add-line">Ngày tạo:</label>
+                        <div class="col-lg-8">
+                            <p>@Model.OrderDateFormat</p>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-lg-3">Ngày đến hạn:</label>
-                        <div class="col-lg-9">
-                            <p>@Model.OverdueDate</p>
+                        <label class="control-label col-lg-4 add-line">Ngày đến hạn:</label>
+                        <div class="col-lg-8">
+                            <p>@Model.OverdueDateFormat</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-12">
+                <hr />
+                <div class="form-group">
+                    <label class="control-label add-line">Mô tả:</label>
+                    <div class="col-lg-12 ">
+                        @Html.TextAreaFor(x => x.Description, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <br />
                 <ul class="nav nav-tabs" data-tabs="tabs">
                     <li class="active"><a data-toggle="tab" href="#description"><h5>Chi tiết hóa đơn</h5> </a></li>
                 </ul>
@@ -60,25 +66,25 @@
                                     <tr>
                                         <th class="text-center"><h4><b>STT</b></h4></th>
                                         <th class="text-center ">
-                                            <h4><b>Tên sản phẩm</b></h4>
+                                            <h5><b>Tên sản phẩm</b></h5>
                                         </th>
                                         <th class="text-center ">
-                                            <h4><b>Số lượng</b></h4>
+                                            <h5><b>Số lượng</b></h5>
                                         </th>
                                         <th class="text-center">
-                                            <h4><b>Đơn vị tính</b></h4>
+                                            <h5><b>Đơn vị tính</b></h5>
                                         </th>
                                         <th class="text-center ">
-                                            <h4><b>Đơn giá</b></h4>
+                                            <h5><b>Đơn giá</b></h5>
                                         </th>
                                         <th class="text-center ">
-                                            <h4><b>Chiết khấu</b></h4>
+                                            <h5><b>Chiết khấu</b></h5>
                                         </th>
                                         <th class="text-center">
-                                            <h4><b>Thuế</b></h4>
+                                            <h5><b>Thuế</b></h5>
                                         </th>
                                         <th class="text-center ">
-                                            <h4><b>Số tiền</b></h4>
+                                            <h5><b>Số tiền</b></h5>
                                         </th>
                                     </tr>
                                 </thead>
@@ -89,11 +95,11 @@
                         <div class="col-lg-12">
                             <div class="col-lg-12">
                                 <div class="col-lg-10 text-right">Số tiền:</div>
-                                <div class="col-lg-2">0đ</div>
+                                <div class="col-lg-2">@Model.TotalAmt (VNĐ)</div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="col-lg-10 text-right">Thuế:</div>
-                                <div class="col-lg-2">0đ</div>
+                                <div class="col-lg-2">@Model.TaxAmt (VNĐ)</div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="col-lg-8"></div>
@@ -101,8 +107,12 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="col-lg-10 text-right"><strong>Tổng cộng:</strong></div>
-                                <div class="col-lg-2">0đ</div>
+                                <div class="col-lg-2">@Model.Total</div>
+                                <br />
+                                <br />
+                                <br />
                             </div>
+                            
                         </div>
                     </div>
                 </div>

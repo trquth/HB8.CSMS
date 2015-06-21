@@ -564,14 +564,63 @@ $(document).ready(function () {
         var nuStaff = staffId.length
         var nuDateCr = dataCreate.length
         var nuOverDue = overDueDate.length
-        if (nuCust * nuStaff * nuDateCr * nuOverDue == 0) {
+        var value = nuCust * nuStaff * nuDateCr * nuOverDue;
+        alert(value)
+        if (value == 0) {
             $(this).attr('type', 'submit');
         } else {
             $(this).attr('type', 'button');
             $.post('/BillSaleOrderManager/CreateBillOrder', { "CustID": custId, "Description": description, "StaffId": staffId, "OrderDisc": orderDisc, "OrderDate": dataCreate, "OverdueDate": overDueDate }, function () {
                 swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
+                $.ajax({
+                    url: '/BillSaleOrderManager/DetailBill',
+                    data: { "id": id },
+                    type: "Get",
+                    success: function (data) {
+                        $("#buttonEditForBillSaleOrder").show();
+                        $("#buttonpreviousForBillSaleOrder").show();
+                        $("#buttonnextForBillSaleOrder").show();
+                        $("#buttonEditForBillSaleOrder").show();
+                        $("#billsaleorder-list").empty();
+                        $("#billsaleorder-list").append(data);
+                        $.ajax({
+                            url: '/BillSaleOrderManager/ShowListInventoryOfBill',
+                            data: { id: id },
+                            type: "Get",
+                            success: function (data) {
+                                $("#tableInventory").empty();
+                                $("#tableInventory").append(data);
+                            }
+                        })
+                    }
+                })
+
             })
         }
 
+    })
+})
+//Thoat
+$(document).ready(function () {
+    $("#buttonExitCreateBillSaleOrder").click(function () {
+        $.ajax({
+            url: '/BillSaleOrderManager/ListBillView',
+            data: {},
+            type: 'GET',
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                $("#buttonCreateForBillSaleOrder").show();
+                $("#billsaleorder-list").empty();
+                $("#billsaleorder-list").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        })
     })
 })
