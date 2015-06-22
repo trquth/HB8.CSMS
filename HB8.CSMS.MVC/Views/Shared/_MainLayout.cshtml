@@ -13,6 +13,7 @@
     <script src="~/Scripts/jquery-1.9.1.js"></script>
     <script src="~/js/bootstrap.js"></script>
 
+   
     <script src="~/Scripts/jquery.ui.widget.js"></script>
     <script src="~/Scripts/jquery.fileupload.js"></script>
     <script src="~/Scripts/jquery.validate.js"></script>
@@ -24,6 +25,7 @@
     <script src="~/Scripts/jquery.timepicker.js"></script>
     <script src="~/Scripts/jquery.timepicker.min.js"></script>
     <script src="~/Scripts/Highcharts-4.0.1/js/highcharts.js"></script>
+    <script src="~/Scripts/Highcharts-4.0.1/js/highcharts-all.js"></script>
 
     <link href="~/css/sweetalert.css" rel="stylesheet" />
     <link href="~/css/bootstrap-datepicker.css" rel="stylesheet" />
@@ -31,6 +33,7 @@
     <link href="~/css/jquery.fileupload.css" rel="stylesheet" />
     <script src="~/js/bootstrap.js"></script>
     <script src="~/MyjQ/Main.js"></script>
+    
 </head>
 <body>
     <div>
@@ -48,6 +51,7 @@
                     <a class="navbar-brand" href="#">PHẦM MỀM QUẢN LÍ CSMS</a>
                     <a class="navbar-brand" href="javascript:;" id="hoadon">Hóa đơn</a>
                     <a class="navbar-brand" href="javascript:;" id="buonban">Buôn bán</a>
+                    <a class="navbar-brand" href="javascript:;" id="bieudo">Biểu đồ</a>
                     <a class="navbar-brand" href="javascript:;" id="nhanluc">Nhân lực</a>
                 </div>
                 <!-- Top Menu Items -->
@@ -163,11 +167,11 @@
             <div id="page-wrapper">
                 <div class="container-fluid">
                     <!-- Page Heading -->
+                    <div class="new"></div>
                     <div class="row">
                         <div class="col-lg-12" id="content">
                             @RenderBody()
-                        </div>
-
+                        </div>                     
                     </div>
                     <div class="row">
                         <div id="showLoading" style="display:none">

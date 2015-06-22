@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "LogIn";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<form class="form col-md-12 center-block" id="loginForm">
+    <div class="form-group">
+        <input type="text" class="form-control input-lg" placeholder="Mã nhân viên" data-rule-required="true" data-msg-required="Mã nhân viên không được rỗng" id="userId">
+    </div>
+    <div class="form-group">
+        <input type="password" class="form-control input-lg" placeholder="Mật khẩu" data-rule-required="true" data-msg-required="Mật khẩu không được rỗng" id="password">
+    </div>
+    <div class="form-group">
+        <button type="button" class="btn btn-primary btn-lg btn-block" id="btnLogin">Đăng nhập</button>
+    </div>
+</form>
+<script src="~/MyjQ/Login.js"></script>

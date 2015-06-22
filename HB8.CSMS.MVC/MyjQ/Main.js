@@ -194,3 +194,58 @@ $(document).ready(function () {
         });
     })
 })
+//Goi trang chu cua phan HOA DON
+$(document).ready(function () {
+    $("#bieudo").click(function () {
+        $.ajax({
+            url: "/Analyze/Index",
+            data: '{}',
+            type: 'Get',
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                $("#content").empty();
+                $("#content").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");
+                $.ajax({
+                    url: "/Analyze/NavBar",
+                    data: '{}',
+                    type: 'Get',
+                    success: function (data) {
+                        $("#contentNavbar").empty();
+                        $("#contentNavbar").append(data);
+                    }
+                });
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
+    })
+})
+//Doanh so ban hang trong thang
+$(document).ready(function () {
+    $("#dsbanhang").click(function () {
+        $.ajax({
+            url: "/Analyze/ColumnWithRotatedLabels",
+            data: '{}',
+            type: 'Post',
+            success: function (data) {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("close");
+                $("#chart").empty();
+                $("#chart").append(data);
+            },
+            beforeSend: function () {
+                var theDialog = $("#showLoading").dialog(opt);
+                theDialog.dialog("open");               
+            },
+            error: function () {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
+    })
+})

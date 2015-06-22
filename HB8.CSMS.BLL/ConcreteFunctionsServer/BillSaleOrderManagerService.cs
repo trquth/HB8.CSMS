@@ -175,5 +175,16 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             });
             return result;
         }
+
+
+        public IEnumerable<BillSaleOrderDomain> GetNameAndTotal()
+        {
+            var items = context.Orders.GetAllItem().GroupBy(x => x.CustID);
+            IEnumerable<BillSaleOrderDomain> result = items.Select(x => new BillSaleOrderDomain
+            {
+                TotalAmt = x.Sum(c => c.TaxAmt + c.TotalAmt),
+            });
+            return result;
+        }
     }
 }

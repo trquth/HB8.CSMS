@@ -52,7 +52,7 @@ namespace HB8.CSMS.MVC.Controllers
         {
             object[] value = TotalAmt();
             Highcharts chart = new Highcharts("chart")
-                .InitChart(new Chart { DefaultSeriesType = ChartTypes.Column, Margin = new[] { 50, 50, 100, 80 } })
+                .InitChart(new Chart { DefaultSeriesType = ChartTypes.Column, Margin = new[] { 10, 10, 30, 20 } })
                 .SetTitle(new Title { Text = "Doanh số bán hàng trong năm 2015" })
                 .SetXAxis(new XAxis
                 {
@@ -94,10 +94,13 @@ namespace HB8.CSMS.MVC.Controllers
                     Data = new Data(value),
                 });
 
+            //return PartialView("ColumnWithRotatedLabels", chart);
             return View(chart);
+
         }
         public ActionResult PieWithLegend()
         {
+
             Highcharts chart = new Highcharts("chart")
                 .InitChart(new Chart { PlotShadow = false, PlotBackgroundColor = null, PlotBorderWidth = null })
                 .SetTitle(new Title { Text = "Browser market shares at a specific website, 2010" })
@@ -116,24 +119,29 @@ namespace HB8.CSMS.MVC.Controllers
                 {
                     Type = ChartTypes.Pie,
                     Name = "Browser share",
-                    Data = new Data(new object[]
-                    {
-                        new object[] { "Firefox", 45.0 },
-                        new object[] { "IE", 26.8 },
-                        new DotNet.Highcharts.Options.Point
-                        {
-                            Name = "Chrome",
-                            Y = 12.8,
-                            Sliced = true,
-                            Selected = true
-                        },
-                        new object[] { "Safari", 8.5 },
-                        new object[] { "Opera", 6.2 },
-                        new object[] { "Others", 0.7 }
-                    })
+                    Data = new Data(billSaleOrderService.GetNameAndTotal().Select(x => new { x.CustName, x.TotalAmt }).ToArray())
                 });
 
             return View(chart);
+        }
+        public ActionResult ChartPartialView()
+        {
+            return View("ChartPartialView");
+        }
+        #endregion
+        #region Start Chart
+
+        #endregion
+        #region Trang Index
+        public ActionResult Index()
+        {
+            return PartialView("IndexPartialView");
+        }
+        #endregion
+        #region Show NAVBAR
+        public ActionResult NavBar()
+        {
+            return PartialView("PanelForChartPartialView");
         }
         #endregion
 
