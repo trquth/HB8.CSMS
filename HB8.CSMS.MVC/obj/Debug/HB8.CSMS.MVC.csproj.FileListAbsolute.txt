@@ -85,3 +85,4 @@ D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\System.Web.Http.WebHost.dll
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\System.Net.Http.Formatting.xml
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\System.Web.Http.xml
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\System.Web.Http.WebHost.xml
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC\bin\DotNet.Highcharts.dll

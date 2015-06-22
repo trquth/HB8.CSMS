@@ -70,5 +70,16 @@ namespace HB8.CSMS.BLL.Abstract
         /// <param name="staff"></param>
         /// <returns></returns>
         int Cancel(int id);
+        /// <summary>
+        /// Lay danh sach khach hang mua hang
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<BillSaleOrderDomain> GetCustomerNames();
+        /// <summary>
+        /// Tong tien cho moi don hang cua tung khach hang
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<BillSaleOrderDomain> TotalAmt();
+
     }
 }
