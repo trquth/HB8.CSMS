@@ -33,6 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Moq, Version=4.2.1506.2016, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
@@ -121,8 +129,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL_Test\BillSaleOrderManagerServiceTest.cs" />
+    <Compile Include="BLL_Test\CustomerManagerServiceTest.cs" />
+    <Compile Include="BLL_Test\InventoryManagerServiceTest.cs" />
     <Compile Include="BLL_Test\StaffManagerServiceTest.cs" />
     <Compile Include="DAL_Test\StaffRepositoryTest.cs" />
+    <Compile Include="MVC_Test\BillSaleOrderControllerTest.cs" />
+    <Compile Include="MVC_Test\CustomerControllerTest.cs" />
+    <Compile Include="MVC_Test\InventoryControllerTest.cs" />
+    <Compile Include="MVC_Test\StaffControllerTest.cs" />
+    <Compile Include="MVC_Test\UploadControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -150,6 +166,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -85,3 +85,5 @@ D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\nunit.util.dll
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\NUnit.VisualStudio.TestAdapter.dll
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\Moq.xml
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\nunit.framework.xml
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\EntityFramework.SqlServer.dll
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\EntityFramework.SqlServer.xml
