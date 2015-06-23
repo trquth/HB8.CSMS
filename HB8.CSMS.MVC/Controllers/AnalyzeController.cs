@@ -1,7 +1,4 @@
-﻿using DotNet.Highcharts;
-using DotNet.Highcharts.Enums;
-using DotNet.Highcharts.Helpers;
-using DotNet.Highcharts.Options;
+﻿
 using HB8.CSMS.BLL.Abstract;
 using System;
 using System.Collections.Generic;
@@ -9,6 +6,12 @@ using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using HB8.CSMS.MVC.Models.BillSaleOrder;
+using HB8.CSMS.MVC.Models.ChartModel;
+using DotNet.Highcharts;
+using DotNet.Highcharts.Options;
+using DotNet.Highcharts.Enums;
+using DotNet.Highcharts.Helpers;
 
 namespace HB8.CSMS.MVC.Controllers
 {
@@ -48,15 +51,65 @@ namespace HB8.CSMS.MVC.Controllers
             }
             return objects;
         }
-        public ActionResult ColumnWithRotatedLabels()
+
+        #endregion
+        #region Bieu do san pham ban chay nhat trong thang
+        //Danh sach san pham ban chay nhat
+        private string[] GetInventoryName(int? month)
         {
-            object[] value = TotalAmt();
+            if (month == null)
+            {
+                month = DateTime.Now.Month;
+                var bills = billSaleOrderService.GetListBill().Where(x => x.OrderDate.Value.Month == month);
+                var detailBill = billSaleOrderService.GetListBillDetail();
+                var detailBillsGroup = detailBill.GroupBy(x => x.InvtID);
+                int number = detailBill.GroupBy(x => x.InvtID).Count();
+                string[] name = new string[number];
+                int i = 0;
+                foreach (var detail in detailBillsGroup)
+                {
+                    foreach (var item in bills)
+                    {
+                        //if (item.SOrderNo == detail.SOrderNo)
+                        //{
+                        //    name[i] = detail.InvtName;
+                        //    i++;
+                        //}
+                    }
+                   
+                }
+
+                return name;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+        private object[] TotalQuantity()
+        {
+            int number = billSaleOrderService.GetListBill().GroupBy(x => x.CustID).Count();
+            object[] objects = new object[number];
+            var model = billSaleOrderService.TotalAmt();
+            int i = 0;
+            foreach (var item in model)
+            {
+                objects[i] = item.TotalAmt;
+                i++;
+            }
+            return objects;
+        }
+        #endregion
+        #region
+        public ActionResult ChartForInventoryThisMonth()
+        {
             Highcharts chart = new Highcharts("chart")
-                .InitChart(new Chart { DefaultSeriesType = ChartTypes.Column, Margin = new[] { 10, 10, 30, 20 } })
-                .SetTitle(new Title { Text = "Doanh số bán hàng trong năm 2015" })
+                .InitChart(new Chart { DefaultSeriesType = ChartTypes.Column, Margin = new[] { 50, 50, 100, 80 } })
+                .SetTitle(new Title { Text = "Danh sách mặt hàng trong tháng " + DateTime.Now.Month })
                 .SetXAxis(new XAxis
                 {
-                    Categories = GetCustomerName(),
+                    Categories = GetInventoryName(null),
                     Labels = new XAxisLabels
                     {
                         Rotation = -45,
@@ -67,7 +120,7 @@ namespace HB8.CSMS.MVC.Controllers
                 .SetYAxis(new YAxis
                 {
                     Min = 0,
-                    Title = new YAxisTitle { Text = "Population (millions)" }
+                    Title = new YAxisTitle { Text = "Tổng doanh thu" }
                 })
                 .SetLegend(new Legend { Enabled = false })
                 .SetTooltip(new Tooltip { Formatter = "TooltipFormatter" })
@@ -91,46 +144,17 @@ namespace HB8.CSMS.MVC.Controllers
                 .SetSeries(new Series
                 {
                     Name = "Population",
-                    Data = new Data(value),
+                    Data = new Data(TotalAmt()),
                 });
 
-            //return PartialView("ColumnWithRotatedLabels", chart);
-            return View(chart);
-
-        }
-        public ActionResult PieWithLegend()
-        {
-
-            Highcharts chart = new Highcharts("chart")
-                .InitChart(new Chart { PlotShadow = false, PlotBackgroundColor = null, PlotBorderWidth = null })
-                .SetTitle(new Title { Text = "Browser market shares at a specific website, 2010" })
-                .SetTooltip(new Tooltip { Formatter = "function() { return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %'; }" })
-                .SetPlotOptions(new PlotOptions
-                {
-                    Pie = new PlotOptionsPie
-                    {
-                        AllowPointSelect = true,
-                        Cursor = Cursors.Pointer,
-                        DataLabels = new PlotOptionsPieDataLabels { Enabled = false },
-                        ShowInLegend = true
-                    }
-                })
-                .SetSeries(new Series
-                {
-                    Type = ChartTypes.Pie,
-                    Name = "Browser share",
-                    Data = new Data(billSaleOrderService.GetNameAndTotal().Select(x => new { x.CustName, x.TotalAmt }).ToArray())
-                });
-
-            return View(chart);
-        }
-        public ActionResult ChartPartialView()
-        {
-            return View("ChartPartialView");
+            return PartialView("ChartForBillThisMonth", chart);
         }
         #endregion
         #region Start Chart
-
+        public ActionResult ShowIndex()
+        {
+            return View();
+        }
         #endregion
         #region Trang Index
         public ActionResult Index()

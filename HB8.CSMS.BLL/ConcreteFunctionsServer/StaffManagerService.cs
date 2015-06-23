@@ -38,21 +38,15 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             context.Save();
             return 0;
         }
-
-
         public IEnumerable<Staff> GetListStaff()
         {
             return context.Staffs.GetAllItem();
 
         }
-
-
         public Staff GetStaffById(string id)
         {
             return context.Staffs.GetItemById(id);
         }
-
-
         public int UpdateStaff(StaffDomain staff)
         {
             var model = context.Staffs.GetItemById(staff.ID);

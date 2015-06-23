@@ -8,6 +8,7 @@ namespace HB8.CSMS.BLL.DomainModels
 {
     public class StaffDomain
     {
+        public StaffDomain() { }
         public StaffDomain(string id, string userId, string staffName,string image ,string address, string numberPhone, string email,string confirmPass)
         {
             ID =id;

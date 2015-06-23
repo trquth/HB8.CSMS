@@ -85,6 +85,11 @@ namespace HB8.CSMS.BLL.Abstract
         /// </summary>
         /// <returns></returns>
         IEnumerable<BillSaleOrderDomain> GetNameAndTotal();
+        /// <summary>
+        /// Tra ve danh sach chi tiet hoa don
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<BillSaleOrderDomain> GetListBillDetail();
 
     }
 }

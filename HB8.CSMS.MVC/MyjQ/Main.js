@@ -102,7 +102,7 @@ $(document).ready(function () {
             },
             beforeSend: function () {
                 var theDialog = $("#showLoading").dialog(opt);
-                theDialog.dialog("open");              
+                theDialog.dialog("open");
             },
         });
     })
@@ -230,18 +230,19 @@ $(document).ready(function () {
 $(document).ready(function () {
     $("#dsbanhang").click(function () {
         $.ajax({
-            url: "/Analyze/ColumnWithRotatedLabels",
+            url: "/Analyze/ChartForBillThisMonth",
             data: '{}',
-            type: 'Post',
+            type: 'GET',
             success: function (data) {
                 var theDialog = $("#showLoading").dialog(opt);
                 theDialog.dialog("close");
                 $("#chart").empty();
                 $("#chart").append(data);
+       
             },
             beforeSend: function () {
                 var theDialog = $("#showLoading").dialog(opt);
-                theDialog.dialog("open");               
+                theDialog.dialog("open");
             },
             error: function () {
                 swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });

@@ -186,5 +186,19 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             });
             return result;
         }
+
+
+        public IEnumerable<BillSaleOrderDomain> GetListBillDetail()
+        {
+            var items = context.OrderDetails.GetAllItem();
+            IEnumerable<BillSaleOrderDomain> result = items.Select(x => new BillSaleOrderDomain
+            {
+                SOrderNo = x.SOrderNo,
+                InvtName = x.Inventory.InvtName,
+                InvtID =x.InvtID,
+                Qty = x.Qty,
+            });
+            return result;
+        }
     }
 }

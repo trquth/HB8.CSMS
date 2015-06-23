@@ -16,7 +16,7 @@ namespace HB8.CSMS.MVC
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Analyze", action = "ChartPartialView", id = UrlParameter.Optional }
+                defaults: new { controller = "Analyze", action = "ShowIndex", id = UrlParameter.Optional }
             );
         }
     }

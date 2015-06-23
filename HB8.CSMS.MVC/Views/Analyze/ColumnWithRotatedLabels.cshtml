@@ -1,9 +1,6 @@
-﻿@*@{
-    ViewBag.Title = "ColumnWithRotatedLabelsK";
-    Layout = "~/Views/Shared/_MainLayout.cshtml";
-}*@
+﻿
 @model DotNet.Highcharts.Highcharts
-<div class="col-lg-12">
+@*<div class="col-lg-12">
     <div class="btn-toolbar" role="toolbar" aria-label="...">
         <div class="btn-group" role="group" aria-label="...">
             <button type="button" class="btn btn-default"><span class="fa fa-bar-chart"></span></button>
@@ -11,10 +8,8 @@
         </div>
     </div>
     <hr />
-</div>
+</div>*@
 @(Model)
-<script src="~/Scripts/Highcharts-4.0.1/js/highcharts.js"></script>
-<script src="~/Scripts/Highcharts-4.0.1/js/highcharts-all.js"></script>
 <script type="text/javascript">
     function TooltipFormatter() {
         return '<b>' + this.x + '</b><br/>' +

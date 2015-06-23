@@ -1,0 +1,13 @@
+﻿@model DotNet.Highcharts.Highcharts
+@{
+    ViewBag.Title = "ChartForBillThisMonth";
+    Layout = "~/Views/Shared/_ContentLayout.cshtml";
+}
+@(Model)
+<script type="text/javascript">
+    function TooltipFormatter() {
+        return '<b>' + this.x + '</b><br/>' +
+                'Tổng tiền trên hóa đơn:' + Highcharts.numberFormat(this.y, 1) +
+                ' triệu';
+    }
+</script>

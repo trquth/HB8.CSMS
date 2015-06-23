@@ -77,3 +77,11 @@ D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\System.Net.Http.Formatting.xml
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\System.Web.Http.xml
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\System.Web.Http.WebHost.xml
 D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\DotNet.Highcharts.dll
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\Moq.dll
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\nunit.core.dll
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\nunit.core.interfaces.dll
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\nunit.framework.dll
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\nunit.util.dll
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\NUnit.VisualStudio.TestAdapter.dll
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\Moq.xml
+D:\GitHub\HB8.CSMS\HB8.CSMS.MVC.Tests\bin\Debug\nunit.framework.xml
