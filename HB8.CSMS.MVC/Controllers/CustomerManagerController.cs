@@ -15,7 +15,7 @@ namespace HB8.CSMS.MVC.Controllers
     {
         #region Khai bao
         private ICustomerManagerService customerService;
-        public const int pageSize = 1;//So nhan vien duoc hien thi tren mot trang
+        public const int pageSize = 5;//So nhan vien duoc hien thi tren mot trang
         public CustomerManagerController(ICustomerManagerService customerService)
         {
             this.customerService = customerService;
@@ -208,9 +208,13 @@ namespace HB8.CSMS.MVC.Controllers
             model.Email = item.Email;
             model.StatusID = item.StatusID;
             model.Description = item.Description;
-            model.BirthDate = (DateTime)item.BirthDate;
+            if (item.BirthDate!=null)
+            {
+                model.BirthDate = (DateTime)item.BirthDate;
+            }            
             model.CreateDate = item.CreateDate;
             model.Image = item.Image;
+            model.StatusName = item.StatusName;
             return model;
         }
         /// <summary>
@@ -342,6 +346,21 @@ namespace HB8.CSMS.MVC.Controllers
         public ActionResult CallBackCustomerPartialView(int page)
         {
             return PartialView("CustomerPartialView", GetCustomerAfterEdit(page));
+        }
+        /// <summary>
+        /// Hien danh sach trang thai
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DropdownListStatus()
+        {
+            var model = customerService.GetListStatus();
+            var data = (from a in model
+                        select new CustomerModel
+                        {
+                            StatusID = a.StatusId,
+                            StatusName = a.StatusName,
+                        }).OrderBy(x => x.StatusName);
+            return PartialView("DropdownListStatus", data);
         }
        
         #endregion     

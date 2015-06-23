@@ -79,6 +79,7 @@ $("#buttonCreateForStaff").button().click(function () {
             theDialog.dialog("close");
             $("#btnloadstaff").hide();
             $("#buttonCreateForStaff").hide();
+            $("#countStaff").hide();
             $("#staff-list").empty().append(data);
         },
         beforeSend: function () {
@@ -152,8 +153,8 @@ $("#buttonEditForStaff").click(function () {
 })
 //Hien thong bao cho nguoi dung co dong y xoa hay khong
 $(".buttonDelete").button().click(function () {
-    $(".buttonEdit").attr('disabled', 'disabled');
-    $(".buttonCreate").attr('disabled', 'disabled');
+    $("#buttonEditForStaff").attr('disabled', 'disabled');
+    $("#buttonCreateForStaff").attr('disabled', 'disabled');
     $(".buttonDelete").attr('disabled', 'disabled');
     //Open the dialog box
 
@@ -189,19 +190,30 @@ $(".okDelete").button().click(function () {
     $('.buttonCreate').prop("disabled", false);
     $('.buttonDelete').prop("disabled", false);
     // Close the dialog box on Yes button is clicked
-    $("#deleteForm").dialog("close");
+    var theDialog = $("#deleteFormStaff").dialog(optforDel);
+    theDialog.dialog("close");
     $.ajax({
         // Call Delete action method
         url: "/StaffManager/DeleteStaff",
         data: { id: selectedId },
         type: 'Get',
         success: function (msg) {
-
-            window.location.reload(true);
+            $.ajax({
+                url: '/StaffManager/ReturnIndex',
+                data: {},
+                type: 'GET',
+                success: function (data) {
+                    $("#staff-list").empty();
+                    $("#btnloadstaff").show();
+                    $(".countStaff").hide();
+                    $("#buttonCreateForStaff").show();
+                    $("#staff-list").append(data);
+                },
+            })
         },
         beforeSend: function () {
             //$("#showspinner").html("<center><i class='fa fa-spinner fa-spin fa-5x ' id='spinner'></i></center>").delay(10000000).fadeOut();
-            $("#showspinnerForm").dialog("open");
+            //$("#showspinnerForm").dialog("open");
         },
         error: function (xhr) {
             swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
@@ -298,7 +310,7 @@ $(document).ready(function () {
             autoOpen: false,
         });
         $.ajax({
-            url: '/StaffManager/ListStaff',
+            url: '/StaffManager/ReturnIndex',
             data: {},
             type: 'GET',
             success: function (data) {
@@ -494,6 +506,7 @@ $(".buttonCreateForCustomer").button().click(function () {
             theDialog.dialog("close");
             $("#btnloadcustomer").hide();
             $(".buttonCreateForCustomer").hide();
+            $("#buttonEditForCustomer").hide();
             $("#customer-list").empty().append(data);
         },
         beforeSend: function () {
@@ -646,6 +659,7 @@ $(document).ready(function () {
                 theDialog.dialog("close");
                 $("#btnloadcustomer").hide();
                 $("#buttonEditForCustomer").hide();
+                $(".countCustomer").hide();
                 $("#customer-list").empty();
                 $("#customer-list").append(data);
 
@@ -701,6 +715,8 @@ $(document).ready(function () {
                 $("#buttonEditForCustomer").show();
                 $("#buttonpreviousForCustomer").show();
                 $("#buttonnextForCustomer").show();
+                $(".buttonCreateForCustomer").show();
+                $(".countCustomer").show();
                 $("#customer-list").empty();
                 $("#customer-list").append(data);
             },

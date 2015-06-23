@@ -21,14 +21,42 @@ namespace HB8.CSMS.MVC.Controllers
     public class StaffManagerController : Controller
     {
         #region  Khai bao
-        public const int pageSize = 2;//So nhan vien duoc hien thi tren mot trang
+        public const int pageSize = 10;//So nhan vien duoc hien thi tren mot trang
         private IStaffManagerService staffService;
-        public StaffManagerController(IStaffManagerService staffService)
+        private IBillSaleOrderManagerService billSaleOrderService;
+        private IInventoryManagerService inventoryService;
+        public StaffManagerController(IStaffManagerService staffService, IInventoryManagerService inventoryService, IBillSaleOrderManagerService billSaleOrderService)
         {
             this.staffService = staffService;
+            this.inventoryService = inventoryService;
+            this.billSaleOrderService = billSaleOrderService;
         }
         #endregion
         #region Code show danh sach nhan vien dang GRID VIEW
+        public ActionResult ReturnIndex()
+        {
+            var staff = new PagedData<StaffModel>();
+            var model = staffService.GetListStaff();
+            int count = model.Count();
+            var listOfStaff = (from a in model
+                               select new StaffModel
+                               {
+                                   Image = a.Image,
+                                   ID = a.StaffID,
+                                   StaffName = a.StaffName,
+                                   NumberPhone = a.NumberPhone,
+                                   Address = a.Address,
+                                   UserId = a.UserId,
+                                   Deleted = a.Deleted
+                               }).ToList();
+            //staff.Data = listOfStaff.Take(pageSize);
+            staff.Data = listOfStaff;
+            staff.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
+            staff.CurrentPage = 1;
+            staff.Count = count;
+            staff.PageSize = pageSize;
+            return PartialView("LargeStaffPartialView", staff);
+        }
         public ActionResult Index()
         {
             var staff = new PagedData<StaffModel>();
@@ -37,12 +65,16 @@ namespace HB8.CSMS.MVC.Controllers
             var listOfStaff = (from a in model
                                select new StaffModel
                                {
+                                   Image = a.Image,
                                    ID = a.StaffID,
                                    StaffName = a.StaffName,
                                    NumberPhone = a.NumberPhone,
-                                   Address = a.Address
+                                   Address = a.Address,
+                                   UserId = a.UserId,
+                                   Deleted = a.Deleted
                                }).ToList();
-            staff.Data = listOfStaff.Take(pageSize);
+            //staff.Data = listOfStaff.Take(pageSize);
+            staff.Data = listOfStaff;
             staff.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
             staff.CurrentPage = 1;
             staff.Count = count;
@@ -68,12 +100,15 @@ namespace HB8.CSMS.MVC.Controllers
             var listOfStaff = (from a in model
                                select new StaffModel
                                {
+                                   Image = a.Image,
                                    ID = a.StaffID,
                                    StaffName = a.StaffName,
                                    NumberPhone = a.NumberPhone,
-                                   Address = a.Address
+                                   Address = a.Address,
+                                   Deleted = a.Deleted
                                }).ToList();
-            staff.Data = listOfStaff.Take(pageSize);
+            //staff.Data = listOfStaff.Take(pageSize);
+            staff.Data = listOfStaff;
             staff.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
             staff.CurrentPage = 1;
             staff.Count = count;
@@ -101,7 +136,8 @@ namespace HB8.CSMS.MVC.Controllers
                                    Address = a.Address,
                                    NumberPhone = a.NumberPhone,
                                    Email = a.Email,
-                                   UserName = a.User.UserName
+                                   UserName = a.User.UserName,
+                                   Deleted =a.Deleted
                                }).Skip(skipRecords).Take(pageSize).ToList();
             staff.Data = listOfStaff;
             staff.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
@@ -350,13 +386,44 @@ namespace HB8.CSMS.MVC.Controllers
         /// <param name="id"></param>
         public void DeleteStaff(string id)
         {
-            staffService.DeleteStaff(id);
+            bool check = CheckStaffBeforeDelete(id);
+            if (check)
+            {
+                staffService.DeleteStaff(id);
+            }
+            else
+            {
+                staffService.DeleteStaffIfStaffExit(id);
+            }
+
         }
         /// <summary>
-        /// Hien thong tin chi tiet cua nhan vien
+        /// Kiem tra xem co the xoa nhan vien nay duoc khong
         /// </summary>
-        /// <param name="staffId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
+        public bool CheckStaffBeforeDelete(string id)
+        {
+            string staffID = id.ToLower();
+            var listInventory = inventoryService.GetListInventory();
+            var listBill = billSaleOrderService.GetListBill();
+            foreach (var item in listInventory)
+            {
+                if (item.StaffId.ToLower().Equals(staffID))
+                {
+                    return false;
+                }
+            }
+            foreach (var item in listBill)
+            {
+                if (item.StaffID.ToLower().Equals(staffID))
+                {
+                    return false;
+                }
+            }
+            return true;
+
+        }
         #region Code xu li Next va Privous
         /// <summary>
         /// Lay Ma khach hang tiep theo

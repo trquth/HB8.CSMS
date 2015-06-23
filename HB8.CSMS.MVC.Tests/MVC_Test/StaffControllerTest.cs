@@ -35,8 +35,10 @@ namespace HB8.CSMS.MVC.Tests.MVC_Test
         {
             IDALContext content = new DALContext();
             IStaffManagerService context = new StaffManagerService(content);
+            IBillSaleOrderManagerService billSaleOrderService = new BillSaleOrderManagerService(content);
+            IInventoryManagerService inventoryService = new InventoryManagerService(content);
             string expectView = "IndexPartialView";
-            var staffController = new StaffManagerController(context);
+            var staffController = new StaffManagerController(context,inventoryService,billSaleOrderService);
             var result = staffController.Index() as PartialViewResult;
             Assert.AreEqual(expectView, result.ViewName);
         }
@@ -45,7 +47,9 @@ namespace HB8.CSMS.MVC.Tests.MVC_Test
         {
             IDALContext content = new DALContext();
             IStaffManagerService context = new StaffManagerService(content);
-            var staffController = new StaffManagerController(context);
+            IBillSaleOrderManagerService billSaleOrderService = new BillSaleOrderManagerService(content);
+            IInventoryManagerService inventoryService = new InventoryManagerService(content);
+            var staffController = new StaffManagerController(context,inventoryService,billSaleOrderService);
             string id = "ABC10";
             StaffModel result = staffController.GetStaffByStaffId(id);
             Assert.IsNotNull(result);

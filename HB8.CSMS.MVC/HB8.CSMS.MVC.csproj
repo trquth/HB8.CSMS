@@ -419,6 +419,7 @@
     <Content Include="Views\Analyze\ChartForBillThisMonth.cshtml" />
     <Content Include="Views\Shared\_ContentLayout.cshtml" />
     <Content Include="Views\Analyze\ChartForInventoryThisMonth.cshtml" />
+    <Content Include="Views\CustomerManager\DropdownListStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

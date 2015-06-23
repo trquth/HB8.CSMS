@@ -1,0 +1,8 @@
+﻿@model IEnumerable<HB8.CSMS.MVC.Models.Customer.CustomerModel>
+<select id="" class="form-control" data-rule-required="true" data-msg-required="Trạng thái không được rỗng">
+    <option selected="selected" value="">--Chọn trạng thái--</option>
+    @foreach (var item in Model)
+    {
+        <option selected="@item.StatusID" value="">@item.StatusName</option>
+    }
+</select>

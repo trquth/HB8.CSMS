@@ -14,13 +14,13 @@ namespace HB8.CSMS.MVC.Controllers
     public class InventoryManagerController : Controller
     {
         #region Variables
-        public const int pageSize = 2;//So san pham duoc hien thi tren mot trang
+        public const int pageSize = 10;//So san pham duoc hien thi tren mot trang
         private IInventoryManagerService inventoryService;
         public InventoryManagerController(IInventoryManagerService inventoryService)
         {
             this.inventoryService = inventoryService;
         }
-        #endregion 
+        #endregion
         #region Show Large View
         public ActionResult Index()
         {
@@ -37,7 +37,7 @@ namespace HB8.CSMS.MVC.Controllers
             var inventory = GetInventoryForListPage();
             return View("ListInventory", inventory);
         }
-        #endregion    
+        #endregion
         #region Action For Dropdownlist
         /// <summary>
         /// Lay  danh sach cac nhom san pham
@@ -147,7 +147,7 @@ namespace HB8.CSMS.MVC.Controllers
             var model = new PagedData<InventoryModel>();
             model.Count = count;
             model.Index = index;
-            return Json(model,JsonRequestBehavior.AllowGet);
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
         #endregion
         #region Show List View
@@ -226,24 +226,23 @@ namespace HB8.CSMS.MVC.Controllers
             var model = inventoryService.GetListInventory();
             int count = model.Count();
             var listOfInventory = (from item in model
-                               select new InventoryModel
-                               {
-                                   InvtID = item.InvtID,
-                                   InvtName = item.InvtName,
-                                   ClassName = item.Class.ClassName,
-                                   UnitRate = (int)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().UnitRate,
-                                   QtyStock = item.QtyStock,
-                                   Description = item.Description,
-                                   StaffName = item.Staff.StaffName,
-                                   StockName = item.Stock.StockName,
-                                   SalePrice_L = (decimal)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate == null).First().SalePrice,
-                                   SalePrice_T = (decimal)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().SalePrice,
-                                   Image = item.Image,
-                                   UnitName_L = item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate == null).First().Unit.UnitName,
-                                   UnitName_T = item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().Unit.UnitName,
-                                   StInvetoryName = item.StatusIventory.StInvetoryName,
-                                   SlsTax = item.SlsTax,
-                               }).Skip(skipRecords).Take(pageSize).ToList();
+                                   select new InventoryModel
+                                   {
+                                       InvtID = item.InvtID,
+                                       InvtName = item.InvtName,
+                                       ClassName = item.Class.ClassName,
+                                       UnitRate = (int)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().UnitRate,
+                                       QtyStock = item.QtyStock,
+                                       Description = item.Description,
+                                       StockName = item.Stock.StockName,
+                                       SalePrice_L = (decimal)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate == null).First().SalePrice,
+                                       SalePrice_T = (decimal)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().SalePrice,
+                                       Image = item.Image,
+                                       UnitName_L = item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate == null).First().Unit.UnitName,
+                                       UnitName_T = item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().Unit.UnitName,
+                                       StInvetoryName = item.StatusIventory.StInvetoryName,
+                                       SlsTax = item.SlsTax,
+                                   }).Skip(skipRecords).Take(pageSize).ToList();
             inventories.Data = listOfInventory;
             inventories.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
             inventories.Count = count;
@@ -258,27 +257,26 @@ namespace HB8.CSMS.MVC.Controllers
         public PagedData<InventoryModel> GetInventoryForListPage()
         {
             var inventory = new PagedData<InventoryModel>();
-            var model = inventoryService.GetListInventory();
-            int count = model.Count();
-            var listOfInventory = (from item in model
-                               select new InventoryModel
-                               {
-                                   InvtID = item.InvtID,
-                                   InvtName = item.InvtName,
-                                   ClassName = item.Class.ClassName,
-                                   UnitRate = (int)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().UnitRate,
-                                   QtyStock = item.QtyStock,
-                                   Description = item.Description,
-                                   StaffName = item.Staff.StaffName,
-                                   StockName = item.Stock.StockName,
-                                   SalePrice_L = (decimal)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate == null).First().SalePrice,
-                                   SalePrice_T = (decimal)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().SalePrice,
-                                   Image = item.Image,
-                                   UnitName_L = item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate == null).First().Unit.UnitName,
-                                   UnitName_T = item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().Unit.UnitName,
-                                   StInvetoryName = item.StatusIventory.StInvetoryName,
-                                   SlsTax = item.SlsTax,
-                               }).ToList();
+            var listInventory = inventoryService.GetListInventory();
+            int count = listInventory.Count();
+            var listOfInventory = (from item in listInventory
+                                   select new InventoryModel
+                                   {
+                                       InvtID = item.InvtID,
+                                       InvtName = item.InvtName,
+                                       ClassName = item.Class.ClassName,
+                                       UnitRate = (int)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().UnitRate,
+                                       QtyStock = item.QtyStock,
+                                       Description = item.Description,
+                                       StockName = item.Stock.StockName,
+                                       SalePrice_L = (decimal)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate == null).First().SalePrice,
+                                       SalePrice_T = (decimal)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().SalePrice,
+                                       Image = item.Image,
+                                       UnitName_L = item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate == null).First().Unit.UnitName,
+                                       UnitName_T = item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().Unit.UnitName,
+                                       StInvetoryName = item.StatusIventory.StInvetoryName,
+                                       SlsTax = item.SlsTax,
+                                   }).ToList();
             inventory.Data = listOfInventory.Take(pageSize);
             inventory.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
             inventory.CurrentPage = 1;
@@ -360,7 +358,7 @@ namespace HB8.CSMS.MVC.Controllers
         /// <returns></returns>
         public string FindNextID(string id)
         {
-            string lastId = inventoryService.GetListInventory().LastOrDefault().InvtID.ToString(); 
+            string lastId = inventoryService.GetListInventory().LastOrDefault().InvtID.ToString();
             //Kiem tra xem MSP vua nhan co phai la MSP cuoi cung k
             if (lastId == id)
             {
@@ -386,7 +384,7 @@ namespace HB8.CSMS.MVC.Controllers
             }
             else
             {
-                string previousId = inventoryService.GetListInventory().TakeWhile(x => x.InvtID != id).LastOrDefault().InvtID.ToString(); 
+                string previousId = inventoryService.GetListInventory().TakeWhile(x => x.InvtID != id).LastOrDefault().InvtID.ToString();
                 return previousId;
             }
         }

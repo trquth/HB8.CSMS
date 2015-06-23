@@ -1,20 +1,144 @@
 ﻿@model HB8.CSMS.MVC.Models.Paging.PagedData<HB8.CSMS.MVC.Models.Staff.StaffModel>
-@{
-    foreach (var item in Model.Data)
-    {
-        <div class="col-md-4 gridView">
-            <div class=" col-md-4 thumbnail">
-                <img src="~/Images/no_image.jpg" class="img-rounded" width="110" alt="" />
+@*@{
+        foreach (var item in Model.Data)
+        {
+            <div class="col-md-4 gridView">
+                <div class=" col-md-4 thumbnail">
+                    @if (item.Image != null)
+                    {
+                        <img src="~/Images/StaffImages/@item.Image" class="img-rounded" width="110" alt="" />
+                    }
+                    else
+                    {
+                        <img src="~/Images/no_image.jpg" class="img-rounded" width="110" alt="" />
+                    }
+
+                </div>
+                <div class="caption col-md-8">
+                    <a class="detailstaff" href="javascript:;" value="@item.ID"><h4 id="getname">@item.StaffName</h4></a>
+                    <p id="getaddress">@item.Address</p>
+                    <p id="getphone">@item.NumberPhone</p>
+                    <input type="hidden" class="getnumberpages" value="@Model.NumberOfPages" />
+                    <input type="hidden" class="count" value="@Model.Count" />
+                    <input type="hidden" class="pagesize" value="@Model.PageSize" />
+                </div>
             </div>
-            <div class="caption col-md-8">
-                <a class="detailstaff" href="javascript:;" value="@item.ID"><h4 id="getname">@item.StaffName</h4></a>
-                <p id="getaddress">@item.Address</p>
-                <p id="getphone">@item.NumberPhone</p>
-                <input type="hidden" class="getnumberpages" value="@Model.NumberOfPages" />
-                <input type="hidden" class="count" value="@Model.Count" />
-                <input type="hidden" class="pagesize" value="@Model.PageSize" />
-            </div>
-        </div>
+        }
+    }*@
+<div class="col-lg-12 change-color">
+    <h4>Quản lí</h4>
+    @{
+        foreach (var item in Model.Data)
+        {
+            if (item.UserId == "AD")
+            {
+                <div class="col-md-4 gridView">
+                    <div class=" col-md-4 thumbnail">
+                        @if (item.Image != null)
+                        {
+                            <img src="~/Images/StaffImages/@item.Image" class="img-rounded" width="110" alt="" />
+                        }
+                        else
+                        {
+                            <img src="~/Images/no_image.jpg" class="img-rounded" width="110" alt="" />
+                        }
+
+                    </div>
+                    <div class="caption col-md-8">
+                        <a class="detailstaff" href="javascript:;" value="@item.ID"><p id="getname">@item.StaffName</p></a>
+                        <p id="getaddress">@item.Address</p>
+                        <p id="getphone">@item.NumberPhone</p>
+                        @if (item.Deleted != null)
+                        {
+                            <p style="color:#ff0000">Nhân viên này đã bị xóa</p>
+                        }
+                        <input type="hidden" class="getnumberpages" value="@Model.NumberOfPages" />
+                        <input type="hidden" class="count" value="@Model.Count" />
+                        <input type="hidden" class="pagesize" value="@Model.PageSize" />
+                    </div>
+                </div>
+            }
+
+        }
     }
-}
+    <hr />
+</div>
+
+<div class="col-lg-12 change-color">
+    <h4>Kiểm kho</h4>
+    @{
+        foreach (var item in Model.Data)
+        {
+            if (item.UserId == "KK")
+            {
+                <div class="col-md-4 gridView">
+                    <div class=" col-md-4 thumbnail">
+                        @if (item.Image != null)
+                        {
+                            <img src="~/Images/StaffImages/@item.Image" class="img-rounded" width="110" alt="" />
+                        }
+                        else
+                        {
+                            <img src="~/Images/no_image.jpg" class="img-rounded" width="110" alt="" />
+                        }
+
+                    </div>
+                    <div class="caption col-md-8">
+                        <a class="detailstaff" href="javascript:;" value="@item.ID"><p id="getname">@item.StaffName</p></a>
+                        <p id="getaddress">@item.Address</p>
+                        <p id="getphone">@item.NumberPhone</p>
+                        @if (item.Deleted != null)
+                        {
+                            <p style="color:#ff0000">Nhân viên này đã bị xóa</p>
+                        }
+                        <input type="hidden" class="getnumberpages" value="@Model.NumberOfPages" />
+                        <input type="hidden" class="count" value="@Model.Count" />
+                        <input type="hidden" class="pagesize" value="@Model.PageSize" />
+                    </div>
+                </div>
+            }
+
+        }
+    }
+    <hr />
+</div>
+
+<div class="col-lg-12 change-color">
+    <h4>Kế toán</h4>
+
+    @{
+        foreach (var item in Model.Data)
+        {
+            if (item.UserId == "KT")
+            {
+                <div class="col-md-4 gridView">
+                    <div class=" col-md-4 thumbnail">
+                        @if (item.Image != null)
+                        {
+                            <img src="~/Images/StaffImages/@item.Image" class="img-rounded" width="110" alt="" />
+                        }
+                        else
+                        {
+                            <img src="~/Images/no_image.jpg" class="img-rounded" width="110" alt="" />
+                        }
+
+                    </div>
+                    <div class="caption col-md-8">
+                        <a class="detailstaff" href="javascript:;" value="@item.ID"><p id="getname">@item.StaffName</p></a>
+                        <p id="getaddress">@item.Address</p>
+                        <p id="getphone">@item.NumberPhone</p>
+                        @if (item.Deleted != null)
+                        {
+                            <p style="color:#ff0000">Nhân viên này đã bị xóa</p>
+                        }
+                        <input type="hidden" class="getnumberpages" value="@Model.NumberOfPages" />
+                        <input type="hidden" class="count" value="@Model.Count" />
+                        <input type="hidden" class="pagesize" value="@Model.PageSize" />
+                    </div>
+                </div>
+            }
+
+        }
+    }
+</div>
 <script src="~/MyjQ/Index.js"></script>

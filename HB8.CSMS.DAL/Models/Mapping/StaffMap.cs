@@ -49,6 +49,7 @@ namespace HB8.CSMS.DAL.Models.Mapping
             this.Property(t => t.BirthDate).HasColumnName("BirthDate");
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
             this.Property(t => t.Password).HasColumnName("Password");
+            this.Property(t => t.Deleted).HasColumnName("Deleted");
 
             // Relationships
             this.HasRequired(t => t.User)

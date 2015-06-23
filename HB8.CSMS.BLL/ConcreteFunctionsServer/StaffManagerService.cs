@@ -67,9 +67,16 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
         public int DeleteStaff(string id)
         {
             var model = context.Staffs.GetItemById(id);
-            context.Staffs.Delete(model);
-            context.Save();
-            return 0;
+            if (model!=null)
+            {
+                context.Staffs.Delete(model);
+                context.Save();
+                return 0;
+            }else
+            {
+                return 0;
+            }
+            
         }
         public int ReturnIndexStaff(string id)
         {
@@ -83,6 +90,14 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
 
             }
             return count;
+        }
+        public int DeleteStaffIfStaffExit(string id)
+        {
+            var model = context.Staffs.GetItemById(id);
+            model.Deleted = 1;
+            context.Staffs.Update(model);
+            context.Save();
+            return 0;
         }
     }
 }

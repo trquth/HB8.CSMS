@@ -181,7 +181,7 @@ $(document).ready(function () {
 //Dung de dong diaglog chua form
 $("#buttonExitCreate").button().click(function () {
     $.ajax({
-        url: '/StaffManager/ListStaff',
+        url: '/StaffManager/ReturnIndex',
         data: {},
         type: 'GET',
         success: function (data) {
@@ -306,7 +306,30 @@ $(document).ready(function () {
         }
     });
 });
+//Tro ve trang chu
+$("#buttonExitCreateCustomer").button().click(function () {
+    $.ajax({
+        url: '/CustomerManager/ListCustomer',
+        data: {},
+        type: 'GET',
+        success: function (data) {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("close");
+            $("#customer-list").empty();
+            $("#btnloadcustomer").show();
+            $(".buttonCreateForCustomer").show();
+            $("#customer-list").append(data);
+        },
+        beforeSend: function () {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("open");
+        },
+        error: function () {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+    })
 
+})
 
 
 //***********************************************************************//
@@ -467,6 +490,119 @@ $(document).ready(function () {
         }
     });
 });
+//Luu thong tin 
+$(document).ready(function () {
+    $(document).ready(function () {
+        $("#createInventory-button").click(function () {
+            $(this).attr('type', 'button');
+            var id = $("#invtId").val();
+            var name = $("#invtname").val();
+            var className = $("#ddlClass").val();
+            var unitT = $("#ddlUnitT").val();
+            var unitRate = $("#unitRate").val();
+            var salePriceT = $("#salePriceT").val();
+            var unitL = $("#ddlUnitL").val();
+            var salePriceL = $("#salePriceL").val();
+            var discription = $("#description").val();
+            var status = $("#ddlStatus").val();
+            var staff = $("#ddlStaff").val();
+            var stock = $("#ddlStock").val();
+            var qutyStock = $("#qtyStock").val();
+            var tax = $("#tax").val();
+            var image = $("#uploadFileForInventory").val();
+            if (id != '') {
+                //Kiem tra 1 lan nua xem ma nv co ton tai hay khong
+                $.ajax({
+                    url: "/InventoryManager/HaveInventoryId",
+                    type: 'Get',
+                    data: { Id: id },
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data) {
+                            sweetAlert("Cảnh báo", "Mã sản phẩm đã tồn tại!", "error");
+                        } else {
+                            var value = id.length * name.length * className.length * unitL.length * unitRate.length * salePriceT.length * unitL.length * salePriceL.length * status.length * staff.length * stock.length * qutyStock.length;
+                            //Dung kiem tra xem cac thong tin nhap vao dung hay sai
+                            if (value == 0) {
+                                $(this).attr('type', 'submit');
+                            } else {
+                                $.post('/InventoryManager/CrateNewInventory', { "InvtID": id, "InvtName": name, "ClassId": className, "UnitID_T": unitT, "UnitID_L": unitL, "UnitRate": unitRate, "QtyStock": qutyStock, "StInventoryId": status, "Description": discription, "StaffId": staff, "StockId": stock, "SalePrice_T": salePriceT, "SalePrice_L": salePriceL, "SlsTax": tax, "Image": image }, function () {
+                                    swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
+                                    $.ajax({
+                                        url: '/InventoryManager/DetailInventory',
+                                        data: { "id": id },
+                                        type: "Get",
+                                        success: function (data) {
+                                            var theDialog = $("#showLoading").dialog(opt);
+                                            theDialog.dialog("close");
+                                            $("#btnloadinventory").hide();
+                                            $("#buttonEditForInventory").show();
+                                            $("#buttonpreviousForInventory").show();
+                                            $("#buttonnextForInventory").show();
+                                            $("#inventory-list").empty();
+                                            $("#inventory-list").append(data);
+                                        },
+                                        beforeSend: function () {
+                                            var theDialog = $("#showLoading").dialog(opt);
+                                            theDialog.dialog("open");
+                                            $.ajax({
+                                                url: '/InventoryManager/IndexOfInventory',
+                                                data: { id: id },
+                                                success: function (data) {
+                                                    $(".countInvnetory").empty();
+                                                    $(".countInvnetory").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
+                                                }
+                                            });
+                                        },
+                                        error: function () {
+                                            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+                                        }
+                                    });
+                                })
+                            }
+                        }
+                    },
+                    error: function (result) {
+                        swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+                    }
+                });
+            } else {
+                $(this).attr('type', 'submit');
+            }
+        });
+    });
+})
+//Thoat 
+$("#btnExitCreateInventory").click(function () {
+    $.ajax({
+        url: '/InventoryManager/ListInventory',
+        data: {},
+        type: 'GET',
+        success: function (data) {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("close");
+            $("#inventory-list").empty();
+            $("#btnloadinventory").show();
+            $("#buttonEditForInventory").hide();
+            $("#buttonpreviousForInventory").hide();
+            $("#buttonnextForInventory").hide();
+            $(".buttonCreateForInventory").show();
+            $(".countInvnetory").hide();
+            $("#btnloadinventory").text('Hiển thêm');
+            $("#btnLargeViewForInventory").prop('value', '1');
+            $("#inventory-list").append(data);
+        },
+        beforeSend: function () {
+            var theDialog = $("#showLoading").dialog(opt);
+            theDialog.dialog("open");
+        },
+        error: function () {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+    })
+})
+
 //******************************************************************************//
 //PHAN CHO BILL SALE ORDER
 //*****************************************************************************//

@@ -303,30 +303,40 @@ $(document).ready(function () {
 
 //PHAN CHO EDIT CUSTOMER
 //Dung de dong diaglog chua form
-$("#buttonExitEdit").button().click(function () {
-    //$('.buttonEdit').prop("disabled", false);
-    //$('.buttonDelete').prop("disabled", false);
-    $("#editFormCustomer").dialog("close");
+$("#buttonExitEditCustomer").button().click(function () {
+    var id = $("#Id").val();
+    $.ajax({
+        url: '/CustomerManager/DetailCustomer',
+        data: { custId: id },
+        type: 'GET',
+        success: function (data) {
+            $(".buttonCreateForCustomer").show();
+            $("#buttonEditForCustomer").show();
+            $("#btnloadcustomer").hide();
+            $("#customer-list").empty();
+            $("#customer-list").append(data);
+        },
+    })
 })
 
 
 //Do du lieu vao dropdowlist
 $(document).ready(function () {
-    $.ajax({
-        url: "/CustomerManager/ListStatus",
-        type: 'Get',
-        data: "{}",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data) {
-            $.each(data, function (key, value) {
-                $("#ddlStatus").append($("<option></option>").val(value.StatusID).html(value.StatusName));
-            });
-        },
-        error: function (result) {
-            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
-        }
-    });
+    $("#ddlStatus").on("click", function () {
+        $.ajax({
+            url: "/CustomerManager/DropdownListStatus",
+            type: 'Get',
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $("#ddlForStatus").empty();
+                $("#ddlForStatus").append(data);
+            },
+            error: function (result) {
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+            }
+        });
+    })
 })
 
 //Dung cho update thong tin cua form EDIT
@@ -353,19 +363,18 @@ $(document).ready(function () {
             $.post('/CustomerManager/EditCustomer', { "CustID": id, "CustName": name, "BirthDate": date, "StatusId": status, "address": address, "Phone": phone, "fax": fax, "email": mail, "Image": image, "description": description }, function () {
                 swal({ title: "Lưu dữ liệu", text: "Lưu thành công", timer: 2000, showConfirmButton: false });
                 $("#person-list").empty();
-                //window.location.reload(true);
                 $.ajax({
-                    url: "/CustomerManager/CallBackCustomerPartialView",
-                    type: 'Get',
-                    data: { page: page },
+                    url: '/CustomerManager/DetailCustomer',
+                    data: { custId: id },
+                    type: 'GET',
                     success: function (data) {
-                        $("#person-list").empty();
-
-                        $("#person-list").append(data);
-                        $(".gridView").hide();
-                        $("#listView").show();
-                    }
-                });
+                        $(".buttonCreateForCustomer").show();
+                        $("#buttonEditForCustomer").show();
+                        $("#btnloadcustomer").hide();
+                        $("#customer-list").empty();
+                        $("#customer-list").append(data);
+                    },
+                })
             })
 
         }

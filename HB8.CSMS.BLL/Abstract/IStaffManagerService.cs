@@ -51,5 +51,11 @@ namespace HB8.CSMS.BLL.Abstract
         /// <param name="id"></param>
         /// <returns></returns>
         int ReturnIndexStaff(string id);
+        /// <summary>
+        /// Tam xoa thong tin cua nhan vien do di
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        int DeleteStaffIfStaffExit(string id);
     }
 }

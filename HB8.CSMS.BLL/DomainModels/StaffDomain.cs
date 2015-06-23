@@ -9,9 +9,9 @@ namespace HB8.CSMS.BLL.DomainModels
     public class StaffDomain
     {
         public StaffDomain() { }
-        public StaffDomain(string id, string userId, string staffName,string image ,string address, string numberPhone, string email,string confirmPass)
+        public StaffDomain(string id, string userId, string staffName, string image, string address, string numberPhone, string email, string confirmPass)
         {
-            ID =id;
+            ID = id;
             UserId = userId;
             StaffName = staffName;
             Address = address;
@@ -29,5 +29,6 @@ namespace HB8.CSMS.BLL.DomainModels
         public string Email { get; set; }
         public string Password { get; set; }
         public string Role { get; set; }
+        public Nullable<int> Deleted { get; set; }
     }
 }
