@@ -16,12 +16,19 @@ namespace HB8.CSMS.MVC.Controllers
         #region Variables
         public const int pageSize = 10;//So san pham duoc hien thi tren mot trang
         private IInventoryManagerService inventoryService;
-        public InventoryManagerController(IInventoryManagerService inventoryService)
+        private IBillSaleOrderManagerService billSaleOrderService;
+        public InventoryManagerController(IInventoryManagerService inventoryService, IBillSaleOrderManagerService billSaleOrderService)
         {
             this.inventoryService = inventoryService;
+            this.billSaleOrderService = billSaleOrderService;
         }
         #endregion
         #region Show Large View
+        public ActionResult ReturnIndex()
+        {
+            var inventory = GetInventoryForListPage();
+            return PartialView("LargeInventoryPartialView", inventory);
+        }
         public ActionResult Index()
         {
             var inventory = GetInventoryForListPage();
@@ -284,6 +291,93 @@ namespace HB8.CSMS.MVC.Controllers
             inventory.PageSize = pageSize;
             return inventory;
         }
+        /// <summary>
+        /// Lay ve danh sach san pham loc duoc
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <returns></returns>
+        public PagedData<InventoryModel> SearchInventoryByKeyWord(string keyword, string classname, int? min, int? max)
+        {
+            var inventory = new PagedData<InventoryModel>();
+            var listInventory = inventoryService.GetListInventory().Where(x => x.InvtName.ToUpper().Contains(keyword.ToUpper()));
+            if (classname != null)
+            {
+                var listInventoryClassName = listInventory.Where(x => x.StInventoryId.ToUpper().Contains(classname.ToUpper()));
+                int count = listInventory.Count();
+                var listOfInventory = (from item in listInventoryClassName
+                                       select new InventoryModel
+                                       {
+                                           InvtID = item.InvtID,
+                                           InvtName = item.InvtName,
+                                           ClassName = item.Class.ClassName,
+                                           UnitRate = (int)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().UnitRate,
+                                           QtyStock = item.QtyStock,
+                                           Description = item.Description,
+                                           StockName = item.Stock.StockName,
+                                           SalePrice_L = (decimal)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate == null).First().SalePrice,
+                                           SalePrice_T = (decimal)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().SalePrice,
+                                           Image = item.Image,
+                                           UnitName_L = item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate == null).First().Unit.UnitName,
+                                           UnitName_T = item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().Unit.UnitName,
+                                           StInvetoryName = item.StatusIventory.StInvetoryName,
+                                           SlsTax = item.SlsTax,
+                                       }).ToList();
+                inventory.Data = listOfInventory.Take(pageSize);
+                inventory.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
+                inventory.CurrentPage = 1;
+                inventory.Count = count;
+                inventory.PageSize = pageSize;
+                return inventory;
+            }
+            else
+            {
+                int count = listInventory.Count();
+                var listOfInventory = (from item in listInventory
+                                       select new InventoryModel
+                                       {
+                                           InvtID = item.InvtID,
+                                           InvtName = item.InvtName,
+                                           ClassName = item.Class.ClassName,
+                                           UnitRate = (int)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().UnitRate,
+                                           QtyStock = item.QtyStock,
+                                           Description = item.Description,
+                                           StockName = item.Stock.StockName,
+                                           SalePrice_L = (decimal)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate == null).First().SalePrice,
+                                           SalePrice_T = (decimal)item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().SalePrice,
+                                           Image = item.Image,
+                                           UnitName_L = item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate == null).First().Unit.UnitName,
+                                           UnitName_T = item.UnitDetails.Where(x => x.InvtID == item.InvtID && x.UnitRate != null).First().Unit.UnitName,
+                                           StInvetoryName = item.StatusIventory.StInvetoryName,
+                                           SlsTax = item.SlsTax,
+                                       }).ToList();
+                inventory.Data = listOfInventory.Take(pageSize);
+                inventory.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
+                inventory.CurrentPage = 1;
+                inventory.Count = count;
+                inventory.PageSize = pageSize;
+                return inventory;
+            }
+
+        }
+        /// <summary>
+        /// Kiem tra xem co the xoa san pham nay duoc hay khong
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool CheckInventoryBeforeDelete(string id)
+        {
+            string inventoryId = id.ToLower();
+            var listBillDetail = billSaleOrderService.GetListBillDetail();
+            foreach (var item in listBillDetail)
+            {
+                if (item.InvtID.ToLower().Equals(inventoryId))
+                {
+                    return false;
+                }
+            }
+            return true;
+
+        }
         #endregion
         #region Create Action
         public ActionResult CreateNewInventory()
@@ -350,6 +444,21 @@ namespace HB8.CSMS.MVC.Controllers
             inventoryService.UpdateInventory(model);
         }
         #endregion
+        #region Xoa
+        public void DeleteInventory(string id)
+        {
+            bool check = CheckInventoryBeforeDelete(id);
+            if (check)
+            {
+                inventoryService.DeleteInventory(id);
+            }
+            else
+            {
+                inventoryService.DeleteInventoryIfInventoryExit(id);
+            }
+
+        }
+        #endregion
         #region Code xu li Next va Privous
         /// <summary>
         /// Lay ma san pham tiep theo tiep theo
@@ -405,6 +514,14 @@ namespace HB8.CSMS.MVC.Controllers
             var model = GetInventoryByID(previousId);
             return PartialView("DetailInventoryPartialView", model);
         }
+        #endregion
+        #region Ham SEARCH
+        public ActionResult SearchInventory(string id, string classname, int? min, int? max)
+        {
+            var inventory = SearchInventoryByKeyWord(id, classname, min, max);
+            return PartialView("LargeInventoryPartialView", inventory);
+        }
+
         #endregion
     }
 }

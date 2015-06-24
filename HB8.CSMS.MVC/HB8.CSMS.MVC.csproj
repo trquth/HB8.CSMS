@@ -185,6 +185,7 @@
     <Compile Include="StructureMap\StructureMapControllerFactory.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\background\body_pattern.jpg" />
     <Content Include="Content\background\graph_background.png" />
     <Content Include="Content\background\symphony.png" />
     <Content Include="Content\PagedList.css" />
@@ -232,6 +233,7 @@
     <Content Include="css\jquery-ui.min.css" />
     <Content Include="css\jquery.fileupload.css" />
     <Content Include="css\plugins\morris.css" />
+    <Content Include="css\sb-admin-2.css" />
     <Content Include="css\sb-admin-rtl.css" />
     <Content Include="css\sb-admin.css" />
     <Content Include="css\styles.css" />
@@ -420,6 +422,7 @@
     <Content Include="Views\Shared\_ContentLayout.cshtml" />
     <Content Include="Views\Analyze\ChartForInventoryThisMonth.cshtml" />
     <Content Include="Views\CustomerManager\DropdownListStatus.cshtml" />
+    <Content Include="Views\StaffManager\RedirectToIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

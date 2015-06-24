@@ -19,8 +19,9 @@ namespace HB8.CSMS.MVC.Tests.MVC_Test
         {
             IDALContext content = new DALContext();
             IInventoryManagerService context = new InventoryManagerService(content);
-            var inventoryController = new InventoryManagerController(context);
-            string  id = "ABCDE";
+            IBillSaleOrderManagerService billSaleOrderService = new BillSaleOrderManagerService(content);
+            var inventoryController = new InventoryManagerController(context,billSaleOrderService);
+            string id = "ABCDE";
             var result = inventoryController.GetInventoryByID(id);
             Assert.IsNotNull(result);
         }
@@ -29,7 +30,8 @@ namespace HB8.CSMS.MVC.Tests.MVC_Test
         {
             IDALContext content = new DALContext();
             IInventoryManagerService context = new InventoryManagerService(content);
-            var inventoryController = new InventoryManagerController(context);
+            IBillSaleOrderManagerService billSaleOrderService = new BillSaleOrderManagerService(content);
+            var inventoryController = new InventoryManagerController(context,billSaleOrderService);
             var result = inventoryController.GetInventoryForListPage();
             Assert.IsNotNull(result);
         }

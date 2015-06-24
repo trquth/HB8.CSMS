@@ -77,8 +77,11 @@ namespace HB8.CSMS.MVC.Controllers
         public JsonResult CheckAccount(string id, string password)
         {
             var data = new StaffModel();
-            var account = from c in staffService.GetListStaff() where c.StaffID.CompareTo(id.ToLower()) >= 0 select c;
-            if (account != null)
+            string idToLower = id.ToUpper();
+            var list = staffService.GetListStaff();
+            var account = staffService.GetListStaff().Where(x=>x.StaffID.Equals(idToLower.ToString()));
+            int i = account.Count();
+            if (i!=0)
             {
                 string passMD5 = account.FirstOrDefault().Password;
                 string passDecrypt = Decrypt(passMD5, true);
@@ -90,7 +93,7 @@ namespace HB8.CSMS.MVC.Controllers
                 else
                 {
                     data.UserId = "0";
-                    return Json(data, JsonRequestBehavior.AllowGet);                  
+                    return Json(data, JsonRequestBehavior.AllowGet);
                 }
             }
             else

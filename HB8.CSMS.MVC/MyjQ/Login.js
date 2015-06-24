@@ -15,6 +15,12 @@ $(document).ready(function () {
                 data: { id: id, password: pass },
                 type: 'POST',
                 success: function (data) {
+                    if (data.UserId == "KK" || data.UserId=="KT") {
+
+                    } else if (data.UserId=="AD")
+                    {
+                        location.href = "/StaffManager/RedirectToIndex"                      
+                    }
                 },
                 error: function () {
                     swal({ title: "Xảy ra lỗi", text: "Vui lòng kiểm tra lại ID và mật khẩu", timer: 2000, showConfirmButton: false });

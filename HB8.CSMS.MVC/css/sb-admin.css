@@ -8,7 +8,7 @@
 
 body {
     margin-top: 100px;
-    background-color: #222;
+    background-color: #E3E3E3;
 }
 
 @media(min-width:768px) {
@@ -135,7 +135,7 @@ ul.alert-dropdown {
     .side-nav li a:hover,
     .side-nav li a:focus {
         outline: none;
-        background-color: #000 !important;
+        background-color: #5cb85c !important;
     }
 }
 

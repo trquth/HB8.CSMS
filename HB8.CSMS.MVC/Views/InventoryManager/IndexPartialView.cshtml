@@ -1,4 +1,111 @@
-﻿
+﻿<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnSearchForInventory").click(function () {
+            $("#myModal").modal('show');
+        })
+    });
+</script>
+@*Kiem tra thong tin nhap vao*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#searchForm').validate({
+        });
+    });
+</script>
+@*Tim theo nhom san pham*@
+<script type="text/javascript">
+    $.ajax({
+        url: "/InventoryManager/ListClass",
+        type: 'Get',
+        data: "{}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            $.each(data, function (key, value) {
+                $("#ddlClass").append($("<option></option>").val(value.ClassId).html(value.ClassName));
+            });
+        },
+        error: function (result) {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#SearchInventory").click(function () {
+            $(this).attr('type', 'button');
+            var id = $("#id").val();
+            var classname = $("#ddlClass").val();
+            var min = $("#min").val();
+            var max = $("#max").val();
+            if (id.length != 0) {
+                if (min != null && max != null && min > max) {
+                    swal({ title: "Xảy ra lỗi", text: "Vui lòng kiểm tra giá trị số lượng nhập vào", timer: 2000, showConfirmButton: false });
+                } else {
+                    $.ajax({
+                        url: "/InventoryManager/SearchInventory",
+                        data: { id: id, classname: classname, min: min, max: max },
+                        success: function (data) {
+                            $("#myModal").modal('hide');
+                            $("#inventory-list").empty();
+                            $("#inventory-list").append(data);
+                        }
+                    });
+                }
+
+
+            } else {
+                $(this).attr('type', 'submit');
+                swal({ title: "Xảy ra lỗi", text: "Vui lòng nhập tên sản phẩm", timer: 2000, showConfirmButton: false });
+            }
+        })
+    })
+</script>
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Tìm sản phẩm</h4>
+            </div>
+            <div class="modal-body">
+                <form id="searchForm" class="form-horizontal">
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="control-label col-lg-3">Mặt hàng:</label>
+                            <div class="col-lg-9">
+                                <input id="id" class="form-control" type="text" name="inventoryname" data-rule-required="true" data-msg-required="Vui lòng nhập từ khóa" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-3">Nhóm hàng:</label>
+                            <div class="col-lg-9">
+                                <select id="ddlClass" class="form-control" data-rule-required="true" data-msg-required="Nhóm sản phẩm không được rỗng">
+                                    <option selected="selected" value="">--Chọn nhóm sản phẩm--</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-3">Số lượng từ:</label>
+                            <div class="col-lg-4">
+                                <input id="min" class="form-control" type="text" name="" data-val-number="Số lượng là một số" />
+                            </div>
+                            <label class="control-label col-lg-1"> đến </label>
+                            <div class="col-lg-4">
+                                <input id="max" class="form-control" type="text" name="" data-val-number="Số lượng là một số" />
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-primary" id="SearchInventory">Tìm kiếm</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-lg-12">
         <nav role="navigation" class="navbar navbar-default">
@@ -14,17 +121,12 @@
             <!-- Collection of nav links, forms, and other content for toggling -->
             <div id="navbarCollapse" class="collapse navbar-collapse">
                 <div class="col-lg-12">
-                    <div class="col-lg-4">
+                    <div class="col-lg-8">
                         <ul class="nav navbar-nav">
                             <li class="color-p"><h4>Sản phẩm</h4></li>
                         </ul>
                     </div>
-                    <div class="col-lg-8">
-                        <form role="search" class="navbar-form navbar-right">
-                            <div class="form-group">
-                                <input type="text" placeholder="Search" class="form-control">
-                            </div>
-                        </form>
+                    <div class="col-lg-4">
                     </div>
                 </div>
                 <div class="col-lg-12">
@@ -33,7 +135,8 @@
                             <br />
                             <input type="button" value="Tạo mới" class="buttonCreateForInventory btn btn-default " />
                             <input type="button" value="Sửa " class="btn btn-default " id="buttonEditForInventory" />
-                            <input type="button" value="Xóa" class="btn btn-default " id="buttonDeleteForStaff" />
+                            <input type="button" value="Xóa" class="btn btn-default " id="buttonDeleteForInventory" />
+
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -53,6 +156,9 @@
                         <button type="button" class="btn btn-default right" aria-label="Left Align" id="btnLargeViewForInventory" value="">
                             <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
                         </button>
+                        <button type="button" class="btn btn-default right" aria-label="Left Align" id="btnSearchForInventory" value="">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </button>
                         <br />
                         <br />
                         <br />
@@ -61,19 +167,21 @@
             </div>
         </nav>
     </div>
+
+
     <div class="col-lg-12">
         <div id="inventory-list">
             @Html.Partial("LargeInventoryPartialView")
         </div>
         <div id="showspinner"></div>
-        <div id="deleteFormCustomer" style="display:none">
+        <div id="deleteFormInventory" style="display:none">
             <div class="panel panel-warning">
-                <div class="panel-heading"> <span><i class="fa fa-exclamation-triangle fa-2x"></i>  <b>Xóa thông tin nhân viên</b> </span> </div>
+                <div class="panel-heading"> <span><i class="fa fa-exclamation-triangle fa-2x"></i>  <b>Xóa thông tin sản phẩm</b> </span> </div>
                 <div class="alert alert-error " style="text-align: center">
-                    <strong>Cảnh báo!</strong> <p>Bạn có chắc là sẽ xóa thông tin nhân viên này</p>
+                    <strong>Cảnh báo!</strong> <p>Bạn có chắc là sẽ xóa thông tin sản phẩm này</p>
                     <br />
-                    <input type="button" value="Đồng ý" class="okDelete btn btn-danger right" />
-                    <input type="button" value="Thoát" class="buttonCloseDelete btn btn-primary right " />
+                    <input type="button" value="Đồng ý" class="okDeleteInventory btn btn-danger right" />
+                    <input type="button" value="Thoát" class="buttonCloseDeleteInventory btn btn-primary right " />
                 </div>
             </div>
         </div>

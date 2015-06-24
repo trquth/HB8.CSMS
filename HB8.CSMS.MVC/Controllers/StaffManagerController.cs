@@ -33,6 +33,30 @@ namespace HB8.CSMS.MVC.Controllers
         }
         #endregion
         #region Code show danh sach nhan vien dang GRID VIEW
+        public ActionResult RedirectToIndex()
+        {
+            var staff = new PagedData<StaffModel>();
+            var model = staffService.GetListStaff();
+            int count = model.Count();
+            var listOfStaff = (from a in model
+                               select new StaffModel
+                               {
+                                   Image = a.Image,
+                                   ID = a.StaffID,
+                                   StaffName = a.StaffName,
+                                   NumberPhone = a.NumberPhone,
+                                   Address = a.Address,
+                                   UserId = a.UserId,
+                                   Deleted = a.Deleted
+                               }).ToList();
+            //staff.Data = listOfStaff.Take(pageSize);
+            staff.Data = listOfStaff;
+            staff.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
+            staff.CurrentPage = 1;
+            staff.Count = count;
+            staff.PageSize = pageSize;
+            return View(staff);
+        }
         public ActionResult ReturnIndex()
         {
             var staff = new PagedData<StaffModel>();

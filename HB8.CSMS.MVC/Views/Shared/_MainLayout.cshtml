@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿
+
+
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -13,7 +16,7 @@
     <script src="~/Scripts/jquery-1.9.1.js"></script>
     <script src="~/js/bootstrap.js"></script>
 
-   
+
     <script src="~/Scripts/jquery.ui.widget.js"></script>
     <script src="~/Scripts/jquery.fileupload.js"></script>
     <script src="~/Scripts/jquery.validate.js"></script>
@@ -23,7 +26,7 @@
     <script src="~/Scripts/sweetalert.min.js"></script>
     <script src="~/Scripts/bootstrap-datepicker.js"></script>
     <script src="~/Scripts/jquery.timepicker.js"></script>
-    <script src="~/Scripts/jquery.timepicker.min.js"></script>   
+    <script src="~/Scripts/jquery.timepicker.min.js"></script>
 
     <link href="~/css/sweetalert.css" rel="stylesheet" />
     <link href="~/css/bootstrap-datepicker.css" rel="stylesheet" />
@@ -34,10 +37,11 @@
     
 </head>
 <body>
-    <div>
+  
+   
         <div id="wrapper">
             <!-- Navigation -->
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="background:#1D5377">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -46,94 +50,19 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">PHẦM MỀM QUẢN LÍ CSMS</a>
-                    <a class="navbar-brand" href="javascript:;" id="hoadon">Hóa đơn</a>
-                    <a class="navbar-brand" href="javascript:;" id="buonban">Buôn bán</a>
-                    @*<a class="navbar-brand" href="javascript:;" id="bieudo">Biểu đồ</a>*@
-                    <a class="navbar-brand" href="javascript:;" id="nhanluc">Nhân lực</a>
+                    <a class="navbar-brand" href="#"><p style="color:#D4D6D7">PHẦM MỀM QUẢN LÍ CSMS :</p></a>
+                    <a class="navbar-brand" href="javascript:;" id="hoadon"><b style="color:#D4D6D7">Hóa đơn</b></a>
+                    <a class="navbar-brand" href="javascript:;" id="buonban"><b style="color:#D4D6D7">Kinh doanh</b></a>
+                    <a class="navbar-brand" href="javascript:;" id="bieudo"><b style="color:#D4D6D7">Thống kê</b></a>
+                    <a class="navbar-brand" href="javascript:;" id="nhanluc"><b style="color:#D4D6D7">Nhân lực</b></a>
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
-                        <ul class="dropdown-menu message-dropdown">
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading">
-                                                <strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading">
-                                                <strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading">
-                                                <strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-footer">
-                                <a href="#">Read All New Messages</a>
-                            </li>
-                        </ul>
-                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
                         <ul class="dropdown-menu alert-dropdown">
                             <li>
                                 <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">View All</a>
                             </li>
                         </ul>
                     </li>
@@ -142,12 +71,6 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
                             </li>
                             <li class="divider"></li>
                             <li>
@@ -169,7 +92,7 @@
                     <div class="row">
                         <div class="col-lg-12" id="content">
                             @RenderBody()
-                        </div>                     
+                        </div>
                     </div>
                     <div class="row">
                         <div id="showLoading" style="display:none">

@@ -69,6 +69,18 @@ namespace HB8.CSMS.BLL.Abstract
         /// <param name="id"></param>
         /// <returns></returns>
         int ReturnIndexInventory(string id);
+        /// <summary>
+        /// Ham xoa thong tin san pham
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        int DeleteInventory(string id);
+        /// <summary>
+        /// Tam xoa thong tin cua san pham
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        int DeleteInventoryIfInventoryExit(string id);
        
 
     }

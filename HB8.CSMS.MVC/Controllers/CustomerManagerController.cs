@@ -15,10 +15,12 @@ namespace HB8.CSMS.MVC.Controllers
     {
         #region Khai bao
         private ICustomerManagerService customerService;
+        private IBillSaleOrderManagerService billSaleOrderService;
         public const int pageSize = 5;//So nhan vien duoc hien thi tren mot trang
-        public CustomerManagerController(ICustomerManagerService customerService)
+        public CustomerManagerController(ICustomerManagerService customerService, IBillSaleOrderManagerService billSaleOrderService)
         {
             this.customerService = customerService;
+            this.billSaleOrderService = billSaleOrderService;
         }
         #endregion
         #region Hien thi LARGE VIEW CUSTOMER
@@ -49,7 +51,7 @@ namespace HB8.CSMS.MVC.Controllers
         #endregion
         #region Code xu li trang LIST CUSTOMER
 
-        public ActionResult ListCustomerView(int?page)
+        public ActionResult ListCustomerView(int? page)
         {
             var pageNumber = 0;
             if (page == null)
@@ -114,10 +116,10 @@ namespace HB8.CSMS.MVC.Controllers
             customer.PageSize = pageSize;
             customer.CurrentPage = page + 1;
             return customer;
-        } 
+        }
         #endregion
         #region Code xu li hien thi thong tin chi tiet cua CUSTOMER
-      
+
         /// <summary>
         /// Hien thi thong tin chi tiet cua CUSTOMER
         /// </summary>
@@ -133,7 +135,7 @@ namespace HB8.CSMS.MVC.Controllers
         /// </summary>
         /// <param name="custId"></param>
         /// <returns></returns>
-        #endregion     
+        #endregion
         #region Create Action
         /// <summary>
         /// Goi form  them khach hang
@@ -146,7 +148,7 @@ namespace HB8.CSMS.MVC.Controllers
         //Ham luu
         public void CreateNewCustomer(CustomerModel customer)
         {
-            var model = new CustomerDomain(customer.CustID,customer.CustName,customer.Address,customer.Phone,customer.Email,customer.StatusID,customer.Description,customer.Image);
+            var model = new CustomerDomain(customer.CustID, customer.CustName, customer.Address, customer.Phone, customer.Email, customer.StatusID, customer.Description, customer.Image);
             customerService.CreateCustomer(model);
         }
         #endregion
@@ -208,10 +210,10 @@ namespace HB8.CSMS.MVC.Controllers
             model.Email = item.Email;
             model.StatusID = item.StatusID;
             model.Description = item.Description;
-            if (item.BirthDate!=null)
+            if (item.BirthDate != null)
             {
                 model.BirthDate = (DateTime)item.BirthDate;
-            }            
+            }
             model.CreateDate = item.CreateDate;
             model.Image = item.Image;
             model.StatusName = item.StatusName;
@@ -268,18 +270,18 @@ namespace HB8.CSMS.MVC.Controllers
         /// </summary>
         /// <returns></returns>
         public PagedData<CustomerModel> GetCustomerForListPage()
-        {      
+        {
             var customer = new PagedData<CustomerModel>();
-            var model = customerService.GetListCustomers(); 
+            var model = customerService.GetListCustomers();
             int count = model.Count();
             var listOfCustomer = (from item in model
-                                   select new CustomerModel
-                                   {
-                                       CustID = item.CustID,
-                                       CustName = item.CustName,
-                                       Address = item.Address,
-                                       Phone = item.Phone
-                                   }).ToList();
+                                  select new CustomerModel
+                                  {
+                                      CustID = item.CustID,
+                                      CustName = item.CustName,
+                                      Address = item.Address,
+                                      Phone = item.Phone
+                                  }).ToList();
             customer.Data = listOfCustomer.Take(pageSize);
             customer.NumberOfPages = Convert.ToInt32(Math.Ceiling((double)count / pageSize));
             customer.CurrentPage = 1;
@@ -295,7 +297,7 @@ namespace HB8.CSMS.MVC.Controllers
         public JsonResult IndexOfCustomer(string id)
         {
             int index = customerService.ReturnIndexCustomer(id);
-            int count =  customerService.GetListCustomers().Count();
+            int count = customerService.GetListCustomers().Count();
             var model = new PagedData<CustomerModel>();
             model.Count = count;
             model.Index = index;
@@ -318,6 +320,25 @@ namespace HB8.CSMS.MVC.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
 
         }
+        /// <summary>
+        /// Kiem tra xem co the xoa san pham nay duoc hay khong
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool CheckCustomerBeforeDelete(string id)
+        {
+            string inventoryId = id.ToLower();
+            var listBillDetail = billSaleOrderService.GetListBillDetail();
+            foreach (var item in listBillDetail)
+            {
+                if (item.InvtID.ToLower().Equals(inventoryId))
+                {
+                    return false;
+                }
+            }
+            return true;
+
+        }
         #endregion
         #region Edit Action
         /// <summary>
@@ -335,7 +356,7 @@ namespace HB8.CSMS.MVC.Controllers
         {
             var dateCreate = DateTime.Now;
             var model = new CustomerDomain(customer.CustID, customer.CustName, customer.Address,
-                customer.Phone, customer.Email, customer.StatusID, customer.Description,customer.Image);
+                customer.Phone, customer.Email, customer.StatusID, customer.Description, customer.Image);
             customerService.UpdateCustomer(model);
         }
         /// <summary>
@@ -362,8 +383,8 @@ namespace HB8.CSMS.MVC.Controllers
                         }).OrderBy(x => x.StatusName);
             return PartialView("DropdownListStatus", data);
         }
-       
-        #endregion     
+
+        #endregion
         #region Code xu li Next va Privous
         /// <summary>
         /// Lay Ma khach hang tiep theo
@@ -382,7 +403,7 @@ namespace HB8.CSMS.MVC.Controllers
             {
                 string nextId = customerService.GetListCustomers().SkipWhile(x => x.CustID != id).Skip(1).FirstOrDefault().CustID.ToString();
                 return nextId;
-            }          
+            }
         }
         /// <summary>
         /// Lay ma khach hang truoc do
@@ -392,7 +413,7 @@ namespace HB8.CSMS.MVC.Controllers
         public string FindPreviousID(string id)
         {
             var startId = customerService.GetListCustomers().FirstOrDefault().CustID.ToString();
-            if (startId==id)
+            if (startId == id)
             {
                 return startId;
             }
@@ -400,7 +421,7 @@ namespace HB8.CSMS.MVC.Controllers
             {
                 string previousId = customerService.GetListCustomers().TakeWhile(x => x.CustID != id).LastOrDefault().CustID.ToString();
                 return previousId;
-            }         
+            }
         }
         /// <summary>
         /// Hien thi khach hang tiep theo
@@ -424,6 +445,21 @@ namespace HB8.CSMS.MVC.Controllers
         public ActionResult NavBar()
         {
             return PartialView("PanelForCustomerPartialView");
+        }
+        #endregion
+        #region Delete
+        public void DeleteCustomer(string id)
+        {
+            bool check = CheckCustomerBeforeDelete(id);
+            if (check)
+            {
+                inventoryService.DeleteInventory(id);
+            }
+            else
+            {
+                inventoryService.DeleteInventoryIfInventoryExit(id);
+            }
+
         }
         #endregion
 

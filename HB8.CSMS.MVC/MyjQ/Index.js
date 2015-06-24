@@ -593,6 +593,7 @@ $(document).ready(function () {
                 $("#buttonEditForCustomer").show();
                 $("#buttonpreviousForCustomer").show();
                 $("#buttonnextForCustomer").show();
+                $("#buttonDeleteForCustomer").show();
                 $("#customer-list").empty();
                 $("#customer-list").append(data);
             },
@@ -604,7 +605,7 @@ $(document).ready(function () {
                     data: { id: id },
                     success: function (data) {
                         $(".countCustomer").empty();
-                        $(".countCustomer").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
+                        $(".countCustomer").append('<a href="#" id="number">' + data.Index + '/' + data.Count + '</a>');
                     }
                 });
             },
@@ -760,10 +761,10 @@ $(document).ready(function () {
                     success: function (data) {
                         if (data.Index == data.Count) {
                             $(".countCustomer").empty();
-                            $(".countCustomer").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
+                            $(".countCustomer").append('<a href="#" id="number">' + data.Index + '/' + data.Count + '</a>');
                         } else {
                             $(".countCustomer").empty();
-                            $(".countCustomer").append('<a href="#">' + (data.Index + 1) + '/' + data.Count + '</a>');
+                            $(".countCustomer").append('<a href="#" id="number">' + (data.Index + 1) + '/' + data.Count + '</a>');
                         }
                     }
                 });
@@ -795,10 +796,10 @@ $(document).ready(function () {
                     success: function (data) {
                         if (data.Index == 1) {
                             $(".countCustomer").empty();
-                            $(".countCustomer").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
+                            $(".countCustomer").append('<a href="#" id="number">' + data.Index + '/' + data.Count + '</a>');
                         } else {
                             $(".countCustomer").empty();
-                            $(".countCustomer").append('<a href="#">' + (data.Index - 1) + '/' + data.Count + '</a>');
+                            $(".countCustomer").append('<a href="#" id="number">' + (data.Index - 1) + '/' + data.Count + '</a>');
                         }
 
                     }
@@ -839,6 +840,74 @@ $("#buttonEditForCustomer").click(function () {
     });
 })
 
+//Hien thong bao xoa 
+$("#buttonDeleteForCustomer").button().click(function () {
+    $("#buttonEditForCustomer").attr('disabled', 'disabled');
+    $(".buttonCreateForCustomer").attr('disabled', 'disabled');
+    $("#buttonDeleteForCustomer").attr('disabled', 'disabled');
+    $("#buttonpreviousForCustomer").hide();
+    $("#buttonnextForCustomer").hide();
+    $("#number").hide();
+    $("#btnSearchForInventory").attr('disabled', 'disabled');
+    $("#btnListViewForCustomer").attr('disabled', 'disabled');
+    $("#btnLargeViewForInventory").attr('disabled', 'disabled');
+    //Open the dialog box
+
+    var theDialog = $("#deleteFormCustomer").dialog(optforDel);
+    theDialog.dialog("open");
+});
+$(".buttonCloseDeleteCustomer").button().click(function () {
+    $("#buttonEditForCustomer").attr('disabled', false);
+    $(".buttonCreateForCustomer").attr('disabled', false);
+    $("#buttonDeleteForCustomer").attr('disabled', false);
+    $("#buttonpreviousForCustomer").show();
+    $("#buttonnextForCustomer").show();
+    $("#number").show();
+    $("#btnSearchForInventory").attr('disabled', false);
+    $("#btnListViewForCustomer").attr('disabled', false);
+    $("#btnLargeViewForInventory").attr('disabled', false);
+    //Open the dialog box
+    var theDialog = $("#deleteFormCustomer").dialog(optforDel);
+    theDialog.dialog("close");
+
+
+});
+$(".okDeleteInventory").button().click(function () {
+    $(".buttonCreateForInventory").attr('disabled', false);
+    $("#btnSearchForInventory").attr('disabled', false);
+    $("#btnListViewForInventory").attr('disabled', false);
+    $("#btnLargeViewForInventory").attr('disabled', false);
+    // Close the dialog box on Yes button is clicked
+    var theDialog = $("#deleteFormInventory").dialog(optforDel);
+    theDialog.dialog("close");
+    $.ajax({
+        // Call Delete action method
+        url: "/InventoryManager/DeleteInventory",
+        data: { id: selectedId },
+        type: 'Get',
+        success: function (msg) {
+            $.ajax({
+                url: '/InventoryManager/ReturnIndex',
+                data: {},
+                type: 'GET',
+                success: function (data) {
+                    $("#inventory-list").empty();
+                    $("#btnloadinventory").show();
+                    $("#inventory-list").append(data);
+                },
+            })
+        },
+        beforeSend: function () {
+            //$("#showspinner").html("<center><i class='fa fa-spinner fa-spin fa-5x ' id='spinner'></i></center>").delay(10000000).fadeOut();
+            //$("#showspinnerForm").dialog("open");
+        },
+        error: function (xhr) {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+    });
+});
+
+
 
 
 //**************************************************************************************//
@@ -850,6 +919,7 @@ $(document).ready(function () {
     $("#buttonpreviousForInventory").hide();
     $("#buttonnextForInventory").hide();
     $("#countInvnetory").hide();
+    $("#buttonDeleteForInventory").hide();
 })
 //Goi trang them san pham moi
 $(".buttonCreateForInventory").button().click(function () {
@@ -889,6 +959,7 @@ $(document).ready(function () {
                 $("#buttonEditForInventory").show();
                 $("#buttonpreviousForInventory").show();
                 $("#buttonnextForInventory").show();
+                $("#buttonDeleteForInventory").show();
                 $("#inventory-list").empty();
                 $("#inventory-list").append(data);
             },
@@ -900,7 +971,7 @@ $(document).ready(function () {
                     data: { id: id },
                     success: function (data) {
                         $(".countInvnetory").empty();
-                        $(".countInvnetory").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
+                        $(".countInvnetory").append('<a href="#" id="number">' + data.Index + '/' + data.Count + '</a>');
                     }
                 });
             },
@@ -954,6 +1025,7 @@ $(document).ready(function () {
                 $("#buttonEditForInventory").hide();
                 $("#buttonpreviousForInventory").hide();
                 $("#buttonnextForInventory").hide();
+                $("#buttonDeleteForInventory").hide();
                 $(".buttonCreateForInventory").show();
                 $(".countInvnetory").hide();
                 $("#btnloadinventory").text('Hiển thêm');
@@ -1119,10 +1191,10 @@ $(document).ready(function () {
                     success: function (data) {
                         if (data.Index == data.Count) {
                             $(".countInvnetory").empty();
-                            $(".countInvnetory").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
+                            $(".countInvnetory").append('<a href="#" id="number">' + data.Index + '/' + data.Count + '</a>');
                         } else {
                             $(".countInvnetory").empty();
-                            $(".countInvnetory").append('<a href="#">' + (data.Index + 1) + '/' + data.Count + '</a>');
+                            $(".countInvnetory").append('<a href="#" id="number">' + (data.Index + 1) + '/' + data.Count + '</a>');
                         }
                     }
                 });
@@ -1155,10 +1227,10 @@ $(document).ready(function () {
                     success: function (data) {
                         if (data.Index == 1) {
                             $(".countInvnetory").empty();
-                            $(".countInvnetory").append('<a href="#">' + data.Index + '/' + data.Count + '</a>');
+                            $(".countInvnetory").append('<a href="#" id="number">' + data.Index + '/' + data.Count + '</a>');
                         } else {
                             $(".countInvnetory").empty();
-                            $(".countInvnetory").append('<a href="#">' + (data.Index - 1) + '/' + data.Count + '</a>');
+                            $(".countInvnetory").append('<a href="#" id="number">' + (data.Index - 1) + '/' + data.Count + '</a>');
                         }
 
                     }
@@ -1170,6 +1242,74 @@ $(document).ready(function () {
         });
     });
 });
+
+//Hien thong bao xoa 
+$("#buttonDeleteForInventory").button().click(function () {
+    $("#buttonEditForInventory").attr('disabled', 'disabled');
+    $(".buttonCreateForInventory").attr('disabled', 'disabled');
+    $("#buttonDeleteForInventory").attr('disabled', 'disabled');
+    $("#buttonpreviousForInventory").hide();
+    $("#buttonnextForInventory").hide();
+    $("#number").hide();
+    $("#btnSearchForInventory").attr('disabled', 'disabled');
+    $("#btnListViewForInventory").attr('disabled', 'disabled');
+    $("#btnLargeViewForInventory").attr('disabled', 'disabled');
+    //Open the dialog box
+
+    var theDialog = $("#deleteFormInventory").dialog(optforDel);
+    theDialog.dialog("open");
+});
+$(".buttonCloseDeleteInventory").button().click(function () {
+    $("#buttonEditForInventory").attr('disabled', false);
+    $(".buttonCreateForInventory").attr('disabled', false);
+    $("#buttonDeleteForInventory").attr('disabled', false);
+    $("#buttonpreviousForInventory").show();
+    $("#buttonnextForInventory").show();
+    $("#number").show();
+    $("#btnSearchForInventory").attr('disabled', false);
+    $("#btnListViewForInventory").attr('disabled', false);
+    $("#btnLargeViewForInventory").attr('disabled', false);
+    //Open the dialog box
+    var theDialog = $("#deleteFormInventory").dialog(optforDel);
+    theDialog.dialog("close");
+
+
+});
+$(".okDeleteInventory").button().click(function () {
+    $(".buttonCreateForInventory").attr('disabled', false);
+    $("#btnSearchForInventory").attr('disabled', false);
+    $("#btnListViewForInventory").attr('disabled', false);
+    $("#btnLargeViewForInventory").attr('disabled', false);
+    // Close the dialog box on Yes button is clicked
+    var theDialog = $("#deleteFormInventory").dialog(optforDel);
+    theDialog.dialog("close");
+    $.ajax({
+        // Call Delete action method
+        url: "/InventoryManager/DeleteInventory",
+        data: { id: selectedId },
+        type: 'Get',
+        success: function (msg) {
+            $.ajax({
+                url: '/InventoryManager/ReturnIndex',
+                data: {},
+                type: 'GET',
+                success: function (data) {
+                    $("#inventory-list").empty();
+                    $("#btnloadinventory").show();
+                    $("#inventory-list").append(data);
+                },
+            })
+        },
+        beforeSend: function () {
+            //$("#showspinner").html("<center><i class='fa fa-spinner fa-spin fa-5x ' id='spinner'></i></center>").delay(10000000).fadeOut();
+            //$("#showspinnerForm").dialog("open");
+        },
+        error: function (xhr) {
+            swal({ title: "Xảy ra lỗi", text: "Vui lòng load lại trang web", timer: 2000, showConfirmButton: false });
+        }
+    });
+});
+
 
 //***************************************************************************//
 //PHAN CHO BILL SALE ORDER

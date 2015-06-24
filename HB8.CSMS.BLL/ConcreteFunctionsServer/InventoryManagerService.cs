@@ -99,7 +99,7 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
             inventory.QtyStock = model.QtyStock;
             inventory.SlsTax = model.SlsTax;
             inventory.Description = model.Description;
-            inventory.StaffName = model.Staff.StaffName;
+            //inventory.StaffName = model.Staff.StaffName;
             inventory.Image = model.Image;
             inventory.StockName = model.Stock.StockName;
             var unitDetailT = model.UnitDetails.Where(x => x.InvtID == id && x.UnitRate != null).First();
@@ -173,6 +173,28 @@ namespace HB8.CSMS.BLL.ConcreteFunctionsServer
 	
             }
             return count;
+        }
+        public int DeleteInventory(string id)
+        {
+            var model = context.Inventories.GetItemById(id);
+            if (model != null)
+            {
+                context.Inventories.Delete(model);
+                context.Save();
+                return 0;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        public int DeleteInventoryIfInventoryExit(string id)
+        {
+            var model = context.Inventories.GetItemById(id);
+            model.StInventoryId = "DE";
+            context.Inventories.Update(model);
+            context.Save();
+            return 0;
         }
     }
 }

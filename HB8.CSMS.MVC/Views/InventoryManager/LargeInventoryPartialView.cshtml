@@ -20,8 +20,8 @@
                 </div>
                 <div class="caption col-lg-8">
                     <a class="detailinventory" href="javascript:;" value="@item.InvtID"><h4 id="">@item.InvtName</h4></a>
-                    <p id=""><strong>Gía:</strong> @item.SalePrice_L</p>
-                    <p id=""><strong>Đang có:</strong>  @(item.UnitRate * item.QtyStock) @item.UnitName</p>
+                    <p id=""><strong>Gía:</strong> @item.SalePrice_L (VNĐ)</p>
+                    <p id=""><strong>Số lượng:</strong>  @(item.UnitRate * item.QtyStock) @item.UnitName_L</p>
                     <input type="hidden" class="getnumberpages" value="@Model.NumberOfPages" />
                     <input type="hidden" class="count" value="@Model.Count" />
                     <input type="hidden" class="pagesize" value="@Model.PageSize" />
